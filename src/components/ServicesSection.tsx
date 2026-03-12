@@ -12,7 +12,7 @@ const services = [
   {
     title: "Przyjęcia & Eventy",
     description:
-      "Urodziny, rocznice, przyjęcia okolicznościowe — każde wydarzenie zasługuje na piękną oprawę. Zadbamy o każdy detal, abyś mógł cieszyć się chwilą.",
+      "Urodziny, rocznice, przyjęcia okolicznościowe — każde wydarzenie zasługuje na piękną oprawę. Zadbamy o każdy detal, abyście mogli cieszyć się chwilą.",
     image: "/images/gallery/outdoor_wedding/plener_6.jpg",
     tags: ["Urodziny", "Rocznice", "Jubileusze"],
     accent: "#A67C6D",

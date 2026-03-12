@@ -48,16 +48,17 @@ export default function ProcessSection() {
         </div>
 
         {/* Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {steps.map((step, i) => (
-            <div key={step.number} className="relative flex flex-col gap-4">
-              {/* Connector line */}
-              {i < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-8 left-full w-full h-px bg-[#C9A87C]/30 -translate-x-1/2 pointer-events-none" />
-              )}
+        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Connector line — single line from center of circle 1 to center of circle 4 */}
+          <div
+            className="hidden lg:block absolute h-px bg-[#C9A87C]/30 pointer-events-none"
+            style={{ top: "32px", left: "32px", right: "32px" }}
+          />
 
-              {/* Number */}
-              <div className="w-16 h-16 rounded-full bg-[#FFFDF9] border-2 border-[#C9A87C]/30 flex items-center justify-center shadow-sm">
+          {steps.map((step) => (
+            <div key={step.number} className="relative flex flex-col gap-4">
+              {/* Number — bg covers the line behind it */}
+              <div className="w-16 h-16 rounded-full bg-[#FFFDF9] border-2 border-[#C9A87C]/30 flex items-center justify-center shadow-sm relative z-10">
                 <span className="font-script text-2xl text-[#C9A87C]" style={{ fontFamily: "'Great Vibes', cursive" }}>
                   {step.number}
                 </span>

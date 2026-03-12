@@ -124,7 +124,7 @@ export default function GaleriaPage() {
             Zainspirowani? Stwórzmy coś wyjątkowego razem!
           </p>
           <p className="text-[#6B5344] mb-8">
-            Napisz do mnie i porozmawiajmy o Waszym wyjątkowym dniu.
+            Napiszcie do mnie i porozmawiajmy o Waszym wyjątkowym dniu.
           </p>
           <a
             href="/kontakt"
