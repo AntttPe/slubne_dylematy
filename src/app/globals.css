@@ -1,153 +1,224 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Great+Vibes&family=Nunito:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
 
-:root {
-  --background: #FAF8F4;
-  --foreground: #2C1810;
-  --cream: #FAF8F4;
-  --beige: #F0E8DC;
-  --sand: #E8D9C4;
-  --gold: #C9A87C;
-  --gold-dark: #A8845A;
-  --rosewood: #A67C6D;
-  --bark: #2C1810;
-  --stone: #6B5344;
-  --blush: #EDD9CE;
-  --warm-white: #FFFDF9;
+/* ============================================================
+   Design tokens
+   Jeden akcent (złoto), reszta to ciepłe szarości.
+   Wszystko, co jest tu zdefiniowane, jest dostępne jako klasa
+   Tailwinda - nie wpisujemy hexów w JSX.
+   ============================================================ */
+@theme {
+  /* Powierzchnie - jasne */
+  --color-canvas: #faf8f4;
+  --color-surface: #f0e8dc;
+  --color-line: #e4d8c6;
+
+  /* Tekst na jasnym */
+  --color-ink: #2c1810;
+  --color-muted: #6b5344;
+  --color-faint: #8a725f;
+
+  /* Powierzchnie - ciemne */
+  --color-canvas-dark: #241309;
+  --color-surface-dark: #372115;
+  --color-line-dark: #4a3122;
+
+  /* Tekst na ciemnym (kontrast AA sprawdzony) */
+  --color-ink-invert: #f0e8dc;
+  --color-muted-invert: #bda893;
+
+  /* Jedyny akcent w całym projekcie */
+  --color-accent: #c9a87c;
+  --color-accent-strong: #a8845a;
+
+  /* Typografia */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
+
+  /* Promienie - dwa kroki, nie pięć.
+     Ostre krawędzie czytają się bardziej redakcyjnie niż pill-buttony. */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+
+  /* Jedna krzywa czasowa dla wszystkiego */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: 'Nunito', sans-serif;
-  --font-serif: 'Cormorant Garamond', serif;
-  --font-script: 'Great Vibes', cursive;
-}
-
-* {
+/* ============================================================
+   Podstawy
+   ============================================================ */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: 'Nunito', sans-serif;
-  line-height: 1.7;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5 {
-  font-family: 'Cormorant Garamond', serif;
-  line-height: 1.2;
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
 }
 
-.font-script {
-  font-family: 'Great Vibes', cursive;
+/* Instrument Serif ma tylko jedną wagę - akcentujemy kursywą,
+   nie pogrubieniem. */
+h1 em,
+h2 em,
+h3 em {
+  font-style: italic;
+  color: var(--color-accent-strong);
 }
 
-.font-serif {
-  font-family: 'Cormorant Garamond', serif;
+p {
+  text-wrap: pretty;
 }
 
-/* Grain texture overlay */
-.grain-overlay::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.3;
+::selection {
+  background: var(--color-accent);
+  color: #fff;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #F0E8DC;
-}
-::-webkit-scrollbar-thumb {
-  background: #C9A87C;
-  border-radius: 3px;
+/* ============================================================
+   Skala typograficzna - 5 kroków, koniec z dziewięcioma
+   ============================================================ */
+.type-display {
+  font-size: clamp(2.75rem, 7vw, 4.5rem);
 }
 
-/* Divider floral */
-.floral-divider {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  justify-content: center;
-}
-.floral-divider::before,
-.floral-divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(to right, transparent, #C9A87C);
-}
-.floral-divider::after {
-  background: linear-gradient(to left, transparent, #C9A87C);
+.type-h2 {
+  font-size: clamp(2rem, 4.2vw, 3rem);
 }
 
-/* Section spacing */
-section {
-  scroll-margin-top: 80px;
+.type-h3 {
+  font-size: 1.375rem;
 }
 
-/* Masonry gallery */
-.masonry-grid {
-  columns: 3;
+.type-lead {
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+/* Zastępuje font skryptowy: rozstrzelone wersaliki.
+   Tak podpisują sekcje prawdziwe studia, a nie generator. */
+.type-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* ============================================================
+   Focus - widoczny, spójny, jeden na całą stronę
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid var(--color-accent-strong);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* ============================================================
+   Jedna animacja: fade-up. Używana przez <Reveal>.
+   Bez slide, bounce, scale i float.
+   ============================================================ */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.reveal {
+  opacity: 0;
+}
+
+.reveal[data-visible="true"] {
+  animation: reveal-up 0.6s var(--ease-out-soft) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal,
+  .reveal[data-visible="true"] {
+    opacity: 1;
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================
+   Galeria masonry
+   ============================================================ */
+.masonry {
+  column-count: 1;
   column-gap: 1rem;
 }
-.masonry-grid > * {
+
+.masonry > * {
   break-inside: avoid;
   margin-bottom: 1rem;
 }
 
-@media (max-width: 1024px) {
-  .masonry-grid { columns: 2; }
-}
-@media (max-width: 640px) {
-  .masonry-grid { columns: 1; }
-}
-
-/* Animation classes */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+@media (min-width: 640px) {
+  .masonry {
+    column-count: 2;
   }
 }
 
-.animate-fade-in-up {
-  animation: fadeInUp 0.7s ease-out forwards;
-}
-
-@keyframes gentle-float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-}
-
-.animate-float {
-  animation: gentle-float 4s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-fade-in-up,
-  .animate-float {
-    animation: none;
+@media (min-width: 1024px) {
+  .masonry {
+    column-count: 3;
   }
-  html {
-    scroll-behavior: auto;
-  }
+}
+
+/* ============================================================
+   Pasek przewijania
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+  border: 3px solid var(--color-surface);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
 }
