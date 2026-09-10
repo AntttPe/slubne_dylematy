@@ -76,7 +76,11 @@ export default function Reveal({
       ref={ref as React.Ref<never>}
       className={`reveal ${className}`}
       data-visible={visible ? "true" : "false"}
-      style={delay ? { animationDelay: `${delay}ms` } : undefined}
+      style={
+        delay
+          ? ({ "--reveal-delay": `${delay}ms` } as React.CSSProperties)
+          : undefined
+      }
     >
       {children}
     </Tag>
