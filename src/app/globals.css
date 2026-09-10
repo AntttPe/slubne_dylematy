@@ -151,12 +151,32 @@ p {
   }
 }
 
-.reveal {
+/*
+  Treść jest domyślnie WIDOCZNA. Ukrywamy ją dopiero wtedy, gdy inline'owy
+  skrypt w layoucie potwierdzi, że JS w ogóle wystartował.
+
+  Bez tego warunku przeglądarka, w której skrypt nie ruszy albo hydratacja
+  padnie (wbudowana w Messengera, starsze Safari), renderuje całą stronę
+  z opacity: 0 - użytkownik widzi pustą kremową kartkę i odbiera to jako
+  wieczne ładowanie.
+*/
+html.js .reveal:not([data-visible="true"]) {
   opacity: 0;
 }
 
 .reveal[data-visible="true"] {
   animation: reveal-up 0.6s var(--ease-out-soft) forwards;
+}
+
+/*
+  Bezpiecznik. Skrypt ustawia klasę .js, ale paczka Reacta może się
+  wywalić już PO tym - wtedy nic nigdy nie ustawi data-visible.
+  Timer w layoucie odpala tę klasę, jeśli w ciągu 2,5 s nie zamontuje
+  się ani jeden <Reveal>. Treść pokazuje się wtedy bez animacji.
+*/
+html.reveal-failsafe .reveal {
+  opacity: 1 !important;
+  animation: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

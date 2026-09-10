@@ -61,6 +61,24 @@ export default function RootLayout({
       className={`${instrumentSerif.variable} ${inter.variable}`}
     >
       <body>
+        {/*
+          Odpalane synchronicznie, przed sparsowaniem reszty <body>, więc
+          treść nigdy nie mignie. Robi dwie rzeczy:
+
+          1. Klasa `js` włącza ukrywanie elementów <Reveal>. Jeśli skrypt
+             nie wystartuje, CSS nie ukryje niczego i strona jest czytelna.
+          2. Timer to bezpiecznik na wypadek, gdy skrypt się wykona, ale
+             paczka Reacta padnie po drodze (np. w przeglądarce wbudowanej
+             w Messengera). Pierwszy zamontowany <Reveal> go kasuje.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "var d=document.documentElement;d.classList.add('js');" +
+              "window.__revealFailsafe=setTimeout(function(){" +
+              "d.classList.add('reveal-failsafe')},2500);",
+          }}
+        />
         <a
           href="#tresc"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-ink-invert"

@@ -30,8 +30,7 @@ export const site = {
   social: {
     instagram: "https://instagram.com/slubne.dylematy",
     instagramHandle: "@slubne.dylematy",
-    // TODO(klient): uzupełnić albo usunąć ikonę z Footer.tsx
-    facebook: null as string | null,
+    facebook: "https://www.facebook.com/profile.php?id=100076236873547" as string | null,
   },
 } as const;
 
