@@ -4,30 +4,38 @@ import Reveal from "./ui/Reveal";
 const values = [
   {
     title: "Z sercem",
-    desc: "Biorę jeden ślub dziennie. Zawsze jestem na miejscu osobiście i zostaję do końca montażu.",
+    desc: "Jeden ślub dziennie. Jestem na miejscu osobiście i zostaję do końca montażu.",
   },
   {
     title: "Naturalnie",
-    desc: "Sezonowe kwiaty, naturalne materiały, konstrukcje wielokrotnego użytku. Estetyka i ekologia idą w parze.",
+    desc: "Sezonowe kwiaty, naturalne materiały, konstrukcje wielokrotnego użytku.",
   },
   {
     title: "Na miarę",
-    desc: "Żadnych gotowych pakietów. Każdą dekorację projektuję od zera pod konkretne wnętrze i konkretną parę.",
+    desc: "Żadnych gotowych pakietów. Każdą dekorację projektuję pod konkretne wnętrze.",
   },
 ];
 
+/**
+ * Sekcja ma się zmieścić na jednym ekranie.
+ *
+ * Poprzednia wersja rozciągała się na dwa: trzy długie akapity plus
+ * wartości ułożone w pionie jako osobne wiersze z liniami. Teraz
+ * tekst jest skrócony, a wartości leżą w trzech kolumnach pod spodem,
+ * więc kolumna tekstu zrównuje się wysokością ze zdjęciem.
+ */
 export default function AboutSection() {
   return (
-    <section id="o-mnie" className="scroll-mt-24 bg-canvas py-24 sm:py-32">
+    <section id="o-mnie" className="scroll-mt-24 bg-canvas py-20 sm:py-24">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-16">
           <Reveal>
-            <div className="relative aspect-[4/5] overflow-hidden rounded-md">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-md sm:aspect-[3/4] lg:aspect-[4/5]">
               <Image
                 src="/images/about/magda.JPG"
                 alt="Magda, właścicielka Ślubnych Dylematów"
                 fill
-                sizes="(min-width: 1024px) 34rem, 100vw"
+                sizes="(min-width: 1024px) 26rem, 92vw"
                 className="object-cover object-top"
               />
             </div>
@@ -36,41 +44,39 @@ export default function AboutSection() {
           <div>
             <Reveal>
               <p className="type-eyebrow text-accent-strong">O mnie</p>
-              <h2 className="type-h2 mt-5 text-ink">
+              <h2 className="type-h2 mt-4 text-ink">
                 Tu Magda - dekoratorka <em>z miłości do piękna</em>
               </h2>
             </Reveal>
 
             <Reveal delay={80}>
-              <div className="mt-7 flex flex-col gap-5 text-muted">
-                <p>
-                  Od pięciu lat tworzę dekoracje z miłości do piękna i
-                  rodzinnych chwil. Zaczynałam od dekorowania przyjęć w
-                  rodzinie - dziś, w ramach{" "}
-                  <span className="text-ink">Ślubnych Dylematów</span>,
-                  projektuję oprawę ślubów i przyjęć dla Was.
-                </p>
-                <p>
-                  Najbliżej mi do kompozycji romantycznych i delikatnych,
-                  robionych w duchu slow i z troską o naturę. Nie lubię
-                  dekoracji, które krzyczą - wolę takie, które sprawiają, że
-                  wszystko wygląda po prostu właściwie.
-                </p>
-                <p className="font-serif text-2xl italic leading-snug text-ink">
-                  „Jeśli szukacie dekoracji z sercem - jesteście w dobrym
-                  miejscu.”
-                </p>
-              </div>
+              <p className="mt-5 leading-relaxed text-muted">
+                Od pięciu lat tworzę dekoracje z miłości do piękna i rodzinnych
+                chwil. Zaczynałam od przyjęć w rodzinie - dziś, w ramach{" "}
+                <span className="text-ink">Ślubnych Dylematów</span>, projektuję
+                oprawę ślubów i przyjęć dla Was.
+              </p>
+
+              <p className="mt-4 leading-relaxed text-muted">
+                Najbliżej mi do kompozycji romantycznych i delikatnych. Nie
+                lubię dekoracji, które krzyczą - wolę takie, które sprawiają, że
+                wszystko wygląda po prostu właściwie.
+              </p>
+
+              <p className="mt-6 font-serif text-xl italic leading-snug text-ink">
+                „Jeśli szukacie dekoracji z sercem - jesteście w dobrym
+                miejscu.”
+              </p>
             </Reveal>
 
             <Reveal delay={160}>
-              <ul className="mt-10 flex flex-col divide-y divide-line border-y border-line">
+              <ul className="mt-8 grid gap-6 border-t border-line pt-7 sm:grid-cols-3">
                 {values.map((value) => (
-                  <li key={value.title} className="grid gap-1 py-5 sm:grid-cols-[9rem_1fr] sm:gap-6">
-                    <h3 className="type-eyebrow pt-1 text-accent-strong">
+                  <li key={value.title}>
+                    <h3 className="type-eyebrow text-accent-strong">
                       {value.title}
                     </h3>
-                    <p className="text-[0.9375rem] leading-relaxed text-muted">
+                    <p className="mt-2.5 text-sm leading-relaxed text-muted">
                       {value.desc}
                     </p>
                   </li>

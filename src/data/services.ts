@@ -1,51 +1,55 @@
+import type { GalleryCategory } from "./gallery";
+
 export type Service = {
   title: string;
+  /** Jedno zdanie, które ma sprzedać usługę. */
+  lead: string;
   description: string;
   image: string;
+  width: number;
+  height: number;
   tags: readonly string[];
+  /**
+   * Kategoria, na którą przefiltruje się galeria po kliknięciu.
+   * Bez niej przycisk prowadzi do pełnej galerii.
+   */
+  galleryCategory?: Exclude<GalleryCategory, "Wszystkie">;
 };
+
+const R = "/images/realizacje";
 
 export const services: readonly Service[] = [
   {
     title: "Dekoracje ślubne",
+    lead: "Kompleksowa oprawa od kościoła po ostatni stół na sali.",
     description:
-      "Kompleksowa oprawa od kościoła po salę weselną. Spójna koncepcja, jeden styl, wszystko dopięte na ostatni guzik.",
-    image: "/images/gallery/wedding_hall/sala_3.jpg",
-    tags: ["Kościół", "Sala", "Plener"],
+      "Spójna koncepcja zamiast zestawu osobnych elementów: jedna paleta, jeden styl, jedna osoba odpowiedzialna za całość. Przyjeżdżam, montuję i zostaję do końca.",
+    image: `${R}/sala-weselna-boho-pampasy-zyrandole.jpg`,
+    width: 1955,
+    height: 1303,
+    tags: ["Sala", "Stoły", "Ścianka", "Plener"],
+    galleryCategory: "Wesela",
   },
   {
     title: "Dekoracje kościoła",
+    lead: "Oprawa, która nie przytłacza wnętrza, tylko je podkreśla.",
     description:
-      "Kwiaty przy ołtarzu, dekoracja ław, łuk wejściowy. Oprawa, która nie przytłacza wnętrza, tylko je podkreśla.",
-    image: "/images/gallery/church/kosciol_6.jpg",
-    tags: ["Ołtarz", "Ławy", "Łuk"],
+      "Kwiaty przy ołtarzu, dekoracja ław, łuk wejściowy, dywan i świece. Każdy kościół ma swój charakter - kompozycję dobieram do niego, a nie odwrotnie.",
+    image: `${R}/dekoracja-kosciola-bialy-dywan-swiece.jpg`,
+    width: 2560,
+    height: 1703,
+    tags: ["Ołtarz", "Ławy", "Łuk", "Świece"],
+    galleryCategory: "Kościół",
   },
   {
     title: "Przyjęcia i eventy",
+    lead: "Urodziny, rocznice, jubileusze i spotkania firmowe.",
     description:
-      "Urodziny, rocznice, jubileusze, spotkania firmowe. Każde wydarzenie zasługuje na przemyślaną oprawę.",
-    image: "/images/gallery/outdoor_wedding/plener_6.jpg",
-    tags: ["Urodziny", "Rocznice", "Firmowe"],
-  },
-  {
-    title: "Komunia święta",
-    description:
-      "Kameralna i stonowana oprawa - zaproszenia, kwiaty, dekoracja stołu i wianki. Elegancko, bez przesady.",
-    image: "/images/gallery/wedding_hall/sala_6.jpg",
-    tags: ["Zaproszenia", "Kwiaty", "Wianki"],
-  },
-  {
-    title: "Chrzciny",
-    description:
-      "Delikatne dekoracje na powitanie nowego życia. Jasne barwy, naturalne materiały, rodzinna atmosfera.",
-    image: "/images/gallery/outdoor_wedding/plener_7.jpg",
-    tags: ["Delikatne", "Rodzinne", "Naturalne"],
-  },
-  {
-    title: "Papeteria ślubna",
-    description:
-      "Zaproszenia, winietki, menu i plan stołów - projektowane ręcznie i spójne z resztą dekoracji.",
-    image: "/images/gallery/wedding_hall/sala.jpg",
-    tags: ["Zaproszenia", "Winietki", "Menu"],
+      "Nie każde wydarzenie musi być weselem, żeby zasługiwać na przemyślaną oprawę. Ten sam standard pracy, skala dopasowana do okazji i budżetu.",
+    image: `${R}/sala-industrialna-swiatelka-stoly.jpg`,
+    width: 1600,
+    height: 1067,
+    tags: ["Urodziny", "Rocznice", "Komunie", "Firmowe"],
+    galleryCategory: "Eventy",
   },
 ];

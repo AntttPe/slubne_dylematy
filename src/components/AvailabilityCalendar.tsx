@@ -25,12 +25,15 @@ const dayStyles: Record<Status, string> = {
 
 type Props = {
   availability: AvailabilityMap;
+  /** false = nie udało się pobrać terminów z Kalendarza Google. */
+  ok?: boolean;
   /** Ile miesięcy do przodu można przewijać. */
   monthsAhead?: number;
 };
 
 export default function AvailabilityCalendar({
   availability,
+  ok = true,
   monthsAhead = 18,
 }: Props) {
   const today = useMemo(() => {
@@ -50,6 +53,23 @@ export default function AvailabilityCalendar({
   const takenThisMonth = cells.filter(
     (d) => d && availability[dateKey(d)],
   ).length;
+
+  /*
+    Awaria feedu = komunikat, nigdy pusta siatka.
+    Siatka bez danych wygląda jak "wszystko wolne" i wygenerowałaby
+    zapytanie o dzień, który jest zajęty - gorzej niż brak kalendarza.
+  */
+  if (!ok) {
+    return (
+      <div className="rounded-md border border-line bg-canvas p-8 text-center">
+        <p className="type-h3 text-ink">Kalendarz chwilowo niedostępny</p>
+        <p className="mx-auto mt-3 max-w-sm text-[0.9375rem] leading-relaxed text-muted">
+          Nie mogę w tej chwili sprawdzić terminów. Napiszcie, a potwierdzę
+          dostępność Waszego dnia osobiście.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="rounded-md border border-line bg-canvas p-5 sm:p-7">

@@ -21,7 +21,7 @@ const details = [
 ];
 
 export default async function KontaktPage() {
-  const availability = await getAvailability();
+  const { availability, ok } = await getAvailability();
 
   return (
     <>
@@ -70,7 +70,7 @@ export default async function KontaktPage() {
                 <h2 className="type-eyebrow mb-4 text-accent-strong">
                   Wolne terminy
                 </h2>
-                <AvailabilityCalendar availability={availability} />
+                <AvailabilityCalendar availability={availability} ok={ok} />
               </div>
             </div>
 

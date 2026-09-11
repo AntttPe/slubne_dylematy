@@ -9,7 +9,7 @@ import Reveal from "./ui/Reveal";
  * do przeglądarki nie trafia żaden klucz ani zapytanie do bazy.
  */
 export default async function AvailabilitySection() {
-  const availability = await getAvailability();
+  const { availability, ok } = await getAvailability();
 
   return (
     <section id="terminy" className="scroll-mt-24 bg-surface py-24 sm:py-32">
@@ -26,7 +26,7 @@ export default async function AvailabilitySection() {
 
         <div className="mt-14 grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_20rem]">
           <Reveal>
-            <AvailabilityCalendar availability={availability} />
+            <AvailabilityCalendar availability={availability} ok={ok} />
           </Reveal>
 
           <Reveal delay={100} className="lg:sticky lg:top-28">

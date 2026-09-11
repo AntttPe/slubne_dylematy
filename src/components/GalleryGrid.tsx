@@ -1,25 +1,74 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import {
+  categoryFromSlug,
+  categorySlug,
   galleryCategories,
   photos,
   type GalleryCategory,
 } from "@/data/gallery";
 
+/**
+ * Adres jest źródłem prawdy dla wybranej kategorii.
+ *
+ * Dzięki temu link z sekcji Oferta ("/galeria#kosciol") od razu
+ * otwiera właściwy filtr, przycisk wstecz wraca do poprzedniego,
+ * a odnośnik da się komuś wysłać. useSyncExternalStore, bo URL to
+ * zewnętrzne źródło stanu - ma poprawną obsługę SSR i nie wymaga
+ * ustawiania stanu w efekcie.
+ */
+function useHash(): string {
+  return useSyncExternalStore(
+    (onChange) => {
+      window.addEventListener("hashchange", onChange);
+      return () => window.removeEventListener("hashchange", onChange);
+    },
+    () => window.location.hash.slice(1),
+    () => "",
+  );
+}
+
+/** Ile zdjęć pokazujemy na start i ile dokłada jedno kliknięcie. */
+const KROK = 24;
+
 export default function GalleryGrid() {
-  const [category, setCategory] = useState<GalleryCategory>("Wszystkie");
+  const hash = useHash();
+  const category: GalleryCategory = categoryFromSlug(hash) ?? "Wszystkie";
   const [lightbox, setLightbox] = useState<number | null>(null);
 
-  const visible = useMemo(
+  /*
+    Limit trzymany per kategoria, a nie jako jedna liczba.
+
+    Dzięki temu nie trzeba go zerować przy zmianie filtra (co wymagałoby
+    ustawiania stanu w efekcie, bo kategoria przychodzi z adresu),
+    a powrót do wcześniej oglądanej kategorii zachowuje to, co już
+    było doładowane.
+  */
+  const [limity, setLimity] = useState<Record<string, number>>({});
+  const limit = limity[category] ?? KROK;
+
+  const wszystkieZKategorii = useMemo(
     () =>
       category === "Wszystkie"
         ? photos
         : photos.filter((p) => p.category === category),
     [category],
   );
+
+  // Siatka pokazuje wycinek, ale powiększenie chodzi po całej kategorii -
+  // wycinek jest jej początkiem, więc indeksy się zgadzają.
+  const visible = wszystkieZKategorii;
+  const pokazane = wszystkieZKategorii.slice(0, limit);
+  const zostalo = wszystkieZKategorii.length - pokazane.length;
 
   const close = useCallback(() => setLightbox(null), []);
   const step = useCallback(
@@ -48,12 +97,23 @@ export default function GalleryGrid() {
     };
   }, [lightbox, close, step]);
 
-  const active = lightbox === null ? null : visible[lightbox];
+  /*
+    Indeks sprawdzamy względem długości listy: po powrocie przyciskiem
+    wstecz filtr może się zmienić bez kliknięcia, a wtedy zapamiętany
+    indeks mógłby wskazywać poza przefiltrowaną listę.
+  */
+  const active =
+    lightbox !== null && lightbox < visible.length ? visible[lightbox] : null;
 
   return (
     <>
-      {/* Filtry */}
-      <div className="flex flex-wrap justify-center gap-2">
+      {/*
+        Siatka o równych kolumnach, nie flex.
+        Przy flexie każdy przycisk miał szerokość swojego tekstu
+        ("Wszystkie" szerokie, "Eventy" wąskie) i mimo stałej przerwy
+        cały rząd wyglądał na niesymetryczny.
+      */}
+      <div className="mx-auto grid max-w-2xl grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
         {galleryCategories.map((cat) => {
           const selected = cat === category;
           return (
@@ -61,11 +121,11 @@ export default function GalleryGrid() {
               key={cat}
               type="button"
               onClick={() => {
-                setCategory(cat);
+                window.location.hash = categorySlug(cat);
                 setLightbox(null);
               }}
               aria-pressed={selected}
-              className={`rounded-sm border px-5 py-2.5 text-sm transition-colors duration-200 ${
+              className={`rounded-sm border px-4 py-2.5 text-center text-sm transition-colors duration-200 ${
                 selected
                   ? "border-ink bg-ink text-canvas"
                   : "border-line text-muted hover:border-ink hover:text-ink"
@@ -78,8 +138,12 @@ export default function GalleryGrid() {
       </div>
 
       <p aria-live="polite" className="mt-6 text-center text-sm text-faint">
-        {visible.length}{" "}
-        {visible.length === 1 ? "zdjęcie" : visible.length < 5 ? "zdjęcia" : "zdjęć"}
+        {wszystkieZKategorii.length}{" "}
+        {wszystkieZKategorii.length === 1
+          ? "zdjęcie"
+          : wszystkieZKategorii.length < 5
+            ? "zdjęcia"
+            : "zdjęć"}
       </p>
 
       {visible.length === 0 ? (
@@ -89,7 +153,7 @@ export default function GalleryGrid() {
         </p>
       ) : (
         <div className="masonry mt-10">
-          {visible.map((photo, i) => (
+          {pokazane.map((photo, i) => (
             <button
               key={photo.src}
               type="button"
@@ -107,6 +171,23 @@ export default function GalleryGrid() {
               />
             </button>
           ))}
+        </div>
+      )}
+
+      {zostalo > 0 && (
+        <div className="mt-12 flex flex-col items-center gap-3">
+          <p className="text-sm text-faint">
+            Pokazano {pokazane.length} z {wszystkieZKategorii.length}
+          </p>
+          <button
+            type="button"
+            onClick={() =>
+              setLimity((l) => ({ ...l, [category]: limit + KROK }))
+            }
+            className="rounded-sm border border-ink/25 px-7 py-3.5 text-[0.9375rem] text-ink transition-colors hover:border-ink hover:bg-ink hover:text-canvas"
+          >
+            Pokaż kolejne {Math.min(KROK, zostalo)}
+          </button>
         </div>
       )}
 

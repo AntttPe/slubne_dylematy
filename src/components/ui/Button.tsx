@@ -1,14 +1,18 @@
 import Link from "next/link";
 
-type Variant = "primary" | "secondary" | "ghost";
+type Variant = "primary" | "secondary" | "onDark";
 
 const base =
   "inline-flex items-center justify-center gap-2 rounded-sm px-7 py-3.5 text-[0.9375rem] font-medium transition-colors duration-200 disabled:pointer-events-none disabled:opacity-60";
 
 const variants: Record<Variant, string> = {
   primary: "bg-accent-strong text-white hover:bg-ink",
-  secondary: "border border-ink/25 text-ink hover:border-ink hover:bg-ink hover:text-canvas",
-  ghost: "border border-accent/40 text-accent hover:bg-accent hover:text-ink",
+  secondary:
+    "border border-ink/25 text-ink hover:border-ink hover:bg-ink hover:text-canvas",
+  /* Na zdjęciu: białe obramowanie z lekkim przyciemnieniem pod spodem,
+     żeby przycisk był czytelny także na jasnym fragmencie kadru. */
+  onDark:
+    "border border-white/40 bg-white/5 text-white backdrop-blur-sm hover:bg-white hover:text-ink",
 };
 
 type Props = {

@@ -35,11 +35,9 @@ export const site = {
 } as const;
 
 export const navLinks = [
-  { href: "/", label: "Start" },
   { href: "/#o-mnie", label: "O mnie" },
-  { href: "/#uslugi", label: "Usługi" },
+  { href: "/#oferta", label: "Oferta" },
   { href: "/#realizacje", label: "Realizacje" },
   { href: "/#terminy", label: "Terminy" },
-  { href: "/#polecani", label: "Polecani" },
   { href: "/kontakt", label: "Kontakt" },
 ] as const;

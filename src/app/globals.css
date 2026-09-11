@@ -13,7 +13,7 @@
   --color-line: #e4d8c6;
 
   /* Tekst na jasnym */
-  --color-ink: #2c1810;
+  --color-ink: #241610;
   --color-muted: #6b5344;
   --color-faint: #8a725f;
 
@@ -26,13 +26,16 @@
   --color-ink-invert: #f0e8dc;
   --color-muted-invert: #bda893;
 
+  /* Przyciemnienie pod tekstem na zdjęciu - bez tego nic nie jest czytelne */
+  --color-scrim: #1a0f08;
+
   /* Jedyny akcent w całym projekcie */
   --color-accent: #c9a87c;
   --color-accent-strong: #a8845a;
 
   /* Typografia */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
+  --font-serif: var(--font-display), ui-serif, Georgia, serif;
 
   /* Promienie - dwa kroki, nie pięć.
      Ostre krawędzie czytają się bardziej redakcyjnie niż pill-buttony. */
@@ -72,7 +75,7 @@ h2,
 h3,
 h4 {
   font-family: var(--font-serif);
-  font-weight: 400;
+  font-weight: 380;
   line-height: 1.08;
   letter-spacing: -0.015em;
   text-wrap: balance;
@@ -100,7 +103,7 @@ p {
    Skala typograficzna - 5 kroków, koniec z dziewięcioma
    ============================================================ */
 .type-display {
-  font-size: clamp(2.75rem, 7vw, 4.5rem);
+  font-size: clamp(2.5rem, 6vw, 4rem);
 }
 
 .type-h2 {
@@ -198,6 +201,37 @@ html.reveal-failsafe .reveal {
   }
 }
 
+
+/* ============================================================
+   Hero - powolny ruch zdjęcia w tle
+
+   Animacja leci w nieskończoność tam i z powrotem, na wszystkich
+   slajdach naraz. Gdyby kończyła się po jednym przebiegu, przy
+   powrocie slajdu trzeba by ją restartować - a przeglądarka nie
+   restartuje animacji po samym ponownym dodaniu klasy.
+   Slajd wchodzi więc w losowym momencie ruchu, co wygląda naturalnie.
+   ============================================================ */
+@keyframes hero-pan {
+  from {
+    transform: scale(1.05) translate3d(-0.8%, 0.4%, 0);
+  }
+  to {
+    transform: scale(1.12) translate3d(0.8%, -0.6%, 0);
+  }
+}
+
+.hero-pan {
+  animation: hero-pan 16s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-pan {
+    animation: none;
+    transform: scale(1.04);
+  }
+}
+
 /* ============================================================
    Galeria masonry
    ============================================================ */
@@ -225,21 +259,9 @@ html.reveal-failsafe .reveal {
 
 /* ============================================================
    Pasek przewijania
+
+   Celowo BEZ własnych stylów. Ustawienie ::-webkit-scrollbar
+   z szerokością wyłącza na macOS nakładkowy pasek i rezerwuje
+   stały gutter - przez co po prawej stronie zostawała jasna
+   wstęga, do której nie dochodziło ani zdjęcie hero, ani navbar.
    ============================================================ */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--color-surface);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-line);
-  border: 3px solid var(--color-surface);
-  border-radius: 999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent);
-}

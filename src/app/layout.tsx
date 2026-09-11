@@ -1,15 +1,20 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Inter } from "next/font/google";
+import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { site } from "@/data/site";
 
-const instrumentSerif = Instrument_Serif({
+/*
+  Fraunces zamiast Instrument Serif. Zdjęcia Magdy są ciepłe i miękkie -
+  beże, złoto, brzoskwinia - a Instrument Serif ma chłodny, redakcyjny
+  rysunek, który się z nimi rozjeżdżał. Fraunces trzyma tę samą klasę,
+  ale ma zaokrąglone, cieplejsze zakończenia.
+*/
+const fraunces = Fraunces({
   subsets: ["latin", "latin-ext"],
-  weight: "400",
   style: ["normal", "italic"],
-  variable: "--font-instrument",
+  variable: "--font-display",
   display: "swap",
 });
 
@@ -58,7 +63,15 @@ export default function RootLayout({
   return (
     <html
       lang="pl"
-      className={`${instrumentSerif.variable} ${inter.variable}`}
+      className={`${fraunces.variable} ${inter.variable}`}
+      /*
+        Skrypt poniżej dopisuje do <html> klasę `js` jeszcze przed
+        hydratacją, więc React zastaje inny className, niż wyrenderował
+        serwer, i zgłasza niezgodność. Robimy to celowo, dlatego
+        wyciszamy ostrzeżenie - dotyczy ono wyłącznie atrybutów tego
+        jednego elementu, nie całego drzewa.
+      */
+      suppressHydrationWarning
     >
       <body>
         {/*

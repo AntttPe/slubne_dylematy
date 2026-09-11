@@ -14,7 +14,7 @@ export default function JsonLd() {
     url: site.url,
     email: site.contact.email,
     telephone: site.contact.phone,
-    image: `${site.url}/images/hero/hero-bg.JPG`,
+    image: `${site.url}/images/realizacje/sala-weselna-boho-pampasy-zyrandole.jpg`,
     address: {
       "@type": "PostalAddress",
       addressRegion: site.area.region,

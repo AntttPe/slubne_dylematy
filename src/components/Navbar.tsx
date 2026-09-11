@@ -12,6 +12,15 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
+  // Ciemne tło pod paskiem jest tylko na stronie głównej (hero ze zdjęciem).
+  // Na podstronach pasek od razu jedzie w wersji jasnej.
+  // Kotwice ("/#oferta") prowadzą do sekcji strony głównej, więc
+  // porównujemy samą ścieżkę, a nie cały href.
+  const aktywny = (href: string) => href.split("#")[0] === pathname;
+
+  const nadHero = pathname === "/" && !scrolled && !open;
+  const jasnyPasek = !nadHero;
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 32);
     onScroll();
@@ -35,25 +44,55 @@ export default function Navbar() {
 
   return (
     <header
+      /*
+        Nad hero pasek jest przezroczysty, a napisy białe - pod spodem
+        jest ciemny kadr. Po przewinięciu przechodzi na kremowe tło
+        z ciemnym tekstem. Bez tego logo znikało na zdjęciu.
+      */
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
-        scrolled || open
+        jasnyPasek
           ? "border-b border-line bg-canvas/90 backdrop-blur-md"
           : "border-b border-transparent"
       }`}
     >
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-5 sm:px-8">
-        <Link href="/" className="flex items-center gap-3">
+        <Link
+          href="/"
+          aria-label="Ślubne Dylematy - przejdź na początek strony"
+          onClick={(e) => {
+            // Na stronie głównej Next nie przewija, bo trasa się nie zmienia.
+            // Zastąpiło to pozycję "Start" w menu.
+            if (pathname === "/") {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              setOpen(false);
+            }
+          }}
+          className="flex items-center gap-3"
+        >
           <Image
             src="/images/logo.png"
             alt=""
             width={449}
             height={555}
-            className="h-10 w-auto"
+            className={`h-10 w-auto transition-[filter] ${
+              jasnyPasek ? "" : "brightness-0 invert"
+            }`}
             priority
           />
           <span className="flex flex-col leading-none">
-            <span className="font-serif text-xl text-ink">{site.name}</span>
-            <span className="type-eyebrow mt-1.5 text-faint">
+            <span
+              className={`font-serif text-xl transition-colors ${
+                jasnyPasek ? "text-ink" : "text-white"
+              }`}
+            >
+              {site.name}
+            </span>
+            <span
+              className={`type-eyebrow mt-1.5 transition-colors ${
+                jasnyPasek ? "text-faint" : "text-white/70"
+              }`}
+            >
               {site.tagline}
             </span>
           </span>
@@ -65,9 +104,13 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               className={`text-sm transition-colors duration-200 ${
-                pathname === link.href
-                  ? "text-ink"
-                  : "text-muted hover:text-ink"
+                jasnyPasek
+                  ? aktywny(link.href)
+                    ? "text-ink"
+                    : "text-muted hover:text-ink"
+                  : aktywny(link.href)
+                    ? "text-white"
+                    : "text-white/75 hover:text-white"
               }`}
             >
               {link.label}
@@ -77,7 +120,9 @@ export default function Navbar() {
 
         <button
           type="button"
-          className="-mr-2 p-2 text-ink lg:hidden"
+          className={`-mr-2 p-2 transition-colors lg:hidden ${
+            jasnyPasek ? "text-ink" : "text-white"
+          }`}
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-controls="menu-mobilne"
