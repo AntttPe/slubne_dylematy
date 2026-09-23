@@ -104,6 +104,7 @@ export const photos: readonly Photo[] = [
   { src: "/images/galeria/wesela/wesela-58.jpg", alt: "Dekoracja weselna - realizacja Ślubnych Dylematów (58)", category: "Wesela", width: 2048, height: 1365 },
   { src: "/images/galeria/wesela/wesela-59.jpg", alt: "Dekoracja weselna - realizacja Ślubnych Dylematów (59)", category: "Wesela", width: 1979, height: 1319 },
   { src: "/images/galeria/wesela/wesela-60.jpg", alt: "Dekoracja weselna - realizacja Ślubnych Dylematów (60)", category: "Wesela", width: 1363, height: 2048 },
+  { src: "/images/galeria/wesela/wesela-61.jpg", alt: "Dekoracja weselna - realizacja Ślubnych Dylematów (61)", category: "Wesela", width: 1363, height: 2048 },
 
   // ── Kościół ─────────────────────────────────────────
   { src: "/images/galeria/kosciol/kosciol-01.jpg", alt: "Dekoracja kościoła - realizacja Ślubnych Dylematów (1)", category: "Kościół", width: 1284, height: 1926 },
@@ -130,7 +131,6 @@ export const photos: readonly Photo[] = [
   { src: "/images/galeria/eventy/eventy-06.jpg", alt: "Dekoracja przyjęcia okolicznościowego - realizacja Ślubnych Dylematów (6)", category: "Eventy", width: 1363, height: 2048 },
   { src: "/images/galeria/eventy/eventy-07.jpg", alt: "Dekoracja przyjęcia okolicznościowego - realizacja Ślubnych Dylematów (7)", category: "Eventy", width: 1363, height: 2048 },
   { src: "/images/galeria/eventy/eventy-08.jpg", alt: "Dekoracja przyjęcia okolicznościowego - realizacja Ślubnych Dylematów (8)", category: "Eventy", width: 1363, height: 2048 },
-  { src: "/images/galeria/eventy/eventy-09.jpg", alt: "Dekoracja przyjęcia okolicznościowego - realizacja Ślubnych Dylematów (9)", category: "Eventy", width: 1363, height: 2048 },
 ];
 
 /**
