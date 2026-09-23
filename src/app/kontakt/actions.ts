@@ -1,5 +1,6 @@
 "use server";
 
+import { site } from "@/data/site";
 import { inquirySchema, type FormState } from "@/lib/contact-schema";
 
 /**
@@ -77,7 +78,7 @@ export async function submitInquiry(
     return {
       status: "error",
       message:
-        "Coś poszło nie tak przy wysyłce. Napiszcie proszę bezpośrednio na kontakt@slubnedylematy.pl.",
+        `Coś poszło nie tak przy wysyłce. Napiszcie proszę bezpośrednio na ${site.contact.email}.`,
     };
   }
 }

@@ -48,14 +48,20 @@ export default function PartnersSection() {
                     partner.url ? "cursor-pointer" : ""
                   }`}
                 >
-                  <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-sm bg-surface">
+                  {/*
+                    Białe tło i object-contain, nie kadrowanie: logotypy
+                    mają proporcje od kwadratu po 2,8:1, a część ma białe
+                    tło zamiast przezroczystości. Kadrowanie ucinałoby
+                    im nazwy, a beżowe tło zostawiało widoczną ramkę.
+                  */}
+                  <div className="relative h-16 w-24 shrink-0 overflow-hidden rounded-sm border border-line bg-white p-2.5">
                     {partner.image ? (
                       <Image
                         src={partner.image}
-                        alt=""
+                        alt={`Logo ${partner.name}`}
                         fill
-                        sizes="64px"
-                        className="object-cover"
+                        sizes="96px"
+                        className="object-contain"
                       />
                     ) : (
                       <span className="flex h-full items-center justify-center font-serif text-lg text-accent-strong">

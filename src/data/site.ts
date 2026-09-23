@@ -2,7 +2,9 @@
  * Jedno źródło prawdy dla danych firmy.
  * Zmiana numeru telefonu = jedna edycja, nie trzy.
  *
- * TODO(klient): podmienić telefon i e-mail na prawdziwe - poniższe to placeholdery.
+ * TODO(klient): adres e-mail jest tymczasowy (Gmail). Po uruchomieniu
+ * skrzynki na własnej domenie podmienić na kontakt@slubnedylematy.pl
+ * i zaktualizować też wizytówkę Google - dane muszą się zgadzać.
  */
 
 export const site = {
@@ -14,10 +16,10 @@ export const site = {
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://slubnedylematy.pl",
 
   contact: {
-    phone: "+48 123 456 789",
-    phoneHref: "tel:+48123456789",
-    email: "kontakt@slubnedylematy.pl",
-    emailHref: "mailto:kontakt@slubnedylematy.pl",
+    phone: "+48 725 824 732",
+    phoneHref: "tel:+48725824732",
+    email: "slubnedylematy.kontakt@gmail.com",
+    emailHref: "mailto:slubnedylematy.kontakt@gmail.com",
     responseTime: "w ciągu 24 godzin",
   },
 

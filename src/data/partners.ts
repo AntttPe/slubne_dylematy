@@ -5,11 +5,8 @@
  * dwa razy w roku, a każda dodatkowa rzecz do klikania to kolejna rzecz
  * do utrzymania. Edycja = jedna linijka tutaj.
  *
- * TODO(klient): Magda podaje prawdziwe nazwy, role i linki.
- * Na start trzy firmy - role poniżej są propozycją, do podmiany
- * na te, z którymi realnie współpracuje.
- * Zdjęcia wrzucamy do /public/images/partners/ (kwadrat, min. 600x600).
- * Bez `image` kafelek pokaże inicjały - działa, nie trzeba czekać na zdjęcia.
+ * Logotypy mają bardzo różne proporcje (od kwadratu po 2,8:1), dlatego
+ * kafelek skaluje je przez object-contain na białym tle, zamiast kadrować.
  */
 
 export type Partner = {
@@ -18,31 +15,40 @@ export type Partner = {
   blurb: string;
   url: string | null;
   image: string | null;
+  /** Wymiary logotypu - bez nich next/image nie zarezerwuje miejsca. */
+  width?: number;
+  height?: number;
 };
 
 export const partners: readonly Partner[] = [
   {
-    name: "Do uzupełnienia",
+    name: "Marysia Foto",
     role: "Fotografia ślubna",
     blurb:
-      "Reportaż, który wygląda jak wspomnienie, a nie jak sesja. Zawsze na czas i zawsze niewidoczny.",
-    url: null,
-    image: null,
+      "Reportaż, który wygląda jak wspomnienie, a nie jak sesja. Jest wszędzie tam, gdzie trzeba, i nigdzie tam, gdzie przeszkadza.",
+    url: "https://marysiafoto.pl",
+    image: "/images/partners/marysia.png",
+    width: 310,
+    height: 169,
   },
   {
-    name: "Do uzupełnienia",
-    role: "Film ślubny",
+    name: "Napompowane",
+    role: "Dekoracje balonowe",
     blurb:
-      "Spokojne, filmowe kadry bez efekciarstwa. Materiał, który ogląda się po latach.",
-    url: null,
-    image: null,
+      "Balony, które wyglądają jak element dekoracji, a nie jak dodatek z ostatniej chwili. Świetnie dogrywają się z resztą aranżacji.",
+    url: "https://www.napompowane.com",
+    image: "/images/partners/napompowane.png",
+    width: 150,
+    height: 150,
   },
   {
-    name: "Do uzupełnienia",
-    role: "Oprawa muzyczna",
+    name: "Piekarnia Kłos",
+    role: "Tort i słodki stół",
     blurb:
-      "Czyta parkiet lepiej niż ktokolwiek. Nikt nie siedzi przy stoliku dłużej, niż chce.",
-    url: null,
-    image: null,
+      "Tort, który smakuje tak dobrze, jak wygląda. Dobierają go do stylu dekoracji, zamiast proponować katalog.",
+    url: "https://www.piekarniaklos.pl",
+    image: "/images/partners/klos.png",
+    width: 901,
+    height: 320,
   },
 ];
