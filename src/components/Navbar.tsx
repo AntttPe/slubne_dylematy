@@ -12,12 +12,10 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-  // Ciemne tło pod paskiem jest tylko na stronie głównej (hero ze zdjęciem).
-  // Na podstronach pasek od razu jedzie w wersji jasnej.
-  // Kotwice ("/#oferta") prowadzą do sekcji strony głównej, więc
-  // porównujemy samą ścieżkę, a nie cały href.
   const aktywny = (href: string) => href.split("#")[0] === pathname;
 
+  // Above the hero the bar is transparent with white text (dark photo
+  // underneath); after scrolling it switches to cream with dark text.
   const nadHero = pathname === "/" && !scrolled && !open;
   const jasnyPasek = !nadHero;
 
@@ -28,7 +26,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Zablokuj przewijanie tła przy otwartym menu.
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
@@ -44,11 +41,6 @@ export default function Navbar() {
 
   return (
     <header
-      /*
-        Nad hero pasek jest przezroczysty, a napisy białe - pod spodem
-        jest ciemny kadr. Po przewinięciu przechodzi na kremowe tło
-        z ciemnym tekstem. Bez tego logo znikało na zdjęciu.
-      */
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
         jasnyPasek
           ? "border-b border-line bg-canvas/90 backdrop-blur-md"
@@ -60,8 +52,8 @@ export default function Navbar() {
           href="/"
           aria-label="Ślubne Dylematy - przejdź na początek strony"
           onClick={(e) => {
-            // Na stronie głównej Next nie przewija, bo trasa się nie zmienia.
-            // Zastąpiło to pozycję "Start" w menu.
+            // Next does not scroll when the route does not change. This
+            // replaced the "Start" item in the menu.
             if (pathname === "/") {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: "smooth" });
@@ -132,11 +124,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/*
-        `inert` przy zamkniętym menu - bez tego linki zostają w drzewie
-        dostępności i łapią focus tabem, mimo że są niewidoczne.
-      */}
-      <div
+            <div
         id="menu-mobilne"
         inert={!open}
         className={`overflow-hidden border-t border-line bg-canvas transition-[max-height,opacity] duration-300 lg:hidden ${

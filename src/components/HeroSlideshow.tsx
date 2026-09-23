@@ -4,29 +4,14 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { CZAS_SLAJDU, heroSlides } from "@/data/hero";
 
-/**
- * Przewijające się tło hero.
- *
- * Trzy rzeczy, które decydują o tym, czy to wygląda elegancko,
- * a nie jak pokaz slajdów z lat dwutysięcznych:
- *
- *  1. Długie przenikanie (1,8 s) przy krótkim postoju - obraz ma
- *     płynąć, a nie przeskakiwać.
- *  2. Powolny pan tylko na aktywnym slajdzie, restartowany przy
- *     każdej zmianie. Ruch i przenikanie nakładają się na siebie.
- *  3. Tekst stoi nieruchomo w osobnej warstwie.
- */
 export default function HeroSlideshow() {
   const [index, setIndex] = useState(0);
   const [pozostaleZamontowane, setPozostaleZamontowane] = useState(false);
 
   useEffect(() => {
-    // Kolejne zdjęcia montujemy dopiero po pierwszym renderze, żeby nie
-    // konkurowały o pasmo z pierwszym kadrem - on jest obrazem LCP.
-    //
-    // setTimeout, nie requestAnimationFrame: rAF nie odpala się w karcie
-    // otwartej w tle, więc pokaz slajdów nigdy by nie wystartował
-    // u kogoś, kto otworzył stronę w nowej karcie i przełączył się później.
+    // setTimeout, not requestAnimationFrame: rAF does not fire in a
+    // background tab, so the slideshow would never start for anyone who
+    // opens the page in a new tab and switches to it later.
     const id = setTimeout(() => setPozostaleZamontowane(true), 100);
     return () => clearTimeout(id);
   }, []);
@@ -34,7 +19,6 @@ export default function HeroSlideshow() {
   useEffect(() => {
     if (!pozostaleZamontowane || heroSlides.length < 2) return;
 
-    // Przy wyłączonych animacjach zostaje jeden nieruchomy kadr.
     const bezRuchu = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (bezRuchu.matches) return;
 

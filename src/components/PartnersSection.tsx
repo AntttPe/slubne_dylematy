@@ -4,7 +4,6 @@ import { partners } from "@/data/partners";
 import SectionHeader from "./ui/SectionHeader";
 import Reveal from "./ui/Reveal";
 
-/** Inicjały jako zapas, gdy nie ma jeszcze logotypu. */
 function initials(name: string) {
   return name
     .split(" ")
@@ -14,17 +13,6 @@ function initials(name: string) {
     .toUpperCase();
 }
 
-/**
- * Układ kartowy zamiast wiersza z miniaturką z boku.
- *
- * Poprzednia wersja upychała logotyp w prostokącie 96x64 obok tekstu -
- * przy trzech firmach robiło to wrażenie przypisu, a nie rekomendacji.
- * Teraz logotyp dostaje własne, białe pole na całą szerokość karty,
- * więc każdy jest czytelny niezależnie od proporcji.
- *
- * Klikalna jest cała karta, nie sama nazwa - większy cel i czytelniejsza
- * intencja niż podkreślony wyraz w środku akapitu.
- */
 export default function PartnersSection() {
   if (partners.length === 0) return null;
 
@@ -59,12 +47,10 @@ export default function PartnersSection() {
                     partner.url ? "hover:border-ink/30" : ""
                   }`}
                 >
-                  {/*
-                    Białe pole na całą szerokość: część logotypów ma białe
-                    tło zamiast przezroczystości, a object-contain zachowuje
-                    proporcje - od kwadratu po 2,8:1 - bez kadrowania.
-                  */}
-                  <div className="relative flex h-32 items-center justify-center border-b border-line bg-white px-8">
+                  {/* White panel + object-contain: some logos ship with a
+                      white background instead of transparency, and ratios
+                      run from 1:1 to 2.8:1. Cropping would cut off names. */}
+                                    <div className="relative flex h-32 items-center justify-center border-b border-line bg-white px-8">
                     {partner.image ? (
                       <Image
                         src={partner.image}

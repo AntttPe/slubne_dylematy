@@ -7,12 +7,8 @@ export const galleryCategories = [
 
 export type GalleryCategory = (typeof galleryCategories)[number];
 
-/**
- * Kategoria w adresie: /galeria#kosciol
- *
- * Hash, a nie parametr zapytania - działa przy eksporcie statycznym
- * i nie wymusza renderowania dynamicznego strony galerii.
- */
+/** Category in the URL: /galeria#kosciol. A hash, not a query param - works
+ *  with static export and does not force dynamic rendering. */
 export function categorySlug(cat: GalleryCategory): string {
   return cat
     .toLowerCase()
@@ -31,19 +27,16 @@ export type Photo = {
   src: string;
   alt: string;
   category: Exclude<GalleryCategory, "Wszystkie">;
-  /** Wymiary źródłowe - wymagane przez next/image, żeby nie było skoku layoutu. */
   width: number;
   height: number;
 };
 
-/*
-  TODO(opisy): pole `alt` jest na razie ogólne - generowałem je bez
-  oglądania zdjęć. Dla dostępności i SEO warto je kiedyś podmienić na
-  opisy tego, co faktycznie jest w kadrze ("łuk kwiatowy z gipsówką",
-  "dekoracja ław kościelnych"). To samo dotyczy nazw plików.
-*/
+/**
+ * TODO(alt text): `alt` is generic - it was generated without looking at the
+ * photos. For accessibility and SEO it should describe what is actually in
+ * frame. Same goes for the file names.
+ */
 export const photos: readonly Photo[] = [
-  // ── Wesela ──────────────────────────────────────────
   { src: "/images/galeria/wesela/wesela-01.jpg", alt: "Dekoracja weselna - realizacja Ślubnych Dylematów (1)", category: "Wesela", width: 1066, height: 1600 },
   { src: "/images/galeria/wesela/wesela-03.jpg", alt: "Dekoracja weselna - realizacja Ślubnych Dylematów (3)", category: "Wesela", width: 1064, height: 1600 },
   { src: "/images/galeria/wesela/wesela-04.jpg", alt: "Dekoracja weselna - realizacja Ślubnych Dylematów (4)", category: "Wesela", width: 1363, height: 2048 },
@@ -106,7 +99,6 @@ export const photos: readonly Photo[] = [
   { src: "/images/galeria/wesela/wesela-60.jpg", alt: "Dekoracja weselna - realizacja Ślubnych Dylematów (60)", category: "Wesela", width: 1363, height: 2048 },
   { src: "/images/galeria/wesela/wesela-61.jpg", alt: "Dekoracja weselna - realizacja Ślubnych Dylematów (61)", category: "Wesela", width: 1363, height: 2048 },
 
-  // ── Kościół ─────────────────────────────────────────
   { src: "/images/galeria/kosciol/kosciol-01.jpg", alt: "Dekoracja kościoła - realizacja Ślubnych Dylematów (1)", category: "Kościół", width: 1284, height: 1926 },
   { src: "/images/galeria/kosciol/kosciol-02.jpg", alt: "Dekoracja kościoła - realizacja Ślubnych Dylematów (2)", category: "Kościół", width: 1284, height: 856 },
   { src: "/images/galeria/kosciol/kosciol-03.jpg", alt: "Dekoracja kościoła - realizacja Ślubnych Dylematów (3)", category: "Kościół", width: 1284, height: 856 },
@@ -122,7 +114,6 @@ export const photos: readonly Photo[] = [
   { src: "/images/galeria/kosciol/kosciol-13.jpg", alt: "Dekoracja kościoła - realizacja Ślubnych Dylematów (13)", category: "Kościół", width: 1365, height: 2048 },
   { src: "/images/galeria/kosciol/kosciol-14.jpg", alt: "Dekoracja kościoła - realizacja Ślubnych Dylematów (14)", category: "Kościół", width: 720, height: 1080 },
 
-  // ── Eventy ──────────────────────────────────────────
   { src: "/images/galeria/eventy/eventy-01.jpg", alt: "Dekoracja przyjęcia okolicznościowego - realizacja Ślubnych Dylematów (1)", category: "Eventy", width: 1363, height: 2048 },
   { src: "/images/galeria/eventy/eventy-02.jpg", alt: "Dekoracja przyjęcia okolicznościowego - realizacja Ślubnych Dylematów (2)", category: "Eventy", width: 1363, height: 2048 },
   { src: "/images/galeria/eventy/eventy-03.jpg", alt: "Dekoracja przyjęcia okolicznościowego - realizacja Ślubnych Dylematów (3)", category: "Eventy", width: 1363, height: 2048 },
@@ -133,13 +124,6 @@ export const photos: readonly Photo[] = [
   { src: "/images/galeria/eventy/eventy-08.jpg", alt: "Dekoracja przyjęcia okolicznościowego - realizacja Ślubnych Dylematów (8)", category: "Eventy", width: 1363, height: 2048 },
 ];
 
-/**
- * Wybór na stronę główną - po nazwach plików, nie po indeksach.
- *
- * Indeksy rozjeżdżały się przy każdej zmianie kolejności w `photos`,
- * co jest łatwe do przeoczenia: lista dalej się kompilowała, tylko
- * pokazywała inne zdjęcia.
- */
 const NA_GLOWNA = [
   "wesela-23.jpg",
   "wesela-01.jpg",

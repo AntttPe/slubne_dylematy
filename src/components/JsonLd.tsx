@@ -1,9 +1,5 @@
 import { site } from "@/data/site";
 
-/**
- * Dane strukturalne LocalBusiness - dla lokalnej firmy usługowej
- * to jedna z niewielu rzeczy SEO, która realnie coś zmienia.
- */
 export default function JsonLd() {
   const schema = {
     "@context": "https://schema.org",
@@ -20,11 +16,6 @@ export default function JsonLd() {
       addressRegion: site.area.region,
       addressCountry: site.area.country,
     },
-    /*
-      Dwa wpisy, nie jeden napis: region mówi Google, gdzie szukać
-      dopasowania lokalnego, kraj - że Magda dojedzie też dalej.
-      To pole opisuje ZASIĘG; siedzibę opisuje `address` poniżej.
-    */
     areaServed: [
       { "@type": "AdministrativeArea", name: "Śląsk" },
       { "@type": "Country", name: "Polska" },

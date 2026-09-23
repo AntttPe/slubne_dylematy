@@ -4,10 +4,6 @@ import SectionHeader from "./ui/SectionHeader";
 import Button from "./ui/Button";
 import Reveal from "./ui/Reveal";
 
-/**
- * Server Component - dane terminów pobierane po stronie serwera,
- * do przeglądarki nie trafia żaden klucz ani zapytanie do bazy.
- */
 export default async function AvailabilitySection() {
   const { availability, ok } = await getAvailability();
 

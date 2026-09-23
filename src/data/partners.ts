@@ -1,19 +1,3 @@
-/**
- * "Sprawdzeni ludzie, z którymi pracuję najchętniej".
- *
- * Świadomie trzymane w kodzie, a nie w panelu - ta lista zmienia się
- * dwa razy w roku, a każda dodatkowa rzecz do klikania to kolejna rzecz
- * do utrzymania. Edycja = jedna linijka tutaj.
- *
- * Logotypy mają bardzo różne proporcje (od kwadratu po 2,8:1), dlatego
- * kafelek skaluje je przez object-contain na białym tle, zamiast kadrować.
- *
- * TODO(klient): `blurb` opisuje na razie wyłącznie zakres usług - czyli to,
- * co da się sprawdzić. Świadomie NIE ma tu ocen ich pracy ani twierdzeń
- * o współpracy, bo byłyby zmyślone. Najlepiej, żeby Magda podała po jednym
- * własnym zdaniu o każdej firmie - to jej rekomendacja, więc powinna brzmieć
- * jej głosem.
- */
 
 export type Partner = {
   name: string;
@@ -21,11 +5,16 @@ export type Partner = {
   blurb: string;
   url: string | null;
   image: string | null;
-  /** Wymiary logotypu - bez nich next/image nie zarezerwuje miejsca. */
   width?: number;
   height?: number;
 };
 
+/**
+ * TODO(client): `blurb` currently states only the scope of services - the
+ * part that can be verified. Deliberately no opinions about their work: this
+ * is a recommendation section, and invented praise for someone else's company
+ * is worse than none. Ideally the owner supplies one sentence per partner.
+ */
 export const partners: readonly Partner[] = [
   {
     name: "Marysia Foto",

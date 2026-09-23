@@ -2,17 +2,12 @@ import type { GalleryCategory } from "./gallery";
 
 export type Service = {
   title: string;
-  /** Jedno zdanie, które ma sprzedać usługę. */
   lead: string;
   description: string;
   image: string;
   width: number;
   height: number;
   tags: readonly string[];
-  /**
-   * Kategoria, na którą przefiltruje się galeria po kliknięciu.
-   * Bez niej przycisk prowadzi do pełnej galerii.
-   */
   galleryCategory?: Exclude<GalleryCategory, "Wszystkie">;
 };
 

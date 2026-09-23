@@ -2,10 +2,6 @@ import { testimonials } from "@/data/testimonials";
 import SectionHeader from "./ui/SectionHeader";
 import Reveal from "./ui/Reveal";
 
-/**
- * Ściana cytatów zamiast karuzeli: wszystkie opinie widoczne od razu,
- * zero JS-u po stronie klienta i cały tekst indeksowany przez Google.
- */
 export default function TestimonialsSection() {
   return (
     <section

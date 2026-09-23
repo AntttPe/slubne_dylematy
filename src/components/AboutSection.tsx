@@ -16,14 +16,6 @@ const values = [
   },
 ];
 
-/**
- * Sekcja ma się zmieścić na jednym ekranie.
- *
- * Poprzednia wersja rozciągała się na dwa: trzy długie akapity plus
- * wartości ułożone w pionie jako osobne wiersze z liniami. Teraz
- * tekst jest skrócony, a wartości leżą w trzech kolumnach pod spodem,
- * więc kolumna tekstu zrównuje się wysokością ze zdjęciem.
- */
 export default function AboutSection() {
   return (
     <section id="o-mnie" className="scroll-mt-24 bg-canvas py-20 sm:py-24">

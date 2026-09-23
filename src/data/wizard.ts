@@ -1,16 +1,5 @@
-/**
- * Pytania pomagające parze opisać wizję.
- *
- * Cztery, nie osiem - przy dłuższej liście ludzie odpadają w połowie.
- * Kolejność jest celowa: najpierw pytanie, na które odpowiada się
- * odruchowo (styl), na końcu to wymagające chwili zastanowienia.
- *
- * Wszędzie jest wyjście "jeszcze nie wiemy". Brak takiej opcji zmusza
- * do zmyślania, a Magda dostaje wtedy odpowiedź gorszą niż żadną.
- */
 export type Question = {
   id: string;
-  /** Etykieta, pod którą odpowiedź trafia do wiadomości. */
   label: string;
   question: string;
   hint?: string;
@@ -18,6 +7,12 @@ export type Question = {
   options: readonly string[];
 };
 
+/**
+ * Four would be too few and eight too many - people drop out halfway. Order
+ * is deliberate: the instinctive question first, the one needing thought last.
+ * Every question has a "we don't know yet" escape; without it people invent an
+ * answer, which is worse than none.
+ */
 export const questions: readonly Question[] = [
   {
     id: "styl",
@@ -83,7 +78,6 @@ export const questions: readonly Question[] = [
   },
 ];
 
-/** Składa odpowiedzi w czytelny akapit, a nie listę pól bazy danych. */
 export function buildSummary(answers: Record<string, string[]>): string {
   return questions
     .map((q) => {

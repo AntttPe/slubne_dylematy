@@ -1,7 +1,6 @@
 import Reveal from "./Reveal";
 
 type Props = {
-  /** Mikro-nagłówek: rozstrzelone wersaliki. Zastąpił font skryptowy. */
   eyebrow: string;
   title: React.ReactNode;
   lead?: string;
@@ -9,10 +8,6 @@ type Props = {
   tone?: "light" | "dark";
 };
 
-/**
- * Nagłówek sekcji - jeden układ na całą stronę.
- * Wcześniej ten sam blok był przepisany ręcznie pięć razy.
- */
 export default function SectionHeader({
   eyebrow,
   title,

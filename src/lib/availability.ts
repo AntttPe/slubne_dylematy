@@ -1,11 +1,3 @@
-/**
- * Warstwa dostępu do terminów.
- *
- * Cała reszta aplikacji rozmawia wyłącznie z `getAvailability()`.
- * Dziś czyta publiczne feedy iCal z Kalendarza Google, po przejściu
- * na static export to samo przeniesie się do Workera na Cloudflare -
- * komponenty się nie zmienią. To jest ten szew, o który chodzi.
- */
 
 import { ODSWIEZANIE_SEKUNDY, kalendarze } from "@/data/calendars";
 import { dniZIcs } from "./ics";
@@ -24,8 +16,6 @@ export const statusLabels: Record<Status, string> = {
   booked: "Zajęty",
 };
 
-/** Klucz dnia w formacie YYYY-MM-DD, budowany z komponentów lokalnych.
- *  `toISOString()` przesunąłby datę o strefę i potrafi zgubić dzień. */
 export function dateKey(date: Date): string {
   const y = date.getFullYear();
   const m = String(date.getMonth() + 1).padStart(2, "0");
@@ -37,8 +27,6 @@ export type AvailabilityMap = Record<string, Status>;
 
 export type AvailabilityResult = {
   availability: AvailabilityMap;
-  /** false = któregoś feedu nie udało się pobrać; nie wolno wtedy
-   *  pokazać siatki, bo brakujące dni wyglądałyby na wolne. */
   ok: boolean;
 };
 
@@ -46,9 +34,6 @@ async function pobierzDni(url: string): Promise<string[] | null> {
   try {
     const res = await fetch(url, {
       next: {
-        // W trybie deweloperskim pobieramy za każdym razem od nowa.
-        // Inaczej po dodaniu wydarzenia w Kalendarzu trzeba czekać
-        // kwadrans, żeby zobaczyć efekt - i wygląda to jak awaria.
         revalidate:
           process.env.NODE_ENV === "development" ? 0 : ODSWIEZANIE_SEKUNDY,
       },
@@ -66,10 +51,10 @@ async function pobierzDni(url: string): Promise<string[] | null> {
 }
 
 /**
- * Zwraca wyłącznie dni różne od "wolny" - reszta jest wolna z definicji.
+ * Returns only days that are not "free" - the rest are free by definition.
  *
- * Status bierze się z tego, w którym kalendarzu Magda założyła wydarzenie,
- * a nie z jego tytułu. Tytuły i tak nie są publiczne.
+ * Status comes from WHICH calendar the event lives in, never from its title;
+ * titles are not public.
  */
 export async function getAvailability(): Promise<AvailabilityResult> {
   const [booked, tentative] = await Promise.all([
@@ -83,18 +68,15 @@ export async function getAvailability(): Promise<AvailabilityResult> {
 
   const availability: AvailabilityMap = {};
   for (const dzien of tentative) availability[dzien] = STATUS.tentative;
-  // Potwierdzona rezerwacja przebija wstępną, gdyby dzień był w obu.
   for (const dzien of booked) availability[dzien] = STATUS.booked;
 
   return { availability, ok: true };
 }
 
-/** Siatka miesiąca z dopełnieniem, tydzień od poniedziałku. */
 export function monthGrid(year: number, month: number): (Date | null)[] {
   const first = new Date(year, month, 1);
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-  // getDay(): 0 = niedziela. Przesuwamy tak, by 0 = poniedziałek.
   const leading = (first.getDay() + 6) % 7;
 
   const cells: (Date | null)[] = Array(leading).fill(null);

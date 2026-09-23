@@ -9,8 +9,6 @@ const variants: Record<Variant, string> = {
   primary: "bg-accent-strong text-white hover:bg-ink",
   secondary:
     "border border-ink/25 text-ink hover:border-ink hover:bg-ink hover:text-canvas",
-  /* Na zdjęciu: białe obramowanie z lekkim przyciemnieniem pod spodem,
-     żeby przycisk był czytelny także na jasnym fragmencie kadru. */
   onDark:
     "border border-white/40 bg-white/5 text-white backdrop-blur-sm hover:bg-white hover:text-ink",
 };
@@ -22,10 +20,6 @@ type Props = {
   children: React.ReactNode;
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "className" | "children">;
 
-/**
- * Jedyny przycisk w projekcie. Nowe warianty dokładamy tutaj,
- * nie przez dopisywanie klas w miejscu użycia.
- */
 export default function Button({
   variant = "primary",
   href,

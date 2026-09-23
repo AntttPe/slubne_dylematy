@@ -6,17 +6,12 @@ import SectionHeader from "./ui/SectionHeader";
 import Reveal from "./ui/Reveal";
 
 /**
- * Układ naprzemienny zamiast siatki kart.
+ * Alternating rows rather than a card grid: with three services a grid left
+ * gaping space and the tiles were too small for the photo to show anything.
  *
- * Przy trzech usługach siatka zostawiałaby ziejące puste miejsce,
- * a kafelki byłyby za małe, żeby zdjęcie cokolwiek pokazało. Para
- * szukająca dekoratorki ogląda zdjęcia, a nie czyta opisy - więc
- * każda usługa dostaje duży kadr i konkretne przejście dalej.
- *
- * Przycisk nie prowadzi do ogólnej galerii, tylko do galerii
- * PRZEFILTROWANEJ po tej kategorii. Kliknięcie w "Dekoracje kościoła"
- * pokazuje od razu dekoracje kościołów - to jest ta jedna rzecz,
- * której użytkownik w tym miejscu chce.
+ * The link goes to the gallery FILTERED by that category, not to the gallery
+ * in general - seeing more of the same kind is the one thing a visitor wants
+ * at that point.
  */
 export default function ServicesSection() {
   return (

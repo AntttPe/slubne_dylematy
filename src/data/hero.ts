@@ -1,14 +1,3 @@
-/**
- * Slajdy w tle strony głównej.
- *
- * Kolejność ma znaczenie: pierwszy jest obrazem LCP i ładuje się
- * priorytetowo, reszta dopiero po pierwszym renderze.
- *
- * Dobór nie jest przypadkowy - kadry pokazują po kolei salę, kościół
- * i plener, więc przewijające się tło samo opowiada zakres usług.
- * Wszystkie muszą być szerokie i spokojne w lewym dolnym rogu,
- * bo tam siedzi nagłówek.
- */
 export type HeroSlide = { src: string; alt: string };
 
 export const heroSlides: readonly HeroSlide[] = [
@@ -34,5 +23,4 @@ export const heroSlides: readonly HeroSlide[] = [
   },
 ];
 
-/** Ile milisekund wisi jeden slajd (łącznie z przejściem). */
 export const CZAS_SLAJDU = 7000;

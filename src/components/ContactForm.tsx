@@ -58,19 +58,16 @@ export default function ContactForm({
   const startedAtInput = useRef<HTMLInputElement>(null);
   const [date, setDate] = useState("");
 
-  // Pole kontrolowane, żeby pomocnik mógł je wypełnić. Wynik pomocnika
-  // ląduje tutaj, a nie w osobnym polu - para widzi, co wysyła.
   const [message, setMessage] = useState("");
 
-  // Zaznaczenie "nie wiem jeszcze" wyłącza pole kwoty. Wyłączone pole
-  // nie trafia do FormData, więc kwota czyści się sama - bez dodatkowego
-  // kasowania stanu.
+  // Checking "don't know yet" disables the amount field. A disabled field is
+  // not included in FormData, so the amount clears itself.
   const [budgetUnknown, setBudgetUnknown] = useState(false);
 
-  // Znacznik czasu ustawiamy dopiero w przeglądarce - w HTML-u z serwera
-  // byłby zamrożony na moment renderu (i identyczny dla wszystkich).
-  // Wpisujemy go prosto do DOM-u, żeby nie wywoływać dodatkowego renderu.
   useEffect(() => {
+    // Set in the browser only - in server HTML it would be frozen at render
+    // time and identical for everyone. Written straight to the DOM to avoid
+    // an extra render.
     if (startedAtInput.current) {
       startedAtInput.current.value = String(Date.now());
     }
@@ -102,13 +99,11 @@ export default function ContactForm({
         Im więcej szczegółów, tym konkretniej odpowiem.
       </p>
 
-      {/* Honeypot - ukryty przed ludźmi, widoczny dla botów. */}
-      <div aria-hidden="true" className="absolute left-[-9999px]">
+            <div aria-hidden="true" className="absolute left-[-9999px]">
         <label htmlFor="website">Nie wypełniaj tego pola</label>
         <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
-      {/* "0" jako wartość zapasowa: bez JS-u time-trap nie zablokuje wysyłki. */}
-      <input
+            <input
         ref={startedAtInput}
         type="hidden"
         name="startedAt"
@@ -188,8 +183,6 @@ export default function ContactForm({
             label="Planowana data"
             name="date"
             error={errors.date}
-            /* Formularz rozmawia z kalendarzem - para od razu wie,
-               czy pytanie ma sens. */
             hint={
               dateStatus ? (
                 <p className="text-sm text-accent-strong">
@@ -296,9 +289,7 @@ export default function ContactForm({
           />
         </Field>
 
-        {/* Zgoda jako checkbox, nie jako akapit - RODO wymaga
-            działania użytkownika, a nie samego poinformowania. */}
-        <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2">
           <label className="flex items-start gap-3 text-sm leading-relaxed text-muted">
             <input
               type="checkbox"

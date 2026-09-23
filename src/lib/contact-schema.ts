@@ -10,10 +10,6 @@ export const celebrationTypes = [
   "Inne wydarzenie",
 ] as const;
 
-/**
- * Jedna schema dla klienta (UX) i serwera (bezpieczeństwo).
- * Serwer waliduje zawsze od nowa - nigdy nie ufamy temu, co przyszło z przeglądarki.
- */
 export const inquirySchema = z.object({
   name: z
     .string()
@@ -51,14 +47,6 @@ export const inquirySchema = z.object({
 
   venue: z.string().trim().max(200).optional().or(z.literal("")),
 
-  /*
-    Kwota wpisywana ręcznie zamiast przedziałów do wyboru.
-    Przedziały zmuszały do zaklasyfikowania się do widełek, których
-    para często jeszcze nie zna - i albo strzelała, albo omijała pole.
-
-    Same cyfry: pole w formularzu jest typu number, ale do akcji
-    serwerowej trafia jako tekst, więc walidujemy zapis.
-  */
   budget: z
     .string()
     .trim()
@@ -67,7 +55,6 @@ export const inquirySchema = z.object({
     .optional()
     .or(z.literal("")),
 
-  /** Zaznaczone "nie wiem jeszcze" - wtedy pole kwoty jest wyłączone. */
   budgetUnknown: z.literal("on").optional().or(z.literal("")),
 
   message: z
@@ -87,6 +74,5 @@ export type Inquiry = z.infer<typeof inquirySchema>;
 export type FormState = {
   status: "idle" | "success" | "error";
   message?: string;
-  /** Błędy per pole - klucz to nazwa inputa. */
   errors?: Record<string, string>;
 };

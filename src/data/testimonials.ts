@@ -1,5 +1,6 @@
+/** TODO(client): names are invented - they must not go live. Either get the
+ *  couples' consent to use them, or revert to anonymous captions. */
 export type Testimonial = {
-  /** TODO(klient): podmienić na prawdziwe imiona za zgodą par. */
   author: string;
   event: string;
   quote: string;

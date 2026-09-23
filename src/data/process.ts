@@ -1,15 +1,10 @@
 export type Step = {
   number: string;
   title: string;
-  /** Pierwsze zdanie - wyróżnione, wprowadza krok. */
   lead: string;
   description: string;
 };
 
-/**
- * Treść od klientki. Zachowana jej redakcja i kolejność.
- * Poprawiona jedynie literówka: "PEROSNALIZOWANA" → "Personalizowana".
- */
 export const steps: readonly Step[] = [
   {
     number: "01",

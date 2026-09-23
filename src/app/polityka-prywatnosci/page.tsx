@@ -10,11 +10,8 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 };
 
-/**
- * TODO(klient): uzupełnić pełną nazwę działalności, adres i NIP -
- * bez danych administratora dokument nie spełnia wymogów RODO.
- * Warto dać to do sprawdzenia prawnikowi przed startem.
- */
+/** TODO(client): needs the full business name, address and tax ID. Without
+ *  the controller's details this does not satisfy GDPR. */
 export default function PolitykaPrywatnosciPage() {
   return (
     <>

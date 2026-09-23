@@ -1,54 +1,38 @@
 @import "tailwindcss";
 
-/* ============================================================
-   Design tokens
-   Jeden akcent (złoto), reszta to ciepłe szarości.
-   Wszystko, co jest tu zdefiniowane, jest dostępne jako klasa
-   Tailwinda - nie wpisujemy hexów w JSX.
-   ============================================================ */
+/* Design tokens. One accent (gold), warm greys for everything else.
+   Anything defined here is available as a Tailwind class - never
+   hardcode hex values in JSX. */
 @theme {
-  /* Powierzchnie - jasne */
-  --color-canvas: #faf8f4;
+    --color-canvas: #faf8f4;
   --color-surface: #f0e8dc;
   --color-line: #e4d8c6;
 
-  /* Tekst na jasnym */
-  --color-ink: #241610;
+    --color-ink: #241610;
   --color-muted: #6b5344;
   --color-faint: #8a725f;
 
-  /* Powierzchnie - ciemne */
-  --color-canvas-dark: #241309;
+    --color-canvas-dark: #241309;
   --color-surface-dark: #372115;
   --color-line-dark: #4a3122;
 
-  /* Tekst na ciemnym (kontrast AA sprawdzony) */
-  --color-ink-invert: #f0e8dc;
+    --color-ink-invert: #f0e8dc;
   --color-muted-invert: #bda893;
 
-  /* Przyciemnienie pod tekstem na zdjęciu - bez tego nic nie jest czytelne */
-  --color-scrim: #1a0f08;
+    --color-scrim: #1a0f08;
 
-  /* Jedyny akcent w całym projekcie */
-  --color-accent: #c9a87c;
+    --color-accent: #c9a87c;
   --color-accent-strong: #a8845a;
 
-  /* Typografia */
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-display), ui-serif, Georgia, serif;
 
-  /* Promienie - dwa kroki, nie pięć.
-     Ostre krawędzie czytają się bardziej redakcyjnie niż pill-buttony. */
-  --radius-sm: 2px;
+    --radius-sm: 2px;
   --radius-md: 4px;
 
-  /* Jedna krzywa czasowa dla wszystkiego */
-  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* ============================================================
-   Podstawy
-   ============================================================ */
 *,
 *::before,
 *::after {
@@ -81,8 +65,6 @@ h4 {
   text-wrap: balance;
 }
 
-/* Instrument Serif ma tylko jedną wagę - akcentujemy kursywą,
-   nie pogrubieniem. */
 h1 em,
 h2 em,
 h3 em {
@@ -99,9 +81,6 @@ p {
   color: #fff;
 }
 
-/* ============================================================
-   Skala typograficzna - 5 kroków, koniec z dziewięcioma
-   ============================================================ */
 .type-display {
   font-size: clamp(2.5rem, 6vw, 4rem);
 }
@@ -119,8 +98,6 @@ p {
   line-height: 1.6;
 }
 
-/* Zastępuje font skryptowy: rozstrzelone wersaliki.
-   Tak podpisują sekcje prawdziwe studia, a nie generator. */
 .type-eyebrow {
   font-family: var(--font-sans);
   font-size: 0.75rem;
@@ -130,33 +107,22 @@ p {
   line-height: 1;
 }
 
-/* ============================================================
-   Focus - widoczny, spójny, jeden na całą stronę
-   ============================================================ */
 :focus-visible {
   outline: 2px solid var(--color-accent-strong);
   outline-offset: 3px;
   border-radius: var(--radius-sm);
 }
 
-/* ============================================================
-   Jedna animacja: fade-up. Używana przez <Reveal>.
-   Bez slide, bounce, scale i float.
-   ============================================================ */
-/*
-  Treść jest domyślnie WIDOCZNA. Ukrywamy ją dopiero wtedy, gdy inline'owy
-  skrypt w layoucie potwierdzi, że JS w ogóle wystartował.
+/* Content is visible BY DEFAULT. It is hidden only once the inline
+   script in the layout confirms JS actually started.
 
-  Bez tego warunku przeglądarka, w której skrypt nie ruszy albo hydratacja
-  padnie (wbudowana w Messengera, starsze Safari), renderuje całą stronę
-  z opacity: 0 - użytkownik widzi pustą kremową kartkę i odbiera to jako
-  wieczne ładowanie.
+   Without that guard, any browser where the script fails to run or
+   hydration breaks renders the whole page at opacity 0 - the user
+   sees a blank page and reads it as an endless load.
 
-  Świadomie tranzycja, nie @keyframes. Przy animacji z animation-delay
-  klatka startowa nie obowiązuje w trakcie opóźnienia, więc elementy
-  kaskady najpierw mignęły, potem gasły i dopiero wchodziły. Tranzycja
-  ma dwa stany i interpoluje między nimi - nie ma tam gdzie powstać luka.
-*/
+   Deliberately a transition, not @keyframes: with animation-delay the
+   starting frame does not apply during the delay, so staggered items
+   flashed, went dark, then faded in. */
 html.js .reveal {
   opacity: 0;
   transform: translateY(16px);
@@ -171,17 +137,8 @@ html.js .reveal[data-visible="true"] {
   transform: none;
 }
 
-/*
-  Bezpiecznik. Skrypt ustawia klasę .js, ale paczka Reacta może się
-  wywalić już PO tym - wtedy nic nigdy nie ustawi data-visible.
-  Timer w layoucie odpala tę klasę, jeśli w ciągu 2,5 s nie zamontuje
-  się ani jeden <Reveal>. Treść pokazuje się wtedy bez animacji.
-*/
-/*
-  Elementy, które mają sens tylko z działającym JS - np. pomocnik
-  do opisania wizji. Bez skryptu nie pokazujemy martwego przycisku,
-  a formularz działa dalej normalnie.
-*/
+/* Only meaningful with working JS (e.g. the vision helper). Without a
+   script we hide it rather than show a dead button. */
 .tylko-z-js {
   display: none;
 }
@@ -194,6 +151,9 @@ html.js div.tylko-z-js {
   display: block;
 }
 
+/* Failsafe: the script sets .js, but the React bundle can still fail
+   AFTER that - then nothing ever sets data-visible. A timer in the
+   layout adds this class if no <Reveal> mounts within 2.5s. */
 html.reveal-failsafe .reveal {
   opacity: 1 !important;
   transform: none !important;
@@ -218,16 +178,6 @@ html.reveal-failsafe .reveal {
   }
 }
 
-
-/* ============================================================
-   Hero - powolny ruch zdjęcia w tle
-
-   Animacja leci w nieskończoność tam i z powrotem, na wszystkich
-   slajdach naraz. Gdyby kończyła się po jednym przebiegu, przy
-   powrocie slajdu trzeba by ją restartować - a przeglądarka nie
-   restartuje animacji po samym ponownym dodaniu klasy.
-   Slajd wchodzi więc w losowym momencie ruchu, co wygląda naturalnie.
-   ============================================================ */
 @keyframes hero-pan {
   from {
     transform: scale(1.05) translate3d(-0.8%, 0.4%, 0);
@@ -237,6 +187,9 @@ html.reveal-failsafe .reveal {
   }
 }
 
+/* Runs forever, back and forth, on every slide at once. A one-shot
+   animation would need restarting when a slide returns - and browsers
+   do not restart an animation just because the class is re-added. */
 .hero-pan {
   animation: hero-pan 16s ease-in-out infinite alternate;
   will-change: transform;
@@ -249,9 +202,6 @@ html.reveal-failsafe .reveal {
   }
 }
 
-/* ============================================================
-   Galeria masonry
-   ============================================================ */
 .masonry {
   column-count: 1;
   column-gap: 1rem;
@@ -273,12 +223,3 @@ html.reveal-failsafe .reveal {
     column-count: 3;
   }
 }
-
-/* ============================================================
-   Pasek przewijania
-
-   Celowo BEZ własnych stylów. Ustawienie ::-webkit-scrollbar
-   z szerokością wyłącza na macOS nakładkowy pasek i rezerwuje
-   stały gutter - przez co po prawej stronie zostawała jasna
-   wstęga, do której nie dochodziło ani zdjęcie hero, ani navbar.
-   ============================================================ */

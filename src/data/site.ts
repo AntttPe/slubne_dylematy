@@ -1,18 +1,12 @@
-/**
- * Jedno źródło prawdy dla danych firmy.
- * Zmiana numeru telefonu = jedna edycja, nie trzy.
- *
- * TODO(klient): adres e-mail jest tymczasowy (Gmail). Po uruchomieniu
- * skrzynki na własnej domenie podmienić na kontakt@slubnedylematy.pl
- * i zaktualizować też wizytówkę Google - dane muszą się zgadzać.
- */
 
+/** TODO(client): the e-mail is temporary (Gmail). Once the mailbox on the
+ *  real domain exists, swap it here AND in the Google Business Profile -
+ *  the two must match. */
 export const site = {
   name: "Ślubne Dylematy",
   tagline: "Dekoracje ślubne i eventowe",
   owner: "Magda",
 
-  // Używane przez metadataBase, sitemap i JSON-LD.
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://slubnedylematy.pl",
 
   contact: {
@@ -25,12 +19,9 @@ export const site = {
 
   area: {
     label: "Śląsk i cała Polska",
-    /**
-     * Województwo zostaje mimo ogólnopolskiego zasięgu: `addressRegion`
-     * w danych strukturalnych mówi, GDZIE firma ma siedzibę, a nie dokąd
-     * dojeżdża. Od tego zależy widoczność w mapkach Google.
-     * Zasięg opisuje `areaServed` w JsonLd.tsx.
-     */
+    /* Region stays even though we serve all of Poland: addressRegion in
+       structured data says WHERE the business is based, not how far it
+       travels. Local map visibility depends on it. Reach is areaServed. */
     region: "śląskie",
     country: "PL",
   },

@@ -13,12 +13,7 @@ export default function HeroSection() {
       <HeroSlideshow />
 
       <div className="absolute inset-0 bg-gradient-to-t from-scrim/88 via-scrim/52 to-transparent" />
-      {/*
-        Osobne przyciemnienie u góry - pod paskiem nawigacji sufit jest
-        jasny i białe linki na nim znikały. Sięga tylko 220 px, więc
-        nie rusza środka kadru.
-      */}
-      <div className="absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-scrim/75 to-transparent" />
+            <div className="absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-scrim/75 to-transparent" />
 
       <div className="relative mx-auto w-full max-w-6xl px-5 pb-16 pt-28 sm:px-8 sm:pb-20">
         <div className="max-w-2xl">
