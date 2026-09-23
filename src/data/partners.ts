@@ -7,6 +7,12 @@
  *
  * Logotypy mają bardzo różne proporcje (od kwadratu po 2,8:1), dlatego
  * kafelek skaluje je przez object-contain na białym tle, zamiast kadrować.
+ *
+ * TODO(klient): `blurb` opisuje na razie wyłącznie zakres usług - czyli to,
+ * co da się sprawdzić. Świadomie NIE ma tu ocen ich pracy ani twierdzeń
+ * o współpracy, bo byłyby zmyślone. Najlepiej, żeby Magda podała po jednym
+ * własnym zdaniu o każdej firmie - to jej rekomendacja, więc powinna brzmieć
+ * jej głosem.
  */
 
 export type Partner = {
@@ -24,8 +30,7 @@ export const partners: readonly Partner[] = [
   {
     name: "Marysia Foto",
     role: "Fotografia ślubna",
-    blurb:
-      "Reportaż, który wygląda jak wspomnienie, a nie jak sesja. Jest wszędzie tam, gdzie trzeba, i nigdzie tam, gdzie przeszkadza.",
+    blurb: "Reportaż z dnia ślubu i sesje plenerowe.",
     url: "https://marysiafoto.pl",
     image: "/images/partners/marysia.png",
     width: 310,
@@ -34,8 +39,7 @@ export const partners: readonly Partner[] = [
   {
     name: "Napompowane",
     role: "Dekoracje balonowe",
-    blurb:
-      "Balony, które wyglądają jak element dekoracji, a nie jak dodatek z ostatniej chwili. Świetnie dogrywają się z resztą aranżacji.",
+    blurb: "Dekoracje balonowe, ścianki i bramy.",
     url: "https://www.napompowane.com",
     image: "/images/partners/napompowane.png",
     width: 150,
@@ -44,8 +48,7 @@ export const partners: readonly Partner[] = [
   {
     name: "Piekarnia Kłos",
     role: "Tort i słodki stół",
-    blurb:
-      "Tort, który smakuje tak dobrze, jak wygląda. Dobierają go do stylu dekoracji, zamiast proponować katalog.",
+    blurb: "Torty weselne i słodki stół.",
     url: "https://www.piekarniaklos.pl",
     image: "/images/partners/klos.png",
     width: 901,
