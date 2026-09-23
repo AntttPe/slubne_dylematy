@@ -1,0 +1,16 @@
+# Konfiguracja deployu trzymana w repozytorium, a nie wyklikana w panelu -
+# dzięki temu build jest odtwarzalny i widać w gicie, co się zmieniło.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  # Next 16 wymaga >= 20.9.0. Bez jawnego przypięcia Netlify potrafi
+  # wziąć starszą wersję i build pada na etapie kompilacji.
+  NODE_VERSION = "20"
+
+# Oficjalna wtyczka Next.js - obsługuje trasy serwerowe, Server Actions
+# i odświeżanie kalendarza co 15 minut.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
