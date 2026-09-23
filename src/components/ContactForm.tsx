@@ -3,11 +3,7 @@
 import { useActionState, useEffect, useRef, useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { submitInquiry } from "@/app/kontakt/actions";
-import {
-  budgetOptions,
-  celebrationTypes,
-  type FormState,
-} from "@/lib/contact-schema";
+import { celebrationTypes, type FormState } from "@/lib/contact-schema";
 import {
   type AvailabilityMap,
   statusLabels,
@@ -65,6 +61,11 @@ export default function ContactForm({
   // Pole kontrolowane, żeby pomocnik mógł je wypełnić. Wynik pomocnika
   // ląduje tutaj, a nie w osobnym polu - para widzi, co wysyła.
   const [message, setMessage] = useState("");
+
+  // Zaznaczenie "nie wiem jeszcze" wyłącza pole kwoty. Wyłączone pole
+  // nie trafia do FormData, więc kwota czyści się sama - bez dodatkowego
+  // kasowania stanu.
+  const [budgetUnknown, setBudgetUnknown] = useState(false);
 
   // Znacznik czasu ustawiamy dopiero w przeglądarce - w HTML-u z serwera
   // byłby zamrożony na moment renderu (i identyczny dla wszystkich).
@@ -152,7 +153,7 @@ export default function ContactForm({
               name="phone"
               type="tel"
               autoComplete="tel"
-              placeholder="+48 123 456 789"
+              placeholder="+48 600 000 000"
               className={field}
             />
           </Field>
@@ -236,14 +237,37 @@ export default function ContactForm({
         </Field>
 
         <Field label="Orientacyjny budżet" name="budget" error={errors.budget}>
-          <select id="budget" name="budget" defaultValue="" className={field}>
-            <option value="">Wolę nie podawać</option>
-            {budgetOptions.map((b) => (
-              <option key={b} value={b}>
-                {b}
-              </option>
-            ))}
-          </select>
+          <div className="relative">
+            <input
+              id="budget"
+              name="budget"
+              type="number"
+              min="0"
+              step="100"
+              inputMode="numeric"
+              disabled={budgetUnknown}
+              placeholder={budgetUnknown ? "" : "np. 4000"}
+              aria-describedby="budget-waluta"
+              className={`${field} pr-10 disabled:cursor-not-allowed disabled:bg-surface disabled:text-faint`}
+            />
+            <span
+              id="budget-waluta"
+              className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-faint"
+            >
+              zł
+            </span>
+          </div>
+
+          <label className="mt-2.5 inline-flex items-center gap-2.5 text-sm text-muted">
+            <input
+              type="checkbox"
+              name="budgetUnknown"
+              checked={budgetUnknown}
+              onChange={(e) => setBudgetUnknown(e.target.checked)}
+              className="h-4 w-4 accent-[#a8845a]"
+            />
+            Nie wiem jeszcze
+          </label>
         </Field>
 
         <Field

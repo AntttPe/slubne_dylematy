@@ -48,6 +48,17 @@ export async function submitInquiry(
 
   const inquiry = parsed.data;
 
+  /*
+    Budżet do postaci czytelnej dla Magdy. W formularzu to dwa pola
+    (kwota i "nie wiem jeszcze"), w wiadomości ma być jedna linijka.
+    Spacja rozdzielająca tysiące, żeby 12000 nie czytało się jak 1200.
+  */
+  const budzet = inquiry.budgetUnknown
+    ? "jeszcze nie wie"
+    : inquiry.budget
+      ? `${Number(inquiry.budget).toLocaleString("pl-PL")} zł`
+      : "nie podano";
+
   try {
     // TODO(integracja): Resend + zapis do Supabase.
     //
@@ -66,6 +77,7 @@ export async function submitInquiry(
 
     console.info("[zapytanie]", {
       ...inquiry,
+      budzet,
       receivedAt: new Date().toISOString(),
     });
 

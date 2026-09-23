@@ -10,14 +10,6 @@ export const celebrationTypes = [
   "Inne wydarzenie",
 ] as const;
 
-export const budgetOptions = [
-  "Do 3 000 zł",
-  "3 000 – 6 000 zł",
-  "6 000 – 10 000 zł",
-  "Powyżej 10 000 zł",
-  "Jeszcze nie wiem",
-] as const;
-
 /**
  * Jedna schema dla klienta (UX) i serwera (bezpieczeństwo).
  * Serwer waliduje zawsze od nowa - nigdy nie ufamy temu, co przyszło z przeglądarki.
@@ -59,7 +51,24 @@ export const inquirySchema = z.object({
 
   venue: z.string().trim().max(200).optional().or(z.literal("")),
 
-  budget: z.enum(budgetOptions).optional().or(z.literal("")),
+  /*
+    Kwota wpisywana ręcznie zamiast przedziałów do wyboru.
+    Przedziały zmuszały do zaklasyfikowania się do widełek, których
+    para często jeszcze nie zna - i albo strzelała, albo omijała pole.
+
+    Same cyfry: pole w formularzu jest typu number, ale do akcji
+    serwerowej trafia jako tekst, więc walidujemy zapis.
+  */
+  budget: z
+    .string()
+    .trim()
+    .regex(/^\d*$/, "Wpisz samą kwotę, bez spacji i złotówek")
+    .max(7, "Ta kwota wygląda na pomyłkę")
+    .optional()
+    .or(z.literal("")),
+
+  /** Zaznaczone "nie wiem jeszcze" - wtedy pole kwoty jest wyłączone. */
+  budgetUnknown: z.literal("on").optional().or(z.literal("")),
 
   message: z
     .string()
