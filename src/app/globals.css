@@ -177,6 +177,23 @@ html.js .reveal[data-visible="true"] {
   Timer w layoucie odpala tę klasę, jeśli w ciągu 2,5 s nie zamontuje
   się ani jeden <Reveal>. Treść pokazuje się wtedy bez animacji.
 */
+/*
+  Elementy, które mają sens tylko z działającym JS - np. pomocnik
+  do opisania wizji. Bez skryptu nie pokazujemy martwego przycisku,
+  a formularz działa dalej normalnie.
+*/
+.tylko-z-js {
+  display: none;
+}
+
+html.js .tylko-z-js {
+  display: inline-flex;
+}
+
+html.js div.tylko-z-js {
+  display: block;
+}
+
 html.reveal-failsafe .reveal {
   opacity: 1 !important;
   transform: none !important;

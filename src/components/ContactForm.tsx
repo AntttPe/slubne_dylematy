@@ -14,6 +14,7 @@ import {
   type Status,
 } from "@/lib/availability";
 import Button from "./ui/Button";
+import VisionWizard from "./VisionWizard";
 
 const field =
   "w-full rounded-sm border border-line bg-canvas px-4 py-3 text-[0.9375rem] text-ink placeholder:text-faint/70 focus:border-accent-strong focus:outline-none";
@@ -60,6 +61,10 @@ export default function ContactForm({
   const [state, action, pending] = useActionState(submitInquiry, initialState);
   const startedAtInput = useRef<HTMLInputElement>(null);
   const [date, setDate] = useState("");
+
+  // Pole kontrolowane, żeby pomocnik mógł je wypełnić. Wynik pomocnika
+  // ląduje tutaj, a nie w osobnym polu - para widzi, co wysyła.
+  const [message, setMessage] = useState("");
 
   // Znacznik czasu ustawiamy dopiero w przeglądarce - w HTML-u z serwera
   // byłby zamrożony na moment renderu (i identyczny dla wszystkich).
@@ -241,12 +246,27 @@ export default function ContactForm({
           </select>
         </Field>
 
-        <Field label="Wasza wizja" name="message" error={errors.message}>
+        <Field
+          label="Wasza wizja"
+          name="message"
+          error={errors.message}
+          hint={
+            <VisionWizard
+              onComplete={(summary) =>
+                setMessage((obecna) =>
+                  obecna.trim() ? `${obecna.trim()}\n\n${summary}` : summary,
+                )
+              }
+            />
+          }
+        >
           <textarea
             id="message"
             name="message"
             rows={5}
             maxLength={4000}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
             placeholder="Styl, kolory, inspiracje, co jest dla Was najważniejsze…"
             className={`${field} resize-y`}
           />

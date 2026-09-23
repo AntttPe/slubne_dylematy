@@ -24,7 +24,7 @@ export default function HeroSection() {
         <div className="max-w-2xl">
           <Reveal>
             <p className="type-eyebrow text-accent">
-              Dekoracje ślubne · Śląsk i okolice
+              Dekoracje ślubne · Śląsk i cała Polska
             </p>
           </Reveal>
 

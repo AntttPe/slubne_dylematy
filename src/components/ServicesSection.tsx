@@ -57,11 +57,7 @@ export default function ServicesSection() {
                   </div>
 
                   <div className={odwrocone ? "lg:order-1" : ""}>
-                    <p className="type-eyebrow text-accent-strong">
-                      {String(i + 1).padStart(2, "0")}
-                    </p>
-
-                    <h3 className="type-h2 mt-4 text-ink">{service.title}</h3>
+                    <h3 className="type-h2 text-ink">{service.title}</h3>
 
                     <p className="mt-4 font-serif text-xl leading-snug text-ink">
                       {service.lead}

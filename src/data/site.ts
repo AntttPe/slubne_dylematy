@@ -22,7 +22,13 @@ export const site = {
   },
 
   area: {
-    label: "Śląsk i okolice",
+    label: "Śląsk i cała Polska",
+    /**
+     * Województwo zostaje mimo ogólnopolskiego zasięgu: `addressRegion`
+     * w danych strukturalnych mówi, GDZIE firma ma siedzibę, a nie dokąd
+     * dojeżdża. Od tego zależy widoczność w mapkach Google.
+     * Zasięg opisuje `areaServed` w JsonLd.tsx.
+     */
     region: "śląskie",
     country: "PL",
   },

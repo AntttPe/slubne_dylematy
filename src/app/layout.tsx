@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     template: "%s | Ślubne Dylematy",
   },
   description:
-    "Dekoracje ślubne, weselne i okolicznościowe na Śląsku. Kościół, sala, plener - kompleksowa oprawa Waszego dnia. Sprawdź wolne terminy.",
+    "Dekoracje ślubne, weselne i okolicznościowe - Śląsk i cała Polska. Kościół, sala, plener - kompleksowa oprawa Waszego dnia. Sprawdź wolne terminy.",
   keywords: [
     "dekoracje ślubne",
     "dekoracje weselne",
@@ -39,21 +39,25 @@ export const metadata: Metadata = {
     "dekoracje kościoła",
     "dekoracje komunia",
     "dekorator ślubny śląsk",
+    "dekoracje ślubne śląsk",
+    "dekoracje ślubne katowice",
+    "dekoracje ślubne cała Polska",
     "ślubne dylematy",
   ],
   alternates: { canonical: "/" },
   openGraph: {
     title: "Ślubne Dylematy | Dekoracje ślubne i eventowe",
     description:
-      "Dekoracje ślubne, weselne i okolicznościowe na Śląsku. Sprawdź wolne terminy.",
+      "Dekoracje ślubne, weselne i okolicznościowe - Śląsk i cała Polska. Sprawdź wolne terminy.",
     url: site.url,
     siteName: "Ślubne Dylematy",
     type: "website",
     locale: "pl_PL",
   },
+  // Ten sam przełącznik co w robots.ts - patrz komentarz tam.
   robots: {
-    index: true,
-    follow: true,
+    index: process.env.NEXT_PUBLIC_INDEXABLE === "true",
+    follow: process.env.NEXT_PUBLIC_INDEXABLE === "true",
   },
 };
 

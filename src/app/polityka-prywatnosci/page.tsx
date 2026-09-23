@@ -69,11 +69,13 @@ export default function PolitykaPrywatnosciPage() {
           <div>
             <h2 className="type-h3 text-ink">Odbiorcy danych</h2>
             <p className="mt-3 leading-relaxed">
-              Dane mogą być powierzone dostawcom usług technicznych: hostingu
-              strony, obsługi poczty oraz bazy danych. Podmioty te działają na
-              podstawie umów powierzenia, a dane pozostają na terenie
-              Europejskiego Obszaru Gospodarczego. Danych nie sprzedajemy ani
-              nie udostępniamy w celach marketingowych.
+              Dane mogą być powierzone dostawcom usług technicznych:
+              hostingu strony oraz obsługi poczty. Podmioty te działają na
+              podstawie umów powierzenia przetwarzania. Część z nich ma
+              siedzibę poza Europejskim Obszarem Gospodarczym - przekazanie
+              danych odbywa się wówczas na podstawie standardowych klauzul
+              umownych zatwierdzonych przez Komisję Europejską. Danych nie
+              sprzedajemy ani nie udostępniamy w celach marketingowych.
             </p>
           </div>
 

@@ -20,7 +20,15 @@ export default function JsonLd() {
       addressRegion: site.area.region,
       addressCountry: site.area.country,
     },
-    areaServed: site.area.label,
+    /*
+      Dwa wpisy, nie jeden napis: region mówi Google, gdzie szukać
+      dopasowania lokalnego, kraj - że Magda dojedzie też dalej.
+      To pole opisuje ZASIĘG; siedzibę opisuje `address` poniżej.
+    */
+    areaServed: [
+      { "@type": "AdministrativeArea", name: "Śląsk" },
+      { "@type": "Country", name: "Polska" },
+    ],
     sameAs: [site.social.instagram, site.social.facebook].filter(Boolean),
     founder: { "@type": "Person", name: site.owner },
   };
