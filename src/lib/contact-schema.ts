@@ -74,5 +74,7 @@ export type Inquiry = z.infer<typeof inquirySchema>;
 export type FormState = {
   status: "idle" | "success" | "error";
   message?: string;
+  /** Echoed back on success so a typo in the address is visible at once. */
+  email?: string;
   errors?: Record<string, string>;
 };

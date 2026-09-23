@@ -53,10 +53,7 @@ export async function submitInquiry(
       receivedAt: new Date().toISOString(),
     });
 
-    return {
-      status: "success",
-      message: "Dziękuję! Odpowiem w ciągu 24 godzin.",
-    };
+    return { status: "success", email: inquiry.email };
   } catch (error) {
     console.error("[zapytanie] błąd wysyłki:", error);
     return {

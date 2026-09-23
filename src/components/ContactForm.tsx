@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useEffect, useRef, useState } from "react";
-import { CheckCircle2 } from "lucide-react";
+import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { submitInquiry } from "@/app/kontakt/actions";
 import { celebrationTypes, type FormState } from "@/lib/contact-schema";
 import {
@@ -79,14 +79,51 @@ export default function ContactForm({
 
   if (state.status === "success") {
     return (
-      <div className="flex flex-col items-start gap-5 rounded-md border border-line bg-canvas p-10">
-        <CheckCircle2 size={32} className="text-accent-strong" />
-        <div>
-          <h2 className="type-h3 text-ink">Zapytanie wysłane</h2>
-          <p className="mt-3 max-w-md leading-relaxed text-muted">
-            {state.message ??
-              "Dziękuję! Odpowiem w ciągu 24 godzin."}
+      <div className="rounded-md border border-line bg-canvas p-8 sm:p-10">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-strong/10">
+          <CheckCircle2 size={24} className="text-accent-strong" />
+        </div>
+
+        <h2 className="type-h2 mt-6 text-ink">
+          Dziękuję! <em>Zapytanie dotarło</em>
+        </h2>
+
+        <p className="type-lead mt-4 max-w-md text-muted">
+          Odpowiem w ciągu 24 godzin, zwykle szybciej. Piszę osobiście, więc
+          nie dostaniecie automatu z cennikiem.
+        </p>
+
+        {state.email && (
+          <div className="mt-8 rounded-sm border border-line bg-surface p-5">
+            <p className="type-eyebrow text-accent-strong">
+              Odpowiedź trafi na adres
+            </p>
+            <p className="mt-2 break-all font-serif text-xl text-ink">
+              {state.email}
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-muted">
+              Jeśli widzicie tu literówkę, napiszcie jeszcze raz - bez
+              poprawnego adresu nie będę w stanie odpowiedzieć.
+            </p>
+          </div>
+        )}
+
+        <div className="mt-6 flex items-start gap-3 text-sm leading-relaxed text-muted">
+          <AlertCircle
+            size={17}
+            className="mt-0.5 shrink-0 text-accent-strong"
+          />
+          <p>
+            <span className="text-ink">Zajrzyjcie do folderu spam.</span>{" "}
+            Wiadomości od nowych nadawców czasem tam trafiają - warto sprawdzić,
+            zanim uznacie, że nie odpisałam.
           </p>
+        </div>
+
+        <div className="mt-9 flex flex-col gap-3 border-t border-line pt-7 sm:flex-row">
+          <Button href="/galeria" variant="secondary">
+            Obejrzyjcie realizacje w międzyczasie
+          </Button>
         </div>
       </div>
     );
