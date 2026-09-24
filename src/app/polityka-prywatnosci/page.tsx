@@ -10,8 +10,18 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 };
 
-/** TODO(client): needs the full business name, address and tax ID. Without
- *  the controller's details this does not satisfy GDPR. */
+/**
+ * Written for an unregistered sole activity (działalność nierejestrowana):
+ * no company number or tax ID exists, so the controller is the owner as a
+ * natural person, reachable by e-mail.
+ *
+ * TODO(client): add the owner's full name. GDPR requires the controller to be
+ * identifiable, and a brand name alone is not a legal person. A home address
+ * does NOT have to be published - a working contact channel is enough.
+ *
+ * TODO(client): revisit the whole document once the activity is registered,
+ * and have a lawyer read it before launch.
+ */
 export default function PolitykaPrywatnosciPage() {
   return (
     <>
@@ -22,8 +32,10 @@ export default function PolitykaPrywatnosciPage() {
           <div>
             <h2 className="type-h3 text-ink">Administrator danych</h2>
             <p className="mt-3 leading-relaxed">
-              Administratorem danych osobowych jest {site.name}. Kontakt w
-              sprawach dotyczących danych:{" "}
+              Administratorem danych osobowych jest osoba prowadząca
+              działalność nierejestrowaną pod nazwą {site.name}. We wszystkich
+              sprawach dotyczących danych osobowych - w tym w celu skorzystania
+              z praw opisanych poniżej - można się kontaktować pod adresem:{" "}
               <a
                 href={site.contact.emailHref}
                 className="text-ink underline underline-offset-2"
@@ -31,6 +43,10 @@ export default function PolitykaPrywatnosciPage() {
                 {site.contact.email}
               </a>
               .
+            </p>
+            <p className="mt-3 leading-relaxed">
+              Działalność nie jest zarejestrowana w CEIDG, w związku z czym nie
+              posiada numeru NIP ani REGON.
             </p>
           </div>
 
