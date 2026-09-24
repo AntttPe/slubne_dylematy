@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/ui/PageHeader";
+import { analyticsEnabled } from "@/lib/analytics";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -105,10 +106,18 @@ export default function PolitykaPrywatnosciPage() {
           <div>
             <h2 className="type-h3 text-ink">Pliki cookies</h2>
             <p className="mt-3 leading-relaxed">
-              Strona nie używa plików cookies do celów marketingowych ani
-              analitycznych. Zabezpieczenie formularza przed spamem realizujemy
-              w sposób nieprofilujący użytkowników.
+              Strona nie zapisuje plików cookies ani żadnych innych danych na
+              Waszym urządzeniu. Nie profilujemy użytkowników i nie śledzimy ich
+              na innych stronach. Z tego powodu nie wyświetlamy okna zgody na
+              cookies - nie ma na co jej wyrażać.
             </p>
+            {analyticsEnabled && (
+              <p className="mt-3 leading-relaxed">
+                Zbieramy anonimowe, zbiorcze statystyki odwiedzin (liczba wejść,
+                kraj, rodzaj urządzenia). Nie pozwalają one zidentyfikować
+                konkretnej osoby ani rozpoznać jej przy kolejnej wizycie.
+              </p>
+            )}
           </div>
         </div>
       </section>

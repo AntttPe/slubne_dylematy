@@ -3,6 +3,10 @@ import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import {
+  cloudflareAnalyticsToken,
+  searchConsoleToken,
+} from "@/lib/analytics";
 import { site } from "@/data/site";
 
 const fraunces = Fraunces({
@@ -54,6 +58,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "pl_PL",
   },
+  ...(searchConsoleToken
+    ? { verification: { google: searchConsoleToken } }
+    : {}),
   robots: {
     index: process.env.NEXT_PUBLIC_INDEXABLE === "true",
     follow: process.env.NEXT_PUBLIC_INDEXABLE === "true",
@@ -88,6 +95,13 @@ export default function RootLayout({
         >
           Przejdź do treści
         </a>
+        {cloudflareAnalyticsToken && (
+          <script
+            defer
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({ token: cloudflareAnalyticsToken })}
+          />
+        )}
         <Navbar />
         <main id="tresc">{children}</main>
         <Footer />
