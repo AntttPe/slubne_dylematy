@@ -307,7 +307,7 @@ export default function ContactForm({
               name="budgetUnknown"
               checked={budgetUnknown}
               onChange={(e) => setBudgetUnknown(e.target.checked)}
-              className="h-4 w-4 accent-[#a8845a]"
+              className="h-4 w-4 accent-accent-strong"
             />
             Nie wiem jeszcze
           </label>
@@ -345,7 +345,7 @@ export default function ContactForm({
               type="checkbox"
               name="consent"
               required
-              className="mt-1 h-4 w-4 shrink-0 accent-[#a8845a]"
+              className="mt-1 h-4 w-4 shrink-0 accent-accent-strong"
             />
             <span>
               Zgadzam się na przetwarzanie moich danych w celu odpowiedzi na
