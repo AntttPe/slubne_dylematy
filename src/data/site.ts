@@ -7,7 +7,17 @@ export const site = {
   tagline: "Dekoracje ślubne i eventowe",
   owner: "Magda",
 
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://slubnedylematy.pl",
+  /*
+   * Falls back to Netlify's own URLs so link previews and sitemaps are correct
+   * on branch deploys too - without this, a shared test link points at a
+   * domain that does not exist yet and the preview card renders empty.
+   * DEPLOY_PRIME_URL is the branch/preview URL, URL the production one.
+   */
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    process.env.DEPLOY_PRIME_URL ??
+    process.env.URL ??
+    "https://slubnedylematy.pl",
 
   contact: {
     phone: "+48 725 824 732",

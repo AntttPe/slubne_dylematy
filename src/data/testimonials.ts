@@ -1,8 +1,9 @@
 /**
- * Quotes are genuine; the couples are credited anonymously because we do not
- * have their consent to publish names.
+ * Quotes are genuine. Most couples are credited anonymously because we do not
+ * have their consent to publish names; where a first name is used, the surname
+ * is deliberately omitted.
  *
- * TODO(client): if the owner collects that consent, swap `author` for real
+ * TODO(client): with the couples' consent, swap the anonymous captions for
  * first names - a named recommendation is worth considerably more.
  */
 export type Testimonial = {
@@ -12,6 +13,12 @@ export type Testimonial = {
 };
 
 export const testimonials: readonly Testimonial[] = [
+  {
+    author: "Sandra",
+    event: "Dekoracja kościoła i sali",
+    quote:
+      "Z całego serca polecamy wspaniałe i profesjonalne Ślubne Dylematy. Subtelny wystrój kościoła zrobił świetne wrażenie, a bajeczna sala przeszła nasze najśmielsze oczekiwania i zachwyciła każdego z gości. Dziękujemy za cierpliwość, ogromną pasję i zaangażowanie w najmniejszy detal - dzięki Tobie nasz ślub był jeszcze piękniejszy.",
+  },
   {
     author: "Para młoda",
     event: "Dekoracje ślubne i papeteria",
