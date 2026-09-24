@@ -85,13 +85,26 @@ export default function ContactForm({
         </div>
 
         <h2 className="type-h2 mt-6 text-ink">
-          Dziękuję! <em>Zapytanie dotarło</em>
+          Dziękujemy! <em>Wasze zapytanie już do nas dotarło</em> 🤍
         </h2>
 
-        <p className="type-lead mt-4 max-w-md text-muted">
-          Odpowiem w ciągu 24 godzin, zwykle szybciej. Piszę osobiście, więc
-          nie dostaniecie automatu z cennikiem.
-        </p>
+        <div className="mt-5 flex max-w-lg flex-col gap-4 leading-relaxed text-muted">
+          <p>
+            Na odpowiedź potrzebujemy chwili, ponieważ do każdego zapytania
+            podchodzimy indywidualnie.
+          </p>
+          <p>
+            Informacje z formularza pozwolą mi lepiej poznać Wasze potrzeby,
+            pomysły i oczekiwania, dzięki czemu już przed naszym spotkaniem
+            będę miała dobrą bazę do rozmowy.
+          </p>
+          <p>
+            W mailu ode mnie otrzymacie najważniejsze informacje i wspólnie
+            wybierzemy dogodny termin spotkania. Możemy porozmawiać online lub
+            spotkać się przy kawie.
+          </p>
+          <p className="font-serif text-xl text-ink">Do usłyszenia!</p>
+        </div>
 
         {state.email && (
           <div className="mt-8 rounded-sm border border-line bg-surface p-5">

@@ -37,7 +37,7 @@ export default function PartnersSection() {
                 Zebrałam tutaj kontakty do osób i marek, z którymi dobrze mi się
                 współpracuje i do których mam zaufanie.
               </p>
-              <p>Być może znajdziecie wśród nich kogoś, kogo właśnie szukacie.</p>
+              <p>Być może znajdziecie wśród nich kogoś, kogo właśnie szukacie. 🤍</p>
             </>
           }
         />

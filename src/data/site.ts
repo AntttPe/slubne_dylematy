@@ -14,7 +14,7 @@ export const site = {
     phoneHref: "tel:+48725824732",
     email: "slubnedylematy.kontakt@gmail.com",
     emailHref: "mailto:slubnedylematy.kontakt@gmail.com",
-    responseTime: "w ciągu 24 godzin",
+    responseTime: "osobiście na każde zapytanie",
   },
 
   area: {

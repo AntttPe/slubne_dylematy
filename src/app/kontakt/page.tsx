@@ -9,7 +9,7 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
   title: "Kontakt i rezerwacja terminu",
   description:
-    "Sprawdź wolne terminy i wyślij zapytanie o dekoracje ślubne. Odpowiadam w ciągu 24 godzin.",
+    "Sprawdź wolne terminy i wyślij zapytanie o dekoracje ślubne, weselne i okolicznościowe. Śląsk i cała Polska.",
   alternates: { canonical: "/kontakt" },
 };
 
@@ -32,7 +32,7 @@ export default async function KontaktPage() {
             Sprawdźcie termin i <em>napiszcie do mnie</em>
           </>
         }
-        lead="Odpowiadam w ciągu 24 godzin. Piszcie także wtedy, gdy data nie jest jeszcze pewna."
+        lead="Do każdego zapytania podchodzę indywidualnie. Piszcie także wtedy, gdy data nie jest jeszcze pewna."
       />
 
       <section className="bg-canvas py-20 sm:py-24">
