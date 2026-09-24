@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { featuredPhotos } from "@/data/gallery";
+import { featuredPhotos, photoAlt } from "@/data/gallery";
 import SectionHeader from "./ui/SectionHeader";
 import Reveal from "./ui/Reveal";
 import Button from "./ui/Button";
@@ -23,7 +23,7 @@ export default function GalleryPreview() {
               <figure className="overflow-hidden rounded-sm bg-surface">
                 <Image
                   src={photo.src}
-                  alt={photo.alt}
+                  alt={photoAlt(photo)}
                   width={photo.width}
                   height={photo.height}
                   sizes="(min-width: 1024px) 20rem, (min-width: 640px) 45vw, 90vw"

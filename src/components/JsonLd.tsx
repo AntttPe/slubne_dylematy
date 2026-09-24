@@ -1,3 +1,4 @@
+import { cities } from "@/data/area";
 import { site } from "@/data/site";
 
 export default function JsonLd() {
@@ -18,6 +19,7 @@ export default function JsonLd() {
     },
     areaServed: [
       { "@type": "AdministrativeArea", name: "Śląsk" },
+      ...cities.map((name) => ({ "@type": "City", name })),
       { "@type": "Country", name: "Polska" },
     ],
     sameAs: [site.social.instagram, site.social.facebook].filter(Boolean),

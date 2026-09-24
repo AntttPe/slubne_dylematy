@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { services } from "@/data/services";
-import { categorySlug } from "@/data/gallery";
+import { categorySlug, venues } from "@/data/gallery";
 import SectionHeader from "./ui/SectionHeader";
 import Reveal from "./ui/Reveal";
 
@@ -30,6 +30,7 @@ export default function ServicesSection() {
         <div className="mt-16 flex flex-col gap-16 sm:gap-20">
           {services.map((service, i) => {
             const odwrocone = i % 2 === 1;
+            const obiekt = service.venue ? venues[service.venue] : null;
             const href = service.galleryCategory
               ? `/galeria#${categorySlug(service.galleryCategory)}`
               : "/galeria";
@@ -37,19 +38,26 @@ export default function ServicesSection() {
             return (
               <Reveal key={service.title}>
                 <article className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14">
-                  <div
-                    className={`relative aspect-[4/3] overflow-hidden rounded-md ${
-                      odwrocone ? "lg:order-2" : ""
-                    }`}
-                  >
-                    <Image
-                      src={service.image}
-                      alt={`${service.title} - realizacja Ślubnych Dylematów`}
-                      fill
-                      sizes="(min-width: 1024px) 34rem, 92vw"
-                      className="object-cover"
-                    />
-                  </div>
+                  <figure className={odwrocone ? "lg:order-2" : ""}>
+                    <div className="relative aspect-[4/3] overflow-hidden rounded-md">
+                      <Image
+                        src={service.image}
+                        alt={
+                          obiekt
+                            ? `${service.title} - ${obiekt.name}, ${obiekt.city}`
+                            : `${service.title} - realizacja Ślubnych Dylematów`
+                        }
+                        fill
+                        sizes="(min-width: 1024px) 34rem, 92vw"
+                        className="object-cover"
+                      />
+                    </div>
+                    {obiekt && (
+                      <figcaption className="mt-3 text-sm text-faint">
+                        {obiekt.name}, {obiekt.city}
+                      </figcaption>
+                    )}
+                  </figure>
 
                   <div className={odwrocone ? "lg:order-1" : ""}>
                     <h3 className="type-h2 text-ink">{service.title}</h3>

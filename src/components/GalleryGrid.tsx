@@ -13,6 +13,8 @@ import {
   categoryFromSlug,
   categorySlug,
   galleryCategories,
+  photoAlt,
+  photoVenue,
   photos,
   type GalleryCategory,
 } from "@/data/gallery";
@@ -137,11 +139,11 @@ export default function GalleryGrid() {
               type="button"
               onClick={() => setLightbox(i)}
               className="group block w-full overflow-hidden rounded-sm bg-surface text-left"
-              aria-label={`Powiększ: ${photo.alt}`}
+              aria-label={`Powiększ: ${photoAlt(photo)}`}
             >
               <Image
                 src={photo.src}
-                alt={photo.alt}
+                alt={photoAlt(photo)}
                 width={photo.width}
                 height={photo.height}
                 sizes="(min-width: 1024px) 20rem, (min-width: 640px) 45vw, 90vw"
@@ -173,7 +175,7 @@ export default function GalleryGrid() {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label={active.alt}
+          aria-label={photoAlt(active)}
           className="fixed inset-0 z-[70] flex items-center justify-center bg-canvas-dark/95 p-4 sm:p-8"
           onClick={close}
         >
@@ -204,14 +206,19 @@ export default function GalleryGrid() {
           >
             <Image
               src={active.src}
-              alt={active.alt}
+              alt={photoAlt(active)}
               width={active.width}
               height={active.height}
               sizes="90vw"
               className="max-h-[80svh] w-auto object-contain"
             />
             <figcaption className="mt-4 text-center text-sm text-muted-invert">
-              {active.alt}
+              {photoAlt(active)}
+              {photoVenue(active) && (
+                <span className="mt-1 block text-accent">
+                  {photoVenue(active)!.name}, {photoVenue(active)!.city}
+                </span>
+              )}
             </figcaption>
           </figure>
 
