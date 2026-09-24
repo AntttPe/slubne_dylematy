@@ -26,7 +26,20 @@ export default function PartnersSection() {
               Sprawdzeni ludzie, z którymi <em>pracuję najchętniej</em>
             </>
           }
-          lead="Przez lata zebrała się grupa osób, na których po prostu wiem, że mogę polegać. Jeśli czegoś Wam jeszcze brakuje - chętnie połączę."
+          lead={
+            <>
+              <p>
+                Za każdą piękną realizacją stoją ludzie. Przez lata miałam
+                przyjemność poznać wiele osób, których pracę naprawdę cenię za
+                jakość, zaangażowanie i serce, jakie wkładają w to, co robią.
+              </p>
+              <p>
+                Zebrałam tutaj kontakty do osób i marek, z którymi dobrze mi się
+                współpracuje i do których mam zaufanie.
+              </p>
+              <p>Być może znajdziecie wśród nich kogoś, kogo właśnie szukacie.</p>
+            </>
+          }
         />
 
         <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

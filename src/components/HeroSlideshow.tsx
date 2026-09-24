@@ -42,7 +42,7 @@ export default function HeroSlideshow() {
               aktywny ? "opacity-100" : "opacity-0"
             }`}
           >
-            <div className="hero-pan h-full w-full">
+            <div className="hero-pan relative h-full w-full">
               <Image
                 src={slide.src}
                 alt=""

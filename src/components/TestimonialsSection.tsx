@@ -21,7 +21,7 @@ export default function TestimonialsSection() {
 
         <ul className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((t, i) => (
-            <Reveal as="li" key={t.author} delay={(i % 3) * 80}>
+            <Reveal as="li" key={t.quote} delay={(i % 3) * 80}>
               <figure className="flex h-full flex-col rounded-md border border-line-dark bg-surface-dark p-7">
                 <blockquote className="flex-1 font-serif text-xl leading-snug text-ink-invert">
                   „{t.quote}”

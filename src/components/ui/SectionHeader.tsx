@@ -3,7 +3,7 @@ import Reveal from "./Reveal";
 type Props = {
   eyebrow: string;
   title: React.ReactNode;
-  lead?: string;
+  lead?: React.ReactNode;
   align?: "center" | "left";
   tone?: "light" | "dark";
 };
@@ -34,13 +34,13 @@ export default function SectionHeader({
       </h2>
 
       {lead && (
-        <p
-          className={`type-lead mt-5 ${
+        <div
+          className={`type-lead mt-5 flex flex-col gap-4 ${
             tone === "dark" ? "text-muted-invert" : "text-muted"
           }`}
         >
-          {lead}
-        </p>
+          {typeof lead === "string" ? <p>{lead}</p> : lead}
+        </div>
       )}
     </Reveal>
   );
