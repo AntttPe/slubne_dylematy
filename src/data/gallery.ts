@@ -31,9 +31,6 @@ export function categoryFromSlug(slug: string): GalleryCategory | null {
  * Venue plus city is the phrase couples actually search for once they have
  * booked a place ("dekoracje Stara Szwajcaria Gliwice") - far less contested
  * than the generic terms and with much higher intent.
- *
- * TODO(client): confirm the exact, official name of the Bytom church - it was
- * given informally and the wrong patron saint would waste the keyword.
  */
 export type Venue = { name: string; city: string };
 
@@ -42,7 +39,7 @@ export const venues = {
   impresja: { name: "Impresja", city: "Zabrze" },
   "lesna-perla": { name: "Leśna Perła", city: "Radlin" },
   "wisniowy-sad": { name: "Wiśniowy Sad", city: "Tarnowskie Góry" },
-  "bytom-michala": { name: "kościół św. Michała Anioła", city: "Bytom" },
+  "bytom-michala": { name: "kościół św. Michała Archanioła", city: "Bytom" },
   swierklaniec: { name: "kościół w Świerklańcu", city: "Świerklaniec" },
   naklo: { name: "kościół w Nakle Śląskim", city: "Nakło Śląskie" },
   "kozlowa-gora": { name: "kościół w Kozłowej Górze", city: "Kozłowa Góra" },
