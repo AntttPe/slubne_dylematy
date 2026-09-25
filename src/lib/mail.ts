@@ -39,45 +39,45 @@ function esc(v: string) {
   return v.replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" })[c]!);
 }
 
-function wiersz(etykieta: string, wartosc?: string) {
-  if (!wartosc?.trim()) return "";
-  return `<tr><td style="padding:6px 16px 6px 0;color:#6b5344;white-space:nowrap;vertical-align:top">${esc(etykieta)}</td><td style="padding:6px 0;color:#241610">${esc(wartosc).replace(/\n/g, "<br>")}</td></tr>`;
-}
-
-/** What the owner receives. replyTo points at the couple, so hitting reply works. */
+/**
+ * What the owner receives.
+ *
+ * Shaped for the reply, not just for reading. Hitting reply goes straight to
+ * the couple (replyTo), and most clients quote the whole thing underneath -
+ * so the sender name is the couple's, and the body avoids tables, which quote
+ * into a mangled mess. There is also no "reply to reach the couple" note: it
+ * would end up quoted back to them, which reads oddly.
+ */
 export function buildOwnerMail(inquiry: Inquiry, budzet: string) {
   const tytul = `Zapytanie: ${inquiry.celebration}${inquiry.date ? ` - ${inquiry.date}` : ""}`;
+
+  const pola: [string, string | undefined][] = [
+    ["E-mail", inquiry.email],
+    ["Telefon", inquiry.phone],
+    ["Uroczystość", inquiry.celebration],
+    ["Data", inquiry.date],
+    ["Liczba gości", inquiry.guests],
+    ["Miejsce", inquiry.venue],
+    ["Budżet", budzet],
+  ];
+  const wypelnione = pola.filter(([, v]) => v?.trim());
+
   return {
-    from: `"Formularz - ${site.name}" <${user}>`,
+    from: `"${inquiry.name} - zapytanie ze strony" <${user}>`,
     to: site.contact.email,
     replyTo: `"${inquiry.name}" <${inquiry.email}>`,
     subject: tytul,
     text: [
-      `Imię i nazwisko: ${inquiry.name}`,
-      `E-mail: ${inquiry.email}`,
-      inquiry.phone && `Telefon: ${inquiry.phone}`,
-      `Uroczystość: ${inquiry.celebration}`,
-      inquiry.date && `Data: ${inquiry.date}`,
-      inquiry.guests && `Liczba gości: ${inquiry.guests}`,
-      inquiry.venue && `Miejsce: ${inquiry.venue}`,
-      `Budżet: ${budzet}`,
+      inquiry.name,
       "",
-      inquiry.message || "(bez dodatkowego opisu)",
-    ].filter(Boolean).join("\n"),
-    html: `<div style="font-family:system-ui,sans-serif;font-size:15px;line-height:1.6">
-<h2 style="font-size:18px;margin:0 0 16px">${esc(tytul)}</h2>
-<table style="border-collapse:collapse;font-size:15px">
-${wiersz("Imię i nazwisko", inquiry.name)}
-${wiersz("E-mail", inquiry.email)}
-${wiersz("Telefon", inquiry.phone)}
-${wiersz("Uroczystość", inquiry.celebration)}
-${wiersz("Data", inquiry.date)}
-${wiersz("Liczba gości", inquiry.guests)}
-${wiersz("Miejsce", inquiry.venue)}
-${wiersz("Budżet", budzet)}
-</table>
-${inquiry.message ? `<p style="margin:20px 0 6px;color:#6b5344">Wasza wizja:</p><div style="padding:14px 16px;background:#f0e8dc;border-radius:4px;color:#241610">${esc(inquiry.message).replace(/\n/g, "<br>")}</div>` : ""}
-<p style="margin-top:24px;color:#8a725f;font-size:13px">Odpowiedz na tę wiadomość, aby napisać bezpośrednio do pary.</p>
+      ...wypelnione.map(([k, v]) => `${k}: ${v}`),
+      "",
+      inquiry.message ? `Wizja:\n${inquiry.message}` : "(bez dodatkowego opisu)",
+    ].join("\n"),
+    html: `<div style="font-family:system-ui,sans-serif;font-size:15px;line-height:1.6;color:#241610">
+<p style="margin:0 0 14px"><strong>${esc(inquiry.name)}</strong></p>
+${wypelnione.map(([k, v]) => `<p style="margin:0 0 4px"><span style="color:#6b5344">${esc(k)}:</span> ${esc(v!)}</p>`).join("\n")}
+${inquiry.message ? `<p style="margin:18px 0 4px;color:#6b5344">Wizja:</p><p style="margin:0">${esc(inquiry.message).replace(/\n/g, "<br>")}</p>` : ""}
 </div>`,
   };
 }
