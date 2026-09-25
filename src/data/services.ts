@@ -1,19 +1,16 @@
-import type { GalleryCategory } from "./gallery";
+import type { GalleryCategory, VenueKey } from "./gallery";
 
 export type Service = {
   title: string;
-  /** Jedno zdanie, które ma sprzedać usługę. */
   lead: string;
   description: string;
   image: string;
   width: number;
   height: number;
   tags: readonly string[];
-  /**
-   * Kategoria, na którą przefiltruje się galeria po kliknięciu.
-   * Bez niej przycisk prowadzi do pełnej galerii.
-   */
   galleryCategory?: Exclude<GalleryCategory, "Wszystkie">;
+  /** Where the photo was taken - shown as a caption and used for local SEO. */
+  venue?: VenueKey;
 };
 
 const R = "/images/realizacje";
@@ -29,6 +26,7 @@ export const services: readonly Service[] = [
     height: 1303,
     tags: ["Sala", "Stoły", "Ścianka", "Plener"],
     galleryCategory: "Wesela",
+    venue: "stara-szwajcaria",
   },
   {
     title: "Dekoracje kościoła",
@@ -40,6 +38,7 @@ export const services: readonly Service[] = [
     height: 1703,
     tags: ["Ołtarz", "Ławy", "Łuk", "Świece"],
     galleryCategory: "Kościół",
+    venue: "kozlowa-gora",
   },
   {
     title: "Przyjęcia i eventy",
@@ -51,5 +50,6 @@ export const services: readonly Service[] = [
     height: 1067,
     tags: ["Urodziny", "Rocznice", "Komunie", "Firmowe"],
     galleryCategory: "Eventy",
+    venue: "impresja",
   },
 ];

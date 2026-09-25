@@ -1,21 +1,6 @@
-/**
- * Minimalny parser iCal - tyle, ile potrzeba do odczytania zajętych dni
- * z publicznego feedu Kalendarza Google.
- *
- * Świadomie bez biblioteki: z całego formatu używamy trzech pól
- * (DTSTART, DTEND, STATUS), a dokładanie zależności do czegoś takiego
- * to więcej kodu do aktualizowania niż do napisania.
- *
- * Zachowania potwierdzone na prawdziwym feedzie, nie na dokumentacji:
- *   - tytuły są podmieniane przez Google na "Busy" (tryb wolny/zajęty),
- *   - linie dłuższe niż 75 znaków są łamane i kontynuowane spacją,
- *   - DTEND wydarzenia całodniowego jest WYŁĄCZNY (12.09 ma DTEND 13.09).
- */
 
-/** Wydarzenie rozciągnięte na absurdalną liczbę dni to błąd, nie rezerwacja. */
 const MAX_DNI_NA_WYDARZENIE = 30;
 
-/** Skleja linie złamane zgodnie z RFC 5545 (kontynuacja zaczyna się spacją lub tabem). */
 function rozwinLinie(tekst: string): string[] {
   return tekst
     .replace(/\r\n/g, "\n")
@@ -24,11 +9,8 @@ function rozwinLinie(tekst: string): string[] {
     .split("\n");
 }
 
-/**
- * Buduje datę z komponentów lokalnych, a nie przez Date.parse.
- * `new Date("2026-09-12")` jest interpretowane jako UTC i w naszej strefie
- * potrafi cofnąć się na 11 września.
- */
+/** Builds the date from local parts. `new Date("2026-09-12")` is parsed as
+ *  UTC and can slip back a day in our timezone. */
 function dataZIcs(wartosc: string): Date | null {
   const m = wartosc.trim().match(/^(\d{4})(\d{2})(\d{2})/);
   if (!m) return null;
@@ -42,7 +24,14 @@ function klucz(d: Date): string {
   return `${d.getFullYear()}-${m}-${dzien}`;
 }
 
-/** Zwraca listę dni (YYYY-MM-DD) zajętych przez wydarzenia w feedzie. */
+/**
+ * Returns the days (YYYY-MM-DD) occupied by events in the feed.
+ *
+ * Verified against the live feed, not the spec: Google replaces titles with
+ * "Busy" in free/busy mode, folds lines over 75 chars, and DTEND of an
+ * all-day event is EXCLUSIVE - 12 Sep has DTEND 13 Sep. Getting that wrong
+ * marks one extra day as booked and silently costs a real enquiry.
+ */
 export function dniZIcs(ics: string): string[] {
   const dni = new Set<string>();
 
@@ -62,9 +51,6 @@ export function dniZIcs(ics: string): string[] {
 
     if (linia.startsWith("END:VEVENT")) {
       if (wWydarzeniu && start && !odwolane) {
-        // DTEND całodniowego jest wyłączny - stąd odjęcie dnia.
-        // Przy wydarzeniu godzinowym DTEND to realna godzina końca,
-        // więc ostatni dzień liczy się normalnie.
         const ostatni = koniec
           ? new Date(koniec.getTime() - (calodniowe ? 86_400_000 : 0))
           : start;

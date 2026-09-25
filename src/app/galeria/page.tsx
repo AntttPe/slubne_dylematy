@@ -23,9 +23,7 @@ export default function GaleriaPage() {
         lead="Kilka dni, przy których miałam przyjemność pracować. Kliknijcie w zdjęcie, żeby je powiększyć."
       />
 
-      {/* pt-* jest konieczne: bez niego rząd filtrów siada dokładnie
-          na styku beżowego nagłówka i kremowego tła sekcji. */}
-      <section className="bg-canvas pb-28 pt-14 sm:pt-16">
+            <section className="bg-canvas pb-28 pt-14 sm:pt-16">
         <div className="mx-auto max-w-6xl px-5 sm:px-8">
           <GalleryGrid />
 

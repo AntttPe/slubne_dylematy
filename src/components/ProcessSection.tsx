@@ -17,13 +17,7 @@ export default function ProcessSection() {
           lead="To prostsze, niż myślicie. Cały proces zamyka się w czterech krokach."
         />
 
-        {/*
-          Dwie kolumny zamiast czterech: każdy krok ma teraz zdanie
-          wiodące i akapit, a w wąskiej kolumnie robiłby się słupek
-          na osiem linijek. Numery niosą kolejność, więc sekwencja
-          zostaje czytelna mimo układu 2×2.
-        */}
-        <ol className="mt-16 grid gap-x-12 gap-y-12 lg:grid-cols-2">
+                <ol className="mt-16 grid gap-x-12 gap-y-12 lg:grid-cols-2">
           {steps.map((step, i) => (
             <Reveal as="li" key={step.number} delay={(i % 2) * 80}>
               <div className="flex gap-5 border-t border-line pt-6 sm:gap-7">

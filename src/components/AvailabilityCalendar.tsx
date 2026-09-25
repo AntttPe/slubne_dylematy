@@ -12,11 +12,9 @@ import {
   weekdayNames,
 } from "@/lib/availability";
 
-/**
- * Statusy celowo trzymają się palety marki - złoto i brąz zamiast
- * przypadkowej zieleni i czerwieni. Kolor nigdy nie niesie informacji
- * sam: każdy dzień ma opis w aria-label, a zajęte dni mają przekreślenie.
- */
+/* Statuses stay within the brand palette rather than using arbitrary red and
+   green. Colour never carries the meaning alone: every day has an aria-label
+   and booked days are struck through. */
 const dayStyles: Record<Status, string> = {
   free: "bg-canvas text-ink border-line hover:border-accent",
   tentative: "bg-accent/25 text-ink border-accent/50",
@@ -25,9 +23,7 @@ const dayStyles: Record<Status, string> = {
 
 type Props = {
   availability: AvailabilityMap;
-  /** false = nie udało się pobrać terminów z Kalendarza Google. */
   ok?: boolean;
-  /** Ile miesięcy do przodu można przewijać. */
   monthsAhead?: number;
 };
 
@@ -54,11 +50,9 @@ export default function AvailabilityCalendar({
     (d) => d && availability[dateKey(d)],
   ).length;
 
-  /*
-    Awaria feedu = komunikat, nigdy pusta siatka.
-    Siatka bez danych wygląda jak "wszystko wolne" i wygenerowałaby
-    zapytanie o dzień, który jest zajęty - gorzej niż brak kalendarza.
-  */
+  /* A feed failure must show a message, never an empty grid. An empty grid
+     reads as "everything is free" and would produce an enquiry for a date
+     that is already taken - worse than having no calendar at all. */
   if (!ok) {
     return (
       <div className="rounded-md border border-line bg-canvas p-8 text-center">
@@ -73,8 +67,7 @@ export default function AvailabilityCalendar({
 
   return (
     <div className="rounded-md border border-line bg-canvas p-5 sm:p-7">
-      {/* Nawigacja */}
-      <div className="mb-7 flex items-center justify-between">
+            <div className="mb-7 flex items-center justify-between">
         <button
           type="button"
           onClick={() => setOffset((o) => o - 1)}
@@ -101,8 +94,7 @@ export default function AvailabilityCalendar({
         </button>
       </div>
 
-      {/* Dni tygodnia */}
-      <div className="mb-2 grid grid-cols-7 gap-1.5">
+            <div className="mb-2 grid grid-cols-7 gap-1.5">
         {weekdayNames.map((d) => (
           <div
             key={d}
@@ -113,8 +105,7 @@ export default function AvailabilityCalendar({
         ))}
       </div>
 
-      {/* Siatka */}
-      <div className="grid grid-cols-7 gap-1.5">
+            <div className="grid grid-cols-7 gap-1.5">
         {cells.map((date, i) => {
           if (!date) return <div key={`pad-${i}`} />;
 
@@ -144,19 +135,14 @@ export default function AvailabilityCalendar({
         })}
       </div>
 
-      {/*
-        Stan pusty - bez tego miesiąc bez rezerwacji wygląda jak błąd
-        wczytywania zamiast jak dobra wiadomość.
-      */}
-      {takenThisMonth === 0 && (
+            {takenThisMonth === 0 && (
         <p className="mt-6 rounded-sm bg-surface px-4 py-3 text-center text-sm text-muted">
           Cały {monthNames[month].toLowerCase()} jeszcze wolny - to dobry
           moment, żeby zapytać o termin.
         </p>
       )}
 
-      {/* Legenda */}
-      <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 border-t border-line pt-5 text-sm text-muted">
+            <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 border-t border-line pt-5 text-sm text-muted">
         <li className="flex items-center gap-2">
           <span className="h-3.5 w-3.5 rounded-[2px] border border-line bg-canvas" />
           Wolny

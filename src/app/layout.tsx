@@ -3,14 +3,12 @@ import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import {
+  cloudflareAnalyticsToken,
+  searchConsoleToken,
+} from "@/lib/analytics";
 import { site } from "@/data/site";
 
-/*
-  Fraunces zamiast Instrument Serif. Zdjęcia Magdy są ciepłe i miękkie -
-  beże, złoto, brzoskwinia - a Instrument Serif ma chłodny, redakcyjny
-  rysunek, który się z nimi rozjeżdżał. Fraunces trzyma tę samą klasę,
-  ale ma zaokrąglone, cieplejsze zakończenia.
-*/
 const fraunces = Fraunces({
   subsets: ["latin", "latin-ext"],
   style: ["normal", "italic"],
@@ -35,15 +33,21 @@ export const metadata: Metadata = {
   keywords: [
     "dekoracje ślubne",
     "dekoracje weselne",
-    "florystyka ślubna",
-    "dekoracje kościoła",
-    "dekoracje komunia",
-    "dekorator ślubny śląsk",
     "dekoracje ślubne śląsk",
     "dekoracje ślubne katowice",
-    "dekoracje ślubne cała Polska",
+    "dekoracje ślubne gliwice",
+    "dekoracje ślubne bytom",
+    "dekoracje ślubne zabrze",
+    "dekoracje ślubne tarnowskie góry",
+    "dekoracje kościoła",
+    "florystyka ślubna",
+    "bukiety ślubne",
+    "dekoracja sali weselnej",
+    "dekoracje komunia",
+    "dekorator ślubny śląsk",
     "ślubne dylematy",
   ],
+
   alternates: { canonical: "/" },
   openGraph: {
     title: "Ślubne Dylematy | Dekoracje ślubne i eventowe",
@@ -54,7 +58,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "pl_PL",
   },
-  // Ten sam przełącznik co w robots.ts - patrz komentarz tam.
+  ...(searchConsoleToken
+    ? { verification: { google: searchConsoleToken } }
+    : {}),
   robots: {
     index: process.env.NEXT_PUBLIC_INDEXABLE === "true",
     follow: process.env.NEXT_PUBLIC_INDEXABLE === "true",
@@ -68,27 +74,14 @@ export default function RootLayout({
     <html
       lang="pl"
       className={`${fraunces.variable} ${inter.variable}`}
-      /*
-        Skrypt poniżej dopisuje do <html> klasę `js` jeszcze przed
-        hydratacją, więc React zastaje inny className, niż wyrenderował
-        serwer, i zgłasza niezgodność. Robimy to celowo, dlatego
-        wyciszamy ostrzeżenie - dotyczy ono wyłącznie atrybutów tego
-        jednego elementu, nie całego drzewa.
-      */
       suppressHydrationWarning
     >
       <body>
-        {/*
-          Odpalane synchronicznie, przed sparsowaniem reszty <body>, więc
-          treść nigdy nie mignie. Robi dwie rzeczy:
-
-          1. Klasa `js` włącza ukrywanie elementów <Reveal>. Jeśli skrypt
-             nie wystartuje, CSS nie ukryje niczego i strona jest czytelna.
-          2. Timer to bezpiecznik na wypadek, gdy skrypt się wykona, ale
-             paczka Reacta padnie po drodze (np. w przeglądarce wbudowanej
-             w Messengera). Pierwszy zamontowany <Reveal> go kasuje.
-        */}
-        <script
+        {/* Runs synchronously before the rest of <body> is parsed, so
+            content never flashes. Adds `js` to enable hiding <Reveal>
+            elements, and arms a failsafe timer in case the React bundle
+            dies after this point. */}
+                <script
           dangerouslySetInnerHTML={{
             __html:
               "var d=document.documentElement;d.classList.add('js');" +
@@ -102,6 +95,18 @@ export default function RootLayout({
         >
           Przejdź do treści
         </a>
+        {cloudflareAnalyticsToken && (
+          <script
+            /* type="module" mirrors the snippet Cloudflare hands out. Module
+               scripts are deferred by definition; `defer` is redundant for
+               them but keeps the loading strategy explicit and satisfies the
+               no-sync-scripts lint rule. */
+            type="module"
+            defer
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({ token: cloudflareAnalyticsToken })}
+          />
+        )}
         <Navbar />
         <main id="tresc">{children}</main>
         <Footer />

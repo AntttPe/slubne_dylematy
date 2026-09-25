@@ -1,18 +1,13 @@
 import Reveal from "./Reveal";
 
 type Props = {
-  /** Mikro-nagłówek: rozstrzelone wersaliki. Zastąpił font skryptowy. */
   eyebrow: string;
   title: React.ReactNode;
-  lead?: string;
+  lead?: React.ReactNode;
   align?: "center" | "left";
   tone?: "light" | "dark";
 };
 
-/**
- * Nagłówek sekcji - jeden układ na całą stronę.
- * Wcześniej ten sam blok był przepisany ręcznie pięć razy.
- */
 export default function SectionHeader({
   eyebrow,
   title,
@@ -39,13 +34,13 @@ export default function SectionHeader({
       </h2>
 
       {lead && (
-        <p
-          className={`type-lead mt-5 ${
+        <div
+          className={`type-lead mt-5 flex flex-col gap-4 ${
             tone === "dark" ? "text-muted-invert" : "text-muted"
           }`}
         >
-          {lead}
-        </p>
+          {typeof lead === "string" ? <p>{lead}</p> : lead}
+        </div>
       )}
     </Reveal>
   );

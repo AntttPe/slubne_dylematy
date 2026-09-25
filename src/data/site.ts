@@ -1,34 +1,40 @@
-/**
- * Jedno źródło prawdy dla danych firmy.
- * Zmiana numeru telefonu = jedna edycja, nie trzy.
- *
- * TODO(klient): podmienić telefon i e-mail na prawdziwe - poniższe to placeholdery.
- */
 
+/** Keep this in sync with the Google Business Profile - Google compares the
+ *  name, address and phone between the two, and a mismatch hurts local rank. */
 export const site = {
   name: "Ślubne Dylematy",
   tagline: "Dekoracje ślubne i eventowe",
+  /** Friendly form - used in signatures and copy. */
   owner: "Magda",
+  /** Full name of the data controller. Required by GDPR: a brand name is not
+   *  a legal person. Used in the privacy policy and structured data. */
+  legalName: "Magdalena Nowak",
 
-  // Używane przez metadataBase, sitemap i JSON-LD.
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://slubnedylematy.pl",
+  /*
+   * Falls back to Netlify's own URLs so link previews and sitemaps are correct
+   * on branch deploys too - without this, a shared test link points at a
+   * domain that does not exist yet and the preview card renders empty.
+   * DEPLOY_PRIME_URL is the branch/preview URL, URL the production one.
+   */
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    process.env.DEPLOY_PRIME_URL ??
+    process.env.URL ??
+    "https://slubnedylematy.pl",
 
   contact: {
-    phone: "+48 123 456 789",
-    phoneHref: "tel:+48123456789",
+    phone: "+48 725 824 732",
+    phoneHref: "tel:+48725824732",
     email: "kontakt@slubnedylematy.pl",
     emailHref: "mailto:kontakt@slubnedylematy.pl",
-    responseTime: "w ciągu 24 godzin",
+    responseTime: "osobiście na każde zapytanie",
   },
 
   area: {
     label: "Śląsk i cała Polska",
-    /**
-     * Województwo zostaje mimo ogólnopolskiego zasięgu: `addressRegion`
-     * w danych strukturalnych mówi, GDZIE firma ma siedzibę, a nie dokąd
-     * dojeżdża. Od tego zależy widoczność w mapkach Google.
-     * Zasięg opisuje `areaServed` w JsonLd.tsx.
-     */
+    /* Region stays even though we serve all of Poland: addressRegion in
+       structured data says WHERE the business is based, not how far it
+       travels. Local map visibility depends on it. Reach is areaServed. */
     region: "śląskie",
     country: "PL",
   },

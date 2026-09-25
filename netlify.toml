@@ -6,9 +6,11 @@
   publish = ".next"
 
 [build.environment]
-  # Next 16 wymaga >= 20.9.0. Bez jawnego przypięcia Netlify potrafi
-  # wziąć starszą wersję i build pada na etapie kompilacji.
-  NODE_VERSION = "20"
+  # 22, nie 20: Next 16 wymaga >= 20.9.0, ale @netlify/plugin-nextjs
+  # potrzebuje już 22+. Przy ustawieniu 20 Netlify i tak uruchamiał
+  # wtyczkę na 22 i zgłaszał ostrzeżenie o niezgodności - lepiej mieć
+  # jedną wersję dla całego builda niż liczyć na to obejście.
+  NODE_VERSION = "22"
 
 # Oficjalna wtyczka Next.js - obsługuje trasy serwerowe, Server Actions
 # i odświeżanie kalendarza co 15 minut.

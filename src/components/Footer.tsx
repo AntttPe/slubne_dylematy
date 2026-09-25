@@ -24,9 +24,7 @@ export default function Footer() {
                 <Instagram size={17} />
               </a>
 
-              {/* Ikona pojawia się dopiero, gdy jest prawdziwy link -
-                  martwe href="#" wygląda na niedokończoną stronę. */}
-              {site.social.facebook && (
+                            {site.social.facebook && (
                 <a
                   href={site.social.facebook}
                   target="_blank"
@@ -43,7 +41,7 @@ export default function Footer() {
           <nav aria-label="Stopka">
             <h2 className="type-eyebrow text-accent">Nawigacja</h2>
             <ul className="mt-5 flex flex-col gap-3">
-              {navLinks.map((link) => (
+              {[...navLinks, { href: "/gdzie-pracuje", label: "Gdzie pracuję" }].map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -89,8 +87,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Wcześniej ten pasek miał kontrast 2.3:1 - nieczytelny. */}
-        <div className="mt-16 flex flex-col gap-3 border-t border-line-dark pt-6 text-sm text-muted-invert sm:flex-row sm:items-center sm:justify-between">
+                <div className="mt-16 flex flex-col gap-3 border-t border-line-dark pt-6 text-sm text-muted-invert sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {new Date().getFullYear()} {site.name}
           </p>

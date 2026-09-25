@@ -1,13 +1,9 @@
 "use client";
 
 import { useActionState, useEffect, useRef, useState } from "react";
-import { CheckCircle2 } from "lucide-react";
+import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { submitInquiry } from "@/app/kontakt/actions";
-import {
-  budgetOptions,
-  celebrationTypes,
-  type FormState,
-} from "@/lib/contact-schema";
+import { celebrationTypes, type FormState } from "@/lib/contact-schema";
 import {
   type AvailabilityMap,
   statusLabels,
@@ -62,14 +58,16 @@ export default function ContactForm({
   const startedAtInput = useRef<HTMLInputElement>(null);
   const [date, setDate] = useState("");
 
-  // Pole kontrolowane, żeby pomocnik mógł je wypełnić. Wynik pomocnika
-  // ląduje tutaj, a nie w osobnym polu - para widzi, co wysyła.
   const [message, setMessage] = useState("");
 
-  // Znacznik czasu ustawiamy dopiero w przeglądarce - w HTML-u z serwera
-  // byłby zamrożony na moment renderu (i identyczny dla wszystkich).
-  // Wpisujemy go prosto do DOM-u, żeby nie wywoływać dodatkowego renderu.
+  // Checking "don't know yet" disables the amount field. A disabled field is
+  // not included in FormData, so the amount clears itself.
+  const [budgetUnknown, setBudgetUnknown] = useState(false);
+
   useEffect(() => {
+    // Set in the browser only - in server HTML it would be frozen at render
+    // time and identical for everyone. Written straight to the DOM to avoid
+    // an extra render.
     if (startedAtInput.current) {
       startedAtInput.current.value = String(Date.now());
     }
@@ -81,14 +79,64 @@ export default function ContactForm({
 
   if (state.status === "success") {
     return (
-      <div className="flex flex-col items-start gap-5 rounded-md border border-line bg-canvas p-10">
-        <CheckCircle2 size={32} className="text-accent-strong" />
-        <div>
-          <h2 className="type-h3 text-ink">Zapytanie wysłane</h2>
-          <p className="mt-3 max-w-md leading-relaxed text-muted">
-            {state.message ??
-              "Dziękuję! Odpowiem w ciągu 24 godzin."}
+      <div className="rounded-md border border-line bg-canvas p-8 sm:p-10">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-strong/10">
+          <CheckCircle2 size={24} className="text-accent-strong" />
+        </div>
+
+        <h2 className="type-h2 mt-6 text-ink">
+          Dziękujemy! <em>Wasze zapytanie już do nas dotarło</em> 🤍
+        </h2>
+
+        <div className="mt-5 flex max-w-lg flex-col gap-4 leading-relaxed text-muted">
+          <p>
+            Na odpowiedź potrzebujemy chwili, ponieważ do każdego zapytania
+            podchodzimy indywidualnie.
           </p>
+          <p>
+            Informacje z formularza pozwolą mi lepiej poznać Wasze potrzeby,
+            pomysły i oczekiwania, dzięki czemu już przed naszym spotkaniem
+            będę miała dobrą bazę do rozmowy.
+          </p>
+          <p>
+            W mailu ode mnie otrzymacie najważniejsze informacje i wspólnie
+            wybierzemy dogodny termin spotkania. Możemy porozmawiać online lub
+            spotkać się przy kawie.
+          </p>
+          <p className="font-serif text-xl text-ink">Do usłyszenia!</p>
+        </div>
+
+        {state.email && (
+          <div className="mt-8 rounded-sm border border-line bg-surface p-5">
+            <p className="type-eyebrow text-accent-strong">
+              Odpowiedź trafi na adres
+            </p>
+            <p className="mt-2 break-all font-serif text-xl text-ink">
+              {state.email}
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-muted">
+              Jeśli widzicie tu literówkę, napiszcie jeszcze raz - bez
+              poprawnego adresu nie będę w stanie odpowiedzieć.
+            </p>
+          </div>
+        )}
+
+        <div className="mt-6 flex items-start gap-3 text-sm leading-relaxed text-muted">
+          <AlertCircle
+            size={17}
+            className="mt-0.5 shrink-0 text-accent-strong"
+          />
+          <p>
+            <span className="text-ink">Zajrzyjcie do folderu spam.</span>{" "}
+            Wiadomości od nowych nadawców czasem tam trafiają - warto sprawdzić,
+            zanim uznacie, że nie odpisałam.
+          </p>
+        </div>
+
+        <div className="mt-9 flex flex-col gap-3 border-t border-line pt-7 sm:flex-row">
+          <Button href="/galeria" variant="secondary">
+            Obejrzyjcie realizacje w międzyczasie
+          </Button>
         </div>
       </div>
     );
@@ -101,13 +149,11 @@ export default function ContactForm({
         Im więcej szczegółów, tym konkretniej odpowiem.
       </p>
 
-      {/* Honeypot - ukryty przed ludźmi, widoczny dla botów. */}
-      <div aria-hidden="true" className="absolute left-[-9999px]">
+            <div aria-hidden="true" className="absolute left-[-9999px]">
         <label htmlFor="website">Nie wypełniaj tego pola</label>
         <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
-      {/* "0" jako wartość zapasowa: bez JS-u time-trap nie zablokuje wysyłki. */}
-      <input
+            <input
         ref={startedAtInput}
         type="hidden"
         name="startedAt"
@@ -152,7 +198,7 @@ export default function ContactForm({
               name="phone"
               type="tel"
               autoComplete="tel"
-              placeholder="+48 123 456 789"
+              placeholder="+48 600 000 000"
               className={field}
             />
           </Field>
@@ -187,8 +233,6 @@ export default function ContactForm({
             label="Planowana data"
             name="date"
             error={errors.date}
-            /* Formularz rozmawia z kalendarzem - para od razu wie,
-               czy pytanie ma sens. */
             hint={
               dateStatus ? (
                 <p className="text-sm text-accent-strong">
@@ -236,14 +280,37 @@ export default function ContactForm({
         </Field>
 
         <Field label="Orientacyjny budżet" name="budget" error={errors.budget}>
-          <select id="budget" name="budget" defaultValue="" className={field}>
-            <option value="">Wolę nie podawać</option>
-            {budgetOptions.map((b) => (
-              <option key={b} value={b}>
-                {b}
-              </option>
-            ))}
-          </select>
+          <div className="relative">
+            <input
+              id="budget"
+              name="budget"
+              type="number"
+              min="0"
+              step="100"
+              inputMode="numeric"
+              disabled={budgetUnknown}
+              placeholder={budgetUnknown ? "" : "np. 4000"}
+              aria-describedby="budget-waluta"
+              className={`${field} pr-10 disabled:cursor-not-allowed disabled:bg-surface disabled:text-faint`}
+            />
+            <span
+              id="budget-waluta"
+              className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-faint"
+            >
+              zł
+            </span>
+          </div>
+
+          <label className="mt-2.5 inline-flex items-center gap-2.5 text-sm text-muted">
+            <input
+              type="checkbox"
+              name="budgetUnknown"
+              checked={budgetUnknown}
+              onChange={(e) => setBudgetUnknown(e.target.checked)}
+              className="h-4 w-4 accent-accent-strong"
+            />
+            Nie wiem jeszcze
+          </label>
         </Field>
 
         <Field
@@ -272,15 +339,13 @@ export default function ContactForm({
           />
         </Field>
 
-        {/* Zgoda jako checkbox, nie jako akapit - RODO wymaga
-            działania użytkownika, a nie samego poinformowania. */}
-        <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2">
           <label className="flex items-start gap-3 text-sm leading-relaxed text-muted">
             <input
               type="checkbox"
               name="consent"
               required
-              className="mt-1 h-4 w-4 shrink-0 accent-[#a8845a]"
+              className="mt-1 h-4 w-4 shrink-0 accent-accent-strong"
             />
             <span>
               Zgadzam się na przetwarzanie moich danych w celu odpowiedzi na

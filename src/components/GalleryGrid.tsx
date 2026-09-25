@@ -13,18 +13,17 @@ import {
   categoryFromSlug,
   categorySlug,
   galleryCategories,
+  photoAlt,
+  photoVenue,
   photos,
   type GalleryCategory,
 } from "@/data/gallery";
 
 /**
- * Adres jest źródłem prawdy dla wybranej kategorii.
- *
- * Dzięki temu link z sekcji Oferta ("/galeria#kosciol") od razu
- * otwiera właściwy filtr, przycisk wstecz wraca do poprzedniego,
- * a odnośnik da się komuś wysłać. useSyncExternalStore, bo URL to
- * zewnętrzne źródło stanu - ma poprawną obsługę SSR i nie wymaga
- * ustawiania stanu w efekcie.
+ * The URL is the source of truth for the selected category, so a link from
+ * the Offer section ("/galeria#kosciol") opens the right filter, the back
+ * button works, and the link is shareable. useSyncExternalStore because the
+ * URL is an external store - correct SSR handling, no setState in an effect.
  */
 function useHash(): string {
   return useSyncExternalStore(
@@ -37,7 +36,6 @@ function useHash(): string {
   );
 }
 
-/** Ile zdjęć pokazujemy na start i ile dokłada jedno kliknięcie. */
 const KROK = 24;
 
 export default function GalleryGrid() {
@@ -45,14 +43,9 @@ export default function GalleryGrid() {
   const category: GalleryCategory = categoryFromSlug(hash) ?? "Wszystkie";
   const [lightbox, setLightbox] = useState<number | null>(null);
 
-  /*
-    Limit trzymany per kategoria, a nie jako jedna liczba.
-
-    Dzięki temu nie trzeba go zerować przy zmianie filtra (co wymagałoby
-    ustawiania stanu w efekcie, bo kategoria przychodzi z adresu),
-    a powrót do wcześniej oglądanej kategorii zachowuje to, co już
-    było doładowane.
-  */
+  // Limit per category, not one number: avoids resetting it when the filter
+  // changes (which would mean setState in an effect, since the category comes
+  // from the URL) and keeps what was already loaded when returning.
   const [limity, setLimity] = useState<Record<string, number>>({});
   const limit = limity[category] ?? KROK;
 
@@ -64,8 +57,6 @@ export default function GalleryGrid() {
     [category],
   );
 
-  // Siatka pokazuje wycinek, ale powiększenie chodzi po całej kategorii -
-  // wycinek jest jej początkiem, więc indeksy się zgadzają.
   const visible = wszystkieZKategorii;
   const pokazane = wszystkieZKategorii.slice(0, limit);
   const zostalo = wszystkieZKategorii.length - pokazane.length;
@@ -97,23 +88,12 @@ export default function GalleryGrid() {
     };
   }, [lightbox, close, step]);
 
-  /*
-    Indeks sprawdzamy względem długości listy: po powrocie przyciskiem
-    wstecz filtr może się zmienić bez kliknięcia, a wtedy zapamiętany
-    indeks mógłby wskazywać poza przefiltrowaną listę.
-  */
   const active =
     lightbox !== null && lightbox < visible.length ? visible[lightbox] : null;
 
   return (
     <>
-      {/*
-        Siatka o równych kolumnach, nie flex.
-        Przy flexie każdy przycisk miał szerokość swojego tekstu
-        ("Wszystkie" szerokie, "Eventy" wąskie) i mimo stałej przerwy
-        cały rząd wyglądał na niesymetryczny.
-      */}
-      <div className="mx-auto grid max-w-2xl grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
+            <div className="mx-auto grid max-w-2xl grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
         {galleryCategories.map((cat) => {
           const selected = cat === category;
           return (
@@ -159,11 +139,11 @@ export default function GalleryGrid() {
               type="button"
               onClick={() => setLightbox(i)}
               className="group block w-full overflow-hidden rounded-sm bg-surface text-left"
-              aria-label={`Powiększ: ${photo.alt}`}
+              aria-label={`Powiększ: ${photoAlt(photo)}`}
             >
               <Image
                 src={photo.src}
-                alt={photo.alt}
+                alt={photoAlt(photo)}
                 width={photo.width}
                 height={photo.height}
                 sizes="(min-width: 1024px) 20rem, (min-width: 640px) 45vw, 90vw"
@@ -191,12 +171,11 @@ export default function GalleryGrid() {
         </div>
       )}
 
-      {/* Lightbox */}
-      {active && (
+            {active && (
         <div
           role="dialog"
           aria-modal="true"
-          aria-label={active.alt}
+          aria-label={photoAlt(active)}
           className="fixed inset-0 z-[70] flex items-center justify-center bg-canvas-dark/95 p-4 sm:p-8"
           onClick={close}
         >
@@ -227,14 +206,19 @@ export default function GalleryGrid() {
           >
             <Image
               src={active.src}
-              alt={active.alt}
+              alt={photoAlt(active)}
               width={active.width}
               height={active.height}
               sizes="90vw"
               className="max-h-[80svh] w-auto object-contain"
             />
             <figcaption className="mt-4 text-center text-sm text-muted-invert">
-              {active.alt}
+              {photoAlt(active)}
+              {photoVenue(active) && (
+                <span className="mt-1 block text-accent">
+                  {photoVenue(active)!.name}, {photoVenue(active)!.city}
+                </span>
+              )}
             </figcaption>
           </figure>
 

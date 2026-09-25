@@ -1,14 +1,12 @@
 /**
- * Publiczne feedy iCal z Kalendarza Google Magdy.
+ * Public iCal feeds from the owner's Google Calendar.
  *
- * Te adresy są celowo trzymane w kodzie, nie w zmiennych środowiskowych -
- * są PUBLICZNE z definicji i nie ma w nich czego chronić. Sprawdzone
- * na żywym feedzie: przy ustawieniu "widzi wyłącznie stan Wolny/Zajęty"
- * Google podmienia tytuły wydarzeń na "Busy", więc na zewnątrz wychodzi
- * sama data. Nazwiska klientek i kwoty zaliczek zostają w kalendarzu.
+ * Kept in code on purpose - they are public by design. Verified on the live
+ * feed: with "see only free/busy" Google replaces event titles with "Busy",
+ * so only dates leave the calendar.
  *
- * NIGDY nie wolno tu wstawić "Tajnego adresu w formacie iCal" z ustawień
- * Google - tamten zwraca pełne szczegóły niezależnie od ustawień prywatności.
+ * NEVER put the "Secret address in iCal format" here - that one returns full
+ * details regardless of the privacy setting.
  */
 export const kalendarze = {
   booked:
@@ -17,5 +15,4 @@ export const kalendarze = {
     "https://calendar.google.com/calendar/ical/b9f8e5219e22d9e36c59b49756289b69aeca6c3bc3e167d63007135ecd31c254%40group.calendar.google.com/public/basic.ics",
 } as const;
 
-/** Co ile sekund odpytywać Google ponownie. */
 export const ODSWIEZANIE_SEKUNDY = 900;

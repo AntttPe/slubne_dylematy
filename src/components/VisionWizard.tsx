@@ -5,24 +5,13 @@ import { ArrowLeft, Check, Sparkles, X } from "lucide-react";
 import { buildSummary, questions } from "@/data/wizard";
 
 /**
- * Pomocnik do opisania wizji.
+ * Helper for describing the vision. An empty "your vision" textarea is a
+ * barrier: people either write "please send a quote" or abandon the form.
  *
- * Powód istnienia: puste pole "Wasza wizja" to bariera. Para albo
- * wpisuje "proszę o wycenę", co nic nie wnosi, albo porzuca formularz.
- *
- * Zasady, które trzymam tu świadomie:
- *
- *  - Wynik ląduje w polu tekstowym, a NIE w osobnym kanale danych.
- *    Para widzi dokładnie, co zostanie wysłane, i może to poprawić.
- *  - Żadna opcja nie jest zaznaczona domyślnie. Podpowiadanie
- *    droższego zakresu przez domyślny stan byłoby nieuczciwe.
- *  - Liczba kroków jest podana z góry i prawdziwa.
- *  - Wszędzie da się pominąć pytanie.
- *
- * Czego tu nie ma i nie będzie: liczników czasu, komunikatów
- * o kończących się terminach, wyskakujących okienek. Przy usłudze,
- * o której decyduje się po spotkaniu, taka wymiana - chwilowy skok
- * konwersji za utratę zaufania - jest zła.
+ * Rules held on purpose: the result lands in the textarea (never a separate
+ * data path) so the couple sees exactly what is sent; no option is
+ * pre-selected, since nudging a bigger scope by default would be dishonest;
+ * the step count is stated up front and true; every question can be skipped.
  */
 export default function VisionWizard({
   onComplete,
@@ -63,8 +52,6 @@ export default function VisionWizard({
     const nowe = { ...odpowiedzi, [pytanie.id]: nowaLista };
     setOdpowiedzi(nowe);
 
-    // Przy jednokrotnym wyborze przechodzimy dalej od razu - dodatkowe
-    // "Dalej" byłoby kliknięciem bez treści.
     if (!pytanie.multi) dalej(nowe);
   };
 
@@ -106,8 +93,7 @@ export default function VisionWizard({
         </button>
       </div>
 
-      {/* Pasek postępu - uczciwy, odzwierciedla realną liczbę kroków. */}
-      <div
+            <div
         className="mt-5 h-0.5 w-full overflow-hidden rounded-full bg-line"
         role="presentation"
       >
@@ -158,8 +144,7 @@ export default function VisionWizard({
             Pomiń
           </button>
 
-          {/* Przy wielokrotnym wyborze potrzebne jest jawne zatwierdzenie. */}
-          {pytanie.multi && (
+                    {pytanie.multi && (
             <button
               type="button"
               onClick={() => dalej(odpowiedzi)}

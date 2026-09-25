@@ -9,7 +9,7 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
   title: "Kontakt i rezerwacja terminu",
   description:
-    "Sprawdź wolne terminy i wyślij zapytanie o dekoracje ślubne. Odpowiadam w ciągu 24 godzin.",
+    "Sprawdź wolne terminy i wyślij zapytanie o dekoracje ślubne, weselne i okolicznościowe. Śląsk i cała Polska.",
   alternates: { canonical: "/kontakt" },
 };
 
@@ -32,14 +32,13 @@ export default async function KontaktPage() {
             Sprawdźcie termin i <em>napiszcie do mnie</em>
           </>
         }
-        lead="Odpowiadam w ciągu 24 godzin. Piszcie także wtedy, gdy data nie jest jeszcze pewna."
+        lead="Do każdego zapytania podchodzę indywidualnie. Piszcie także wtedy, gdy data nie jest jeszcze pewna."
       />
 
       <section className="bg-canvas py-20 sm:py-24">
         <div className="mx-auto max-w-6xl px-5 sm:px-8">
           <div className="grid gap-12 lg:grid-cols-[22rem_minmax(0,1fr)] lg:gap-16">
-            {/* Kolumna boczna */}
-            <div className="flex flex-col gap-8">
+                        <div className="flex flex-col gap-8">
               <div className="rounded-md border border-line bg-surface p-7">
                 <h2 className="type-eyebrow text-accent-strong">Dane kontaktowe</h2>
                 <ul className="mt-6 flex flex-col gap-5">
@@ -64,9 +63,7 @@ export default async function KontaktPage() {
                 </ul>
               </div>
 
-              {/* Kalendarz również tutaj - para widzi dostępność
-                  w momencie wypełniania formularza. */}
-              <div>
+                            <div>
                 <h2 className="type-eyebrow mb-4 text-accent-strong">
                   Wolne terminy
                 </h2>

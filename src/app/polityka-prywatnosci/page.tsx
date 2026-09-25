@@ -1,101 +1,132 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/ui/PageHeader";
+import { analyticsEnabled } from "@/lib/analytics";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "Polityka prywatności",
   description:
-    "Zasady przetwarzania danych osobowych przekazanych przez formularz kontaktowy.",
+    "Co dzieje się z danymi podanymi w formularzu kontaktowym Ślubnych Dylematów.",
   alternates: { canonical: "/polityka-prywatnosci" },
   robots: { index: false, follow: true },
 };
 
 /**
- * TODO(klient): uzupełnić pełną nazwę działalności, adres i NIP -
- * bez danych administratora dokument nie spełnia wymogów RODO.
- * Warto dać to do sprawdzenia prawnikowi przed startem.
+ * Written in plain Polish on purpose. Legalese is not a legal requirement -
+ * GDPR asks for clear, plain language - and a wall of clauses on a one-person
+ * business reads as copied boilerplate.
+ *
+ * The substance still has to be here: who the controller is, what is
+ * collected, why, for how long, who else sees it, and what rights people have.
+ *
+ * TODO(client): worth having a lawyer read this before launch.
  */
 export default function PolitykaPrywatnosciPage() {
   return (
     <>
-      <PageHeader eyebrow="Dokumenty" title="Polityka prywatności" />
+      <PageHeader
+        eyebrow="Dokumenty"
+        title="Polityka prywatności"
+        lead="Krótko i bez prawniczego żargonu: co dzieje się z danymi, które nam podajecie."
+      />
 
-      <section className="bg-canvas py-20">
-        <div className="mx-auto flex max-w-2xl flex-col gap-10 px-5 text-muted sm:px-8">
+      <section className="bg-canvas py-16 sm:py-20">
+        <div className="mx-auto flex max-w-2xl flex-col gap-10 px-5 leading-relaxed text-muted sm:px-8">
           <div>
-            <h2 className="type-h3 text-ink">Administrator danych</h2>
-            <p className="mt-3 leading-relaxed">
-              Administratorem danych osobowych jest {site.name}. Kontakt w
-              sprawach dotyczących danych:{" "}
+            <h2 className="type-h3 text-ink">Kto odpowiada za Wasze dane</h2>
+            <p className="mt-3">
+              Administratorem danych jest {site.legalName}, prowadząca
+              działalność pod nazwą {site.name}. W każdej sprawie
+              dotyczącej Waszych danych napiszcie na{" "}
               <a
                 href={site.contact.emailHref}
                 className="text-ink underline underline-offset-2"
               >
                 {site.contact.email}
-              </a>
-              .
+              </a>{" "}
+              - odpowiadam osobiście.
             </p>
           </div>
 
           <div>
-            <h2 className="type-h3 text-ink">Jakie dane zbieramy</h2>
-            <p className="mt-3 leading-relaxed">
-              Wyłącznie dane podane dobrowolnie w formularzu kontaktowym: imię i
-              nazwisko, adres e-mail, opcjonalnie numer telefonu, data i miejsce
-              uroczystości, liczba gości, orientacyjny budżet oraz treść
-              wiadomości.
+            <h2 className="type-h3 text-ink">Co zbieramy</h2>
+            <p className="mt-3">
+              Tylko to, co sami wpiszecie w formularzu. Konieczne są{" "}
+              <span className="text-ink">imię i nazwisko oraz adres e-mail</span>{" "}
+              - bez nich nie mam jak odpowiedzieć. Reszta jest dobrowolna:
+              telefon, data i miejsce uroczystości, liczba gości, budżet i opis
+              Waszej wizji.
+            </p>
+            <p className="mt-3">
+              Nie kupujemy baz danych i nie zbieramy niczego poza formularzem.
             </p>
           </div>
 
           <div>
-            <h2 className="type-h3 text-ink">Cel i podstawa prawna</h2>
-            <p className="mt-3 leading-relaxed">
-              Dane przetwarzamy w celu udzielenia odpowiedzi na zapytanie i
-              ewentualnego przygotowania oferty - na podstawie zgody (art. 6
-              ust. 1 lit. a RODO) oraz działań podejmowanych przed zawarciem
-              umowy (art. 6 ust. 1 lit. b RODO).
+            <h2 className="type-h3 text-ink">Po co</h2>
+            <p className="mt-3">
+              Żeby odpowiedzieć na zapytanie i przygotować propozycję
+              dekoracji. Do niczego innego. Nie wysyłamy newslettera i nie
+              wykorzystujemy tych danych do reklam.
             </p>
           </div>
 
           <div>
-            <h2 className="type-h3 text-ink">Okres przechowywania</h2>
-            <p className="mt-3 leading-relaxed">
-              Zapytania przechowujemy przez 24 miesiące od ostatniego kontaktu,
-              a w przypadku zawarcia umowy - przez okres wymagany przepisami
-              podatkowymi.
+            <h2 className="type-h3 text-ink">Jak długo je trzymamy</h2>
+            <p className="mt-3">
+              Zapytania przechowujemy dwa lata od ostatniego kontaktu - na
+              wypadek, gdybyście wrócili do rozmowy. Jeśli dojdzie do
+              współpracy, dokumenty rozliczeniowe zostają tak długo, jak
+              wymagają tego przepisy podatkowe.
+            </p>
+            <p className="mt-3">
+              Możecie w każdej chwili poprosić o usunięcie wcześniej - wystarczy
+              jeden mail.
             </p>
           </div>
 
           <div>
-            <h2 className="type-h3 text-ink">Odbiorcy danych</h2>
-            <p className="mt-3 leading-relaxed">
-              Dane mogą być powierzone dostawcom usług technicznych:
-              hostingu strony oraz obsługi poczty. Podmioty te działają na
-              podstawie umów powierzenia przetwarzania. Część z nich ma
-              siedzibę poza Europejskim Obszarem Gospodarczym - przekazanie
-              danych odbywa się wówczas na podstawie standardowych klauzul
-              umownych zatwierdzonych przez Komisję Europejską. Danych nie
-              sprzedajemy ani nie udostępniamy w celach marketingowych.
+            <h2 className="type-h3 text-ink">Kto jeszcze ma do nich dostęp</h2>
+            <p className="mt-3">
+              Nikt poza firmami, które technicznie obsługują stronę i pocztę -
+              hosting i serwer pocztowy. Nie sprzedajemy danych, nie
+              udostępniamy ich innym firmom ani nie przekazujemy nikomu do
+              celów marketingowych.
+            </p>
+            <p className="mt-3">
+              Część tych usług ma siedzibę poza Unią Europejską i korzysta ze
+              standardowych klauzul umownych zatwierdzonych przez Komisję
+              Europejską.
             </p>
           </div>
 
           <div>
-            <h2 className="type-h3 text-ink">Wasze prawa</h2>
-            <p className="mt-3 leading-relaxed">
-              Przysługuje Wam prawo dostępu do danych, ich sprostowania,
-              usunięcia, ograniczenia przetwarzania, przenoszenia oraz cofnięcia
-              zgody w dowolnym momencie. Macie też prawo wniesienia skargi do
+            <h2 className="type-h3 text-ink">Co możecie zrobić</h2>
+            <p className="mt-3">
+              Możecie poprosić o wgląd w swoje dane, ich poprawienie, usunięcie
+              albo wycofać zgodę - bez podawania powodu i bez żadnych
+              konsekwencji. Napiszcie na adres powyżej.
+            </p>
+            <p className="mt-3">
+              Gdyby coś Wam się nie podobało, macie też prawo złożyć skargę do
               Prezesa Urzędu Ochrony Danych Osobowych.
             </p>
           </div>
 
           <div>
             <h2 className="type-h3 text-ink">Pliki cookies</h2>
-            <p className="mt-3 leading-relaxed">
-              Strona nie używa plików cookies do celów marketingowych ani
-              analitycznych. Zabezpieczenie formularza przed spamem realizujemy
-              w sposób nieprofilujący użytkowników.
+            <p className="mt-3">
+              Strona nie zapisuje plików cookies ani niczego innego na Waszym
+              urządzeniu. Nie śledzimy Was na innych stronach. Dlatego nie
+              wyświetlamy okna zgody na cookies - nie ma na co jej wyrażać.
             </p>
+            {analyticsEnabled && (
+              <p className="mt-3">
+                Liczymy tylko anonimowe odwiedziny (ile osób weszło, z jakiego
+                kraju, na jakim urządzeniu). Tych danych nie da się powiązać z
+                konkretną osobą ani rozpoznać jej przy kolejnej wizycie.
+              </p>
+            )}
           </div>
         </div>
       </section>

@@ -1,7 +1,3 @@
-/**
- * Nagłówek podstrony. Bez falowanych dividerów SVG -
- * wystarczy zmiana tła i oddech.
- */
 export default function PageHeader({
   eyebrow,
   title,
