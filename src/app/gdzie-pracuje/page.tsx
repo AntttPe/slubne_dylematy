@@ -34,7 +34,7 @@ export default function GdziePracujePage() {
             Śląsk i <em>cała Polska</em>
           </>
         }
-        lead="Najczęściej dekoruję na Śląsku, ale dojeżdżam w każde miejsce w kraju. Jeśli Waszego obiektu nie ma na liście, to żaden problem - po prostu jeszcze się nie poznaliśmy."
+        lead="Pracuję głównie na Śląsku i dojeżdżam w całej Polsce. Poniżej miejsca, które zdążyłam poznać na tyle dobrze, że wiem, co się w nich sprawdzi - gdzie jest światło, ile zajmuje montaż, co widać z każdego stolika."
       />
 
       <section className="bg-canvas py-16 sm:py-20">
@@ -42,7 +42,7 @@ export default function GdziePracujePage() {
           <div className="grid gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-16">
             <Reveal>
               <h2 className="type-eyebrow text-accent-strong">
-                Obiekty, w których dekorowałam
+                Obiekty, które już znam
               </h2>
               <ul className="mt-6 grid gap-x-8 gap-y-3 sm:grid-cols-2">
                 {lista.map((v) => (
@@ -66,19 +66,19 @@ export default function GdziePracujePage() {
               </p>
               <p className="mt-6 flex items-start gap-2.5 text-[0.9375rem] leading-relaxed text-muted">
                 <MapPin size={16} className="mt-1 shrink-0 text-accent-strong" />
-                Poza Śląskiem dojeżdżam w całej Polsce - wystarczy, że
-                napiszecie, gdzie odbywa się Wasza uroczystość.
+                Lista rośnie z każdym sezonem. Odległość nie jest przeszkodą -
+                liczy się to, żeby zdążyć obejrzeć miejsce przed Waszym dniem.
               </p>
             </Reveal>
           </div>
 
           <div className="mt-20 border-t border-line pt-14 text-center">
             <h2 className="type-h2 text-ink">
-              Dekorujecie w <em>którymś z tych miejsc</em>?
+              Powiedzcie, gdzie <em>świętujecie</em>
             </h2>
-            <p className="type-lead mx-auto mt-5 max-w-lg text-muted">
-              Znam je od kuchni - wiem, co gdzie stanie, zanim wejdę. Napiszcie,
-              a sprawdzę termin.
+            <p className="type-lead mx-auto mt-5 max-w-xl text-muted">
+              Jeśli znam to miejsce, od razu wiem, co się w nim sprawdzi. Jeśli
+              nie - przyjadę je obejrzeć, zanim cokolwiek zaproponuję.
             </p>
             <div className="mt-8">
               <Button href="/kontakt">Zapytaj o termin</Button>
