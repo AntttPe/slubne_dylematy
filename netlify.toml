@@ -12,6 +12,16 @@
   # jedną wersję dla całego builda niż liczyć na to obejście.
   NODE_VERSION = "22"
 
+  # Turbopack zapisuje w swoim cache kompilacji snapshot zmiennych
+  # środowiskowych, więc skaner Netlify znajduje tam SMTP_PASS i przerywa
+  # build. Sprawdzone: hasła NIE MA ani w paczkach dla przeglądarki, ani
+  # w kodzie funkcji serwerowej - tylko w .sst, czyli w cache, którego
+  # Netlify nie serwuje, a jedynie przechowuje między budowaniami.
+  #
+  # Wyłączamy z skanowania wyłącznie ten katalog. Reszta - w tym to, co
+  # realnie trafia na serwer - jest skanowana dalej.
+  SECRETS_SCAN_OMIT_PATHS = ".next/cache/**,.netlify/.next/cache/**"
+
 # Oficjalna wtyczka Next.js - obsługuje trasy serwerowe, Server Actions
 # i odświeżanie kalendarza co 15 minut.
 [[plugins]]
