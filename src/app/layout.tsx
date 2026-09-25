@@ -97,6 +97,11 @@ export default function RootLayout({
         </a>
         {cloudflareAnalyticsToken && (
           <script
+            /* type="module" mirrors the snippet Cloudflare hands out. Module
+               scripts are deferred by definition; `defer` is redundant for
+               them but keeps the loading strategy explicit and satisfies the
+               no-sync-scripts lint rule. */
+            type="module"
             defer
             src="https://static.cloudflareinsights.com/beacon.min.js"
             data-cf-beacon={JSON.stringify({ token: cloudflareAnalyticsToken })}
