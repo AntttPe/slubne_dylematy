@@ -1,3 +1,4 @@
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
 
 type Variant = "primary" | "secondary" | "onDark";
@@ -17,6 +18,8 @@ type Props = {
   variant?: Variant;
   href?: string;
   className?: string;
+  /** Shows a spinner in place of nothing - the wait on submit is a few seconds. */
+  loading?: boolean;
   children: React.ReactNode;
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "className" | "children">;
 
@@ -24,6 +27,7 @@ export default function Button({
   variant = "primary",
   href,
   className = "",
+  loading = false,
   children,
   ...rest
 }: Props) {
@@ -48,7 +52,8 @@ export default function Button({
   }
 
   return (
-    <button className={cls} {...rest}>
+    <button className={cls} aria-busy={loading || undefined} {...rest}>
+      {loading && <Loader2 size={17} className="animate-spin" aria-hidden="true" />}
       {children}
     </button>
   );

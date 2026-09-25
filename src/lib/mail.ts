@@ -3,6 +3,7 @@ import "server-only";
 import nodemailer from "nodemailer";
 import { site } from "@/data/site";
 import type { Inquiry } from "./contact-schema";
+import { firstName } from "./format";
 
 /**
  * Mail rendering is not web rendering. Outlook on Windows draws HTML with
@@ -115,15 +116,20 @@ ${inquiry.message ? `<p style="margin:18px 0 4px;color:${PRZYGASZONY}">Wizja:</p
  * Confirmation for the couple. Sent from the real mailbox, not a noreply
  * address - people do reply to these, and bouncing that reply would lose a
  * lead without anyone noticing.
+ *
+ * Greets by first name only. A surname in a thank-you note reads like a
+ * database talking; the owner's copy keeps the full name.
  */
 export function buildCoupleMail(inquiry: Inquiry) {
+  const imie = firstName(inquiry.name);
+
   return {
     from: `"${site.name}" <${user}>`,
     to: inquiry.email,
     replyTo: site.contact.email,
     subject: `Dziękujemy za zapytanie - ${site.name}`,
     text: [
-      `Dzień dobry, ${inquiry.name.split(" ")[0]}!`,
+      `Dzień dobry, ${imie}!`,
       "",
       "Wasze zapytanie już do nas dotarło.",
       "",
@@ -137,7 +143,7 @@ export function buildCoupleMail(inquiry: Inquiry) {
       `${site.name} | ${site.contact.phone}`,
       site.url,
     ].join("\n"),
-    html: szablon(`<p style="margin:0 0 14px;color:${ATRAMENT}">Dzień dobry, ${esc(inquiry.name.split(" ")[0])}!</p>
+    html: szablon(`<p style="margin:0 0 14px;color:${ATRAMENT}">Dzień dobry, ${esc(imie)}!</p>
 <p style="margin:0 0 14px;color:${ATRAMENT}"><strong>Wasze zapytanie już do nas dotarło.</strong></p>
 <p style="margin:0 0 14px;color:${ATRAMENT}">Na odpowiedź potrzebujemy chwili, ponieważ do każdego zapytania podchodzimy indywidualnie. Informacje z formularza pozwolą mi lepiej poznać Wasze potrzeby, pomysły i oczekiwania.</p>
 <p style="margin:0 0 24px;color:${ATRAMENT}">W kolejnym mailu ode mnie otrzymacie najważniejsze informacje i wspólnie wybierzemy dogodny termin spotkania - online lub przy kawie.</p>

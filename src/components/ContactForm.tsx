@@ -10,6 +10,7 @@ import {
   type Status,
 } from "@/lib/availability";
 import Button from "./ui/Button";
+import PhoneField from "./PhoneField";
 import VisionWizard from "./VisionWizard";
 
 const field =
@@ -192,14 +193,7 @@ export default function ContactForm({
 
         <div className="grid gap-5 sm:grid-cols-2">
           <Field label="Telefon" name="phone" error={errors.phone}>
-            <input
-              id="phone"
-              name="phone"
-              type="tel"
-              autoComplete="tel"
-              placeholder="+48 600 000 000"
-              className={field}
-            />
+            <PhoneField error={errors.phone} />
           </Field>
 
           <Field
@@ -372,8 +366,13 @@ export default function ContactForm({
           </p>
         )}
 
-        <Button type="submit" disabled={pending} className="mt-2 w-full">
-          {pending ? "Wysyłanie…" : "Wyślij zapytanie"}
+        <Button
+          type="submit"
+          disabled={pending}
+          loading={pending}
+          className="mt-2 w-full"
+        >
+          {pending ? "Wysyłam zapytanie…" : "Wyślij zapytanie"}
         </Button>
       </div>
     </form>

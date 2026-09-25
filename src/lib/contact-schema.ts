@@ -1,4 +1,8 @@
 import { z } from "zod";
+import { formatName, phoneDigits } from "./format";
+import { DOMYSLNY_PREFIKS, phonePrefixes } from "@/data/phone-prefixes";
+
+const prefiksy = phonePrefixes.map((p) => p.code);
 
 export const celebrationTypes = [
   "Ślub i wesele",
@@ -11,19 +15,35 @@ export const celebrationTypes = [
 ] as const;
 
 export const inquirySchema = z.object({
+  // Normalised here rather than in the form, so a submission with JS off
+  // gets the same treatment as one from the browser.
   name: z
     .string()
     .trim()
     .min(2, "Podaj imię i nazwisko")
-    .max(100, "Za długie imię i nazwisko"),
+    .max(100, "Za długie imię i nazwisko")
+    .transform(formatName),
 
   email: z.email("Sprawdź adres e-mail").max(200),
 
+  // The dialling code is a separate control, so the number itself is digits
+  // and spacing only.
   phone: z
     .string()
     .trim()
     .max(30)
-    .regex(/^[0-9+\s()-]*$/, "Numer może zawierać tylko cyfry i znaki + ( ) -")
+    .regex(/^[0-9\s()-]*$/, "Numer może zawierać tylko cyfry")
+    .refine(
+      (v) => v === "" || phoneDigits(v).length >= 6,
+      "Ten numer wygląda na niepełny",
+    )
+    .optional()
+    .or(z.literal("")),
+
+  phoneCountry: z
+    .string()
+    .trim()
+    .refine((v) => v === "" || prefiksy.includes(v), "Nieznany kierunkowy")
     .optional()
     .or(z.literal("")),
 
@@ -67,7 +87,19 @@ export const inquirySchema = z.object({
   consent: z.literal("on", {
     message: "Zgoda jest wymagana, żeby móc odpowiedzieć na zapytanie",
   }),
-});
+})
+
+/**
+ * The dialling code is only ever useful glued to the number, so the schema
+ * emits one ready-to-use `phone` and the rest of the app never has to think
+ * about the two fields again.
+ */
+.transform((dane) => ({
+  ...dane,
+  phone: dane.phone
+    ? `${dane.phoneCountry || DOMYSLNY_PREFIKS} ${dane.phone}`.replace(/\s+/g, " ").trim()
+    : "",
+}));
 
 export type Inquiry = z.infer<typeof inquirySchema>;
 
