@@ -127,9 +127,8 @@ export default function ContactForm({
             className="mt-0.5 shrink-0 text-accent-strong"
           />
           <p>
-            <span className="text-ink">Zajrzyjcie do folderu spam.</span>{" "}
-            Wiadomości od nowych nadawców czasem tam trafiają - warto sprawdzić,
-            zanim uznacie, że nie odpisałam.
+            <span className="text-ink">Zajrzyjcie też do folderu spam.</span>{" "}
+            Wiadomości od nowych nadawców czasem tam trafiają.
           </p>
         </div>
 
