@@ -18,7 +18,7 @@ const values = [
 
 export default function AboutSection() {
   return (
-    <section id="o-mnie" className="scroll-mt-24 bg-canvas py-20 sm:py-24">
+    <section id="o-mnie" className="scroll-mt-24 bg-canvas py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-16">
           <Reveal>

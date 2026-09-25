@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Instagram, Facebook } from "lucide-react";
 import { navLinks, site } from "@/data/site";
+import NavLink from "./ui/NavLink";
 
 export default function Footer() {
   return (
@@ -43,12 +44,12 @@ export default function Footer() {
             <ul className="mt-5 flex flex-col gap-3">
               {[...navLinks, { href: "/gdzie-pracuje", label: "Gdzie pracuję" }].map((link) => (
                 <li key={link.href}>
-                  <Link
+                  <NavLink
                     href={link.href}
                     className="text-[0.9375rem] text-muted-invert transition-colors hover:text-ink-invert"
                   >
                     {link.label}
-                  </Link>
+                  </NavLink>
                 </li>
               ))}
             </ul>

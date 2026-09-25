@@ -15,7 +15,7 @@ import Reveal from "./ui/Reveal";
  */
 export default function ServicesSection() {
   return (
-    <section id="oferta" className="scroll-mt-24 bg-surface py-24 sm:py-28">
+    <section id="oferta" className="scroll-mt-24 bg-surface py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeader
           eyebrow="Oferta"

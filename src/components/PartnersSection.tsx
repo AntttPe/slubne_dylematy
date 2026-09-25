@@ -17,7 +17,7 @@ export default function PartnersSection() {
   if (partners.length === 0) return null;
 
   return (
-    <section id="polecani" className="scroll-mt-24 bg-canvas py-24 sm:py-28">
+    <section id="polecani" className="scroll-mt-24 bg-canvas py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeader
           eyebrow="Zaufany zespół"

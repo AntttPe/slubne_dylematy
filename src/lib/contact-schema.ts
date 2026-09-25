@@ -67,11 +67,13 @@ export const inquirySchema = z.object({
 
   venue: z.string().trim().max(200).optional().or(z.literal("")),
 
+  // Arrives grouped as "12 000" from the form; the spaces are display only.
   budget: z
     .string()
     .trim()
-    .regex(/^\d*$/, "Wpisz samą kwotę, bez spacji i złotówek")
-    .max(7, "Ta kwota wygląda na pomyłkę")
+    .transform((v) => v.replace(/\s/g, ""))
+    .refine((v) => /^\d*$/.test(v), "Wpisz samą kwotę, bez złotówek")
+    .refine((v) => v.length <= 7, "Ta kwota wygląda na pomyłkę")
     .optional()
     .or(z.literal("")),
 

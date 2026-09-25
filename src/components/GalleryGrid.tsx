@@ -147,6 +147,10 @@ export default function GalleryGrid() {
                 width={photo.width}
                 height={photo.height}
                 sizes="(min-width: 1024px) 20rem, (min-width: 640px) 45vw, 90vw"
+                // The first row is on screen before anything can scroll, so
+                // lazy-loading it only delays the photos people see first.
+                loading={i < 3 ? "eager" : "lazy"}
+                fetchPriority={i < 3 ? "high" : "auto"}
                 className="h-auto w-full transition-opacity duration-200 group-hover:opacity-85"
               />
             </button>

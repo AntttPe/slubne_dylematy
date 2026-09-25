@@ -49,3 +49,18 @@ export function formatPhone(value: string, maxDigits = 15): string {
   const cyfry = phoneDigits(value).slice(0, maxDigits);
   return cyfry.replace(/(\d{3})(?=\d)/g, "$1 ").trim();
 }
+
+/**
+ * Groups an amount in thousands as it is typed: "12000" -> "12 000".
+ *
+ * A plain space, not the non-breaking one `toLocaleString` produces: this
+ * value goes back into an <input>, and a non-breaking space there is
+ * invisible but breaks a naive copy-paste into a calculator.
+ */
+export function formatAmount(value: string, maxDigits = 7): string {
+  const cyfry = value
+    .replace(/\D/g, "")
+    .replace(/^0+(?=\d)/, "")
+    .slice(0, maxDigits);
+  return cyfry.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+}

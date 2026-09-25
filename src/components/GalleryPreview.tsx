@@ -6,7 +6,7 @@ import Button from "./ui/Button";
 
 export default function GalleryPreview() {
   return (
-    <section id="realizacje" className="scroll-mt-24 bg-canvas py-24 sm:py-32">
+    <section id="realizacje" className="scroll-mt-24 bg-canvas py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeader
           eyebrow="Realizacje"

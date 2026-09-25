@@ -136,7 +136,7 @@
    Deliberately a transition, not @keyframes: with animation-delay the
    starting frame does not apply during the delay, so staggered items
    flashed, went dark, then faded in. */
-html.js .reveal {
+html[data-js] .reveal {
   opacity: 0;
   transform: translateY(16px);
   transition:
@@ -145,7 +145,7 @@ html.js .reveal {
   transition-delay: var(--reveal-delay, 0ms);
 }
 
-html.js .reveal[data-visible="true"] {
+html[data-js] .reveal[data-visible="true"] {
   opacity: 1;
   transform: none;
 }
@@ -156,18 +156,18 @@ html.js .reveal[data-visible="true"] {
   display: none;
 }
 
-html.js .tylko-z-js {
+html[data-js] .tylko-z-js {
   display: inline-flex;
 }
 
-html.js div.tylko-z-js {
+html[data-js] div.tylko-z-js {
   display: block;
 }
 
-/* Failsafe: the script sets .js, but the React bundle can still fail
-   AFTER that - then nothing ever sets data-visible. A timer in the
-   layout adds this class if no <Reveal> mounts within 2.5s. */
-html.reveal-failsafe .reveal {
+/* Failsafe: the script marks data-js, but the React bundle can still
+   fail AFTER that - then nothing ever sets data-visible. A timer in the
+   layout sets this attribute if no <Reveal> mounts within 2.5s. */
+html[data-reveal-failsafe] .reveal {
   opacity: 1 !important;
   transform: none !important;
   transition: none !important;

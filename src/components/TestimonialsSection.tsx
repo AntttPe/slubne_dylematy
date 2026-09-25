@@ -6,7 +6,7 @@ export default function TestimonialsSection() {
   return (
     <section
       id="opinie"
-      className="scroll-mt-24 bg-canvas-dark py-24 sm:py-32"
+      className="scroll-mt-24 bg-canvas-dark py-16 sm:py-20"
     >
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeader

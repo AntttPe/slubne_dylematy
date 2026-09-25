@@ -78,15 +78,22 @@ export default function RootLayout({
     >
       <body>
         {/* Runs synchronously before the rest of <body> is parsed, so
-            content never flashes. Adds `js` to enable hiding <Reveal>
-            elements, and arms a failsafe timer in case the React bundle
-            dies after this point. */}
+            content never flashes. Marks that JS is alive, which is what
+            lets the CSS hide <Reveal> elements, and arms a failsafe timer
+            in case the React bundle dies after this point.
+
+            These are data attributes, not classes, and that is the whole
+            point: <html> already carries a className from next/font, and
+            React rewrites that attribute during hydration - which silently
+            wiped the marker and left every .tylko-z-js element hidden for
+            good. React never renders these attributes, so it has no reason
+            to touch them. */}
                 <script
           dangerouslySetInnerHTML={{
             __html:
-              "var d=document.documentElement;d.classList.add('js');" +
+              "var d=document.documentElement;d.setAttribute('data-js','');" +
               "window.__revealFailsafe=setTimeout(function(){" +
-              "d.classList.add('reveal-failsafe')},2500);",
+              "d.setAttribute('data-reveal-failsafe','')},2500);",
           }}
         />
         <a

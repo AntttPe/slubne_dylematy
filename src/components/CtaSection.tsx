@@ -4,7 +4,7 @@ import Reveal from "./ui/Reveal";
 
 export default function CtaSection() {
   return (
-    <section className="bg-canvas py-24 sm:py-32">
+    <section className="bg-canvas py-16 sm:py-20">
       <div className="mx-auto max-w-3xl px-5 text-center sm:px-8">
         <Reveal>
           <p className="type-eyebrow text-accent-strong">Rezerwacja</p>

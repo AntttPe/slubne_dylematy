@@ -4,6 +4,7 @@ import { useActionState, useEffect, useRef, useState } from "react";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { submitInquiry } from "@/app/kontakt/actions";
 import { celebrationTypes, type FormState } from "@/lib/contact-schema";
+import { formatAmount } from "@/lib/format";
 import {
   type AvailabilityMap,
   statusLabels,
@@ -64,6 +65,10 @@ export default function ContactForm({
   // Checking "don't know yet" disables the amount field. A disabled field is
   // not included in FormData, so the amount clears itself.
   const [budgetUnknown, setBudgetUnknown] = useState(false);
+
+  // Grouped in thousands as it is typed. type="number" cannot show a
+  // separator, so this is a text field with a numeric keypad instead.
+  const [budget, setBudget] = useState("");
 
   useEffect(() => {
     // Set in the browser only - in server HTML it would be frozen at render
@@ -277,12 +282,13 @@ export default function ContactForm({
             <input
               id="budget"
               name="budget"
-              type="number"
-              min="0"
-              step="100"
+              type="text"
               inputMode="numeric"
+              autoComplete="off"
+              value={budget}
+              onChange={(e) => setBudget(formatAmount(e.target.value))}
               disabled={budgetUnknown}
-              placeholder={budgetUnknown ? "" : "np. 4000"}
+              placeholder={budgetUnknown ? "" : "np. 4 000"}
               aria-describedby="budget-waluta"
               className={`${field} pr-10 disabled:cursor-not-allowed disabled:bg-surface disabled:text-faint`}
             />

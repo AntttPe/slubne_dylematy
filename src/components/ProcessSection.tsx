@@ -5,7 +5,7 @@ import Button from "./ui/Button";
 
 export default function ProcessSection() {
   return (
-    <section id="wspolpraca" className="scroll-mt-24 bg-surface py-24 sm:py-32">
+    <section id="wspolpraca" className="scroll-mt-24 bg-surface py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeader
           eyebrow="Jak to działa"

@@ -6,6 +6,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { navLinks, site } from "@/data/site";
+import NavLink from "./ui/NavLink";
+import { scrollToTop } from "@/lib/scroll";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -60,7 +62,7 @@ export default function Navbar() {
             // which breaks voice control.
             if (pathname === "/") {
               e.preventDefault();
-              window.scrollTo({ top: 0, behavior: "smooth" });
+              scrollToTop();
               setOpen(false);
             }
           }}
@@ -97,7 +99,7 @@ export default function Navbar() {
 
         <nav className="hidden items-center gap-7 lg:flex">
           {navLinks.map((link) => (
-            <Link
+            <NavLink
               key={link.href}
               href={link.href}
               className={`text-sm transition-colors duration-200 ${
@@ -111,7 +113,7 @@ export default function Navbar() {
               }`}
             >
               {link.label}
-            </Link>
+            </NavLink>
           ))}
         </nav>
 
@@ -138,14 +140,14 @@ export default function Navbar() {
       >
         <nav className="flex flex-col px-5 py-2 sm:px-8">
           {navLinks.map((link) => (
-            <Link
+            <NavLink
               key={link.href}
               href={link.href}
-              onClick={() => setOpen(false)}
+              onNavigate={() => setOpen(false)}
               className="border-b border-line py-4 text-[0.9375rem] text-muted last:border-0 hover:text-ink"
             >
               {link.label}
-            </Link>
+            </NavLink>
           ))}
         </nav>
       </div>
