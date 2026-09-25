@@ -5,7 +5,6 @@ import GalleryPreview from "@/components/GalleryPreview";
 import AvailabilitySection from "@/components/AvailabilitySection";
 import ProcessSection from "@/components/ProcessSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import AreaSection from "@/components/AreaSection";
 import PartnersSection from "@/components/PartnersSection";
 import CtaSection from "@/components/CtaSection";
 import JsonLd from "@/components/JsonLd";
@@ -21,7 +20,6 @@ export default function HomePage() {
       <AvailabilitySection />
       <ProcessSection />
       <TestimonialsSection />
-      <AreaSection />
       <PartnersSection />
       <CtaSection />
     </>

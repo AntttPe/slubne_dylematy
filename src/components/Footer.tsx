@@ -41,7 +41,7 @@ export default function Footer() {
           <nav aria-label="Stopka">
             <h2 className="type-eyebrow text-accent">Nawigacja</h2>
             <ul className="mt-5 flex flex-col gap-3">
-              {navLinks.map((link) => (
+              {[...navLinks, { href: "/gdzie-pracuje", label: "Gdzie pracuję" }].map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}

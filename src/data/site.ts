@@ -1,7 +1,6 @@
 
-/** TODO(client): the e-mail is temporary (Gmail). Once the mailbox on the
- *  real domain exists, swap it here AND in the Google Business Profile -
- *  the two must match. */
+/** Keep this in sync with the Google Business Profile - Google compares the
+ *  name, address and phone between the two, and a mismatch hurts local rank. */
 export const site = {
   name: "Ślubne Dylematy",
   tagline: "Dekoracje ślubne i eventowe",
@@ -22,8 +21,8 @@ export const site = {
   contact: {
     phone: "+48 725 824 732",
     phoneHref: "tel:+48725824732",
-    email: "slubnedylematy.kontakt@gmail.com",
-    emailHref: "mailto:slubnedylematy.kontakt@gmail.com",
+    email: "kontakt@slubnedylematy.pl",
+    emailHref: "mailto:kontakt@slubnedylematy.pl",
     responseTime: "osobiście na każde zapytanie",
   },
 
