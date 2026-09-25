@@ -1,5 +1,6 @@
 "use server";
 
+import { mailConfigured, sendInquiry } from "@/lib/mail";
 import { site } from "@/data/site";
 import { inquirySchema, type FormState } from "@/lib/contact-schema";
 
@@ -46,13 +47,17 @@ export async function submitInquiry(
       : "nie podano";
 
   try {
+    if (!mailConfigured) {
+      // Local development without SMTP credentials: log instead of failing,
+      // so the form can still be exercised end to end.
+      console.info("[zapytanie] SMTP nieskonfigurowany, tylko log:", {
+        ...inquiry,
+        budzet,
+      });
+      return { status: "success", email: inquiry.email };
+    }
 
-    console.info("[zapytanie]", {
-      ...inquiry,
-      budzet,
-      receivedAt: new Date().toISOString(),
-    });
-
+    await sendInquiry(inquiry, budzet);
     return { status: "success", email: inquiry.email };
   } catch (error) {
     console.error("[zapytanie] błąd wysyłki:", error);
