@@ -23,7 +23,7 @@ export default function JsonLd() {
       { "@type": "Country", name: "Polska" },
     ],
     sameAs: [site.social.instagram, site.social.facebook].filter(Boolean),
-    founder: { "@type": "Person", name: site.owner },
+    founder: { "@type": "Person", name: site.legalName },
   };
 
   return (

@@ -4,7 +4,11 @@
 export const site = {
   name: "Ślubne Dylematy",
   tagline: "Dekoracje ślubne i eventowe",
+  /** Friendly form - used in signatures and copy. */
   owner: "Magda",
+  /** Full name of the data controller. Required by GDPR: a brand name is not
+   *  a legal person. Used in the privacy policy and structured data. */
+  legalName: "Magdalena Nowak",
 
   /*
    * Falls back to Netlify's own URLs so link previews and sitemaps are correct

@@ -19,10 +19,7 @@ export const metadata: Metadata = {
  * The substance still has to be here: who the controller is, what is
  * collected, why, for how long, who else sees it, and what rights people have.
  *
- * TODO(client): add the owner's full name. A brand name is not a legal
- * person, and the controller has to be identifiable. A home address does NOT
- * have to be published - a working contact channel is enough. Worth having a
- * lawyer read this before launch.
+ * TODO(client): worth having a lawyer read this before launch.
  */
 export default function PolitykaPrywatnosciPage() {
   return (
@@ -38,7 +35,8 @@ export default function PolitykaPrywatnosciPage() {
           <div>
             <h2 className="type-h3 text-ink">Kto odpowiada za Wasze dane</h2>
             <p className="mt-3">
-              Administratorem danych jest {site.name}. W każdej sprawie
+              Administratorem danych jest {site.legalName}, prowadząca
+              działalność pod nazwą {site.name}. W każdej sprawie
               dotyczącej Waszych danych napiszcie na{" "}
               <a
                 href={site.contact.emailHref}

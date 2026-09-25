@@ -76,10 +76,6 @@ export default function GdziePracujePage() {
             <h2 className="type-h2 text-ink">
               Powiedzcie, gdzie <em>świętujecie</em>
             </h2>
-            <p className="type-lead mx-auto mt-5 max-w-xl text-muted">
-              Jeśli znam to miejsce, od razu wiem, co się w nim sprawdzi. Jeśli
-              nie - przyjadę je obejrzeć, zanim cokolwiek zaproponuję.
-            </p>
             <div className="mt-8">
               <Button href="/kontakt">Zapytaj o termin</Button>
             </div>
