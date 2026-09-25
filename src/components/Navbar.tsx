@@ -50,10 +50,14 @@ export default function Navbar() {
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-5 sm:px-8">
         <Link
           href="/"
-          aria-label="Ślubne Dylematy - przejdź na początek strony"
           onClick={(e) => {
             // Next does not scroll when the route does not change. This
             // replaced the "Start" item in the menu.
+            //
+            // No aria-label here on purpose: the visible name and tagline
+            // already name the link, and an aria-label that omitted the
+            // tagline made the accessible name disagree with the text -
+            // which breaks voice control.
             if (pathname === "/") {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: "smooth" });
@@ -67,6 +71,7 @@ export default function Navbar() {
             alt=""
             width={449}
             height={555}
+            sizes="40px"
             className={`h-10 w-auto transition-[filter] ${
               jasnyPasek ? "" : "brightness-0 invert"
             }`}

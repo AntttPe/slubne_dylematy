@@ -26,3 +26,22 @@
 # i odświeżanie kalendarza co 15 minut.
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# Nagłówki bezpieczeństwa. Lighthouse zgłasza ich brak w sekcji "Trust and
+# Safety" - nie obniżają wyniku, ale na publicznej stronie z formularzem
+# nie ma powodu ich nie mieć.
+#
+# Świadomie BEZ Content-Security-Policy: Next wstrzykuje style i skrypty
+# inline, więc sensowna polityka wymaga nonce'ów przez middleware. To
+# osobna robota, nie jednolinijkowiec.
+[[headers]]
+  for = "/*"
+
+  [headers.values]
+    # Bez includeSubDomains: poddomeny pocztowe seohosta nie stoją za HTTPS.
+    Strict-Transport-Security = "max-age=31536000"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+    # Nowocześniejszy odpowiednik X-Frame-Options: DENY.
+    Content-Security-Policy = "frame-ancestors 'none'"

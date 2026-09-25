@@ -8,13 +8,18 @@ import {
   dateKey,
   monthGrid,
   monthNames,
+  monthNamesGenitive,
   statusLabels,
   weekdayNames,
 } from "@/lib/availability";
 
 /* Statuses stay within the brand palette rather than using arbitrary red and
-   green. Colour never carries the meaning alone: every day has an aria-label
-   and booked days are struck through. */
+   green. Colour never carries the meaning alone: every day spells its status
+   out in visually hidden text, and booked days are struck through.
+
+   The status is real text rather than an aria-label: a plain <div> maps to
+   role=generic, which prohibits aria-label. Browsers drop it, so the cell
+   reached the accessibility tree with no name at all. */
 const dayStyles: Record<Status, string> = {
   free: "bg-canvas text-ink border-line hover:border-accent",
   tentative: "bg-accent/25 text-ink border-accent/50",
@@ -126,10 +131,12 @@ export default function AvailabilityCalendar({
           return (
             <div
               key={dateKey(date)}
-              aria-label={`${date.getDate()} ${monthNames[month].toLowerCase()} - ${statusLabels[status]}`}
               className={`flex aspect-square items-center justify-center rounded-sm border text-sm transition-colors duration-200 ${dayStyles[status]}`}
             >
-              <span aria-hidden="true">{date.getDate()}</span>
+              {date.getDate()}
+              <span className="sr-only">
+                {` ${monthNamesGenitive[month]} - ${statusLabels[status]}`}
+              </span>
             </div>
           );
         })}

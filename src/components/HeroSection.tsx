@@ -1,6 +1,6 @@
 import HeroSlideshow from "./HeroSlideshow";
 import Button from "./ui/Button";
-import Reveal from "./ui/Reveal";
+import Intro from "./ui/Intro";
 
 const stats = [
   { value: "5+", label: "lat doświadczenia" },
@@ -17,36 +17,36 @@ export default function HeroSection() {
 
       <div className="relative mx-auto w-full max-w-6xl px-5 pb-16 pt-28 sm:px-8 sm:pb-20">
         <div className="max-w-2xl">
-          <Reveal>
+          <Intro>
             <p className="type-eyebrow text-accent">
               Dekoracje ślubne · Śląsk i cała Polska
             </p>
-          </Reveal>
+          </Intro>
 
-          <Reveal delay={80}>
+          <Intro delay={80}>
             <h1 className="type-display mt-5 text-white">
               Tworzymy piękne chwile <em className="text-accent">z miłości</em>{" "}
               do detali
             </h1>
-          </Reveal>
+          </Intro>
 
-          <Reveal delay={160}>
+          <Intro delay={160}>
             <p className="type-lead mt-5 max-w-lg text-white/85">
               Dekoracje ślubne, weselne i okolicznościowe - od pierwszej
               rozmowy po ostatni kwiat postawiony na sali.
             </p>
-          </Reveal>
+          </Intro>
 
-          <Reveal delay={240}>
+          <Intro delay={240}>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button href="/kontakt">Sprawdź wolny termin</Button>
               <Button href="/galeria" variant="onDark">
                 Zobacz realizacje
               </Button>
             </div>
-          </Reveal>
+          </Intro>
 
-          <Reveal delay={320}>
+          <Intro delay={320}>
             <dl className="mt-10 flex gap-12 border-t border-white/20 pt-6">
               {stats.map((stat) => (
                 <div key={stat.label}>
@@ -62,7 +62,7 @@ export default function HeroSection() {
                 </div>
               ))}
             </dl>
-          </Reveal>
+          </Intro>
         </div>
       </div>
     </section>

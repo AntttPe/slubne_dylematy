@@ -93,4 +93,12 @@ export const monthNames = [
   "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień",
 ];
 
+/* Genitive forms, for reading a date out loud: "12 września", not
+   "12 wrzesień". Only the screen-reader text uses these; the heading above
+   the grid names the month on its own and stays nominative. */
+export const monthNamesGenitive = [
+  "stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca",
+  "lipca", "sierpnia", "września", "października", "listopada", "grudnia",
+];
+
 export const weekdayNames = ["Pn", "Wt", "Śr", "Cz", "Pt", "So", "Nd"];
